@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Bullet: {fileID: 2329323580639709198, guid: ca5431323b4170c4391e7e3bc3b9abeb, type: 3}
-  bulletSpeed: 10
+  bulletSpeed: 20
 --- !u!114 &3415383523834631772
 MonoBehaviour:
   m_ObjectHideFlags: 0

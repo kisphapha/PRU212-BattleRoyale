@@ -14,7 +14,9 @@ public class PlayerProps : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        var persistentData = FindObjectOfType<PersistentData>();
+        characterName = persistentData.playerName;
+        Debug.Log(characterName);
     }
 
     // Update is called once per frame

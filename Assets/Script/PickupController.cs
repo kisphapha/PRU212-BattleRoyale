@@ -55,7 +55,7 @@ public class PickupController : MonoBehaviour
         if (weapon == null)
         {
             // Find the nearest weapon to equip
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 5f);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 3f);
             foreach (var collider in colliders)
             {
                 if (collider.CompareTag("PickUpItems"))

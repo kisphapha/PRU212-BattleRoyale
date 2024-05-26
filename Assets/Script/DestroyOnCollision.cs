@@ -5,9 +5,9 @@ public class DestroyOnCollision : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Solid" || other.tag == "Enermy")
+        if (other.tag == "Solid" || other.tag == "Enermy" || other.tag == "Player")
         {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+            PlayerProps playerHealth = other.GetComponent<PlayerProps>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(1);

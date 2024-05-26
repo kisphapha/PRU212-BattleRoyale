@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerProps : MonoBehaviour
@@ -35,7 +33,7 @@ public class PlayerProps : MonoBehaviour
     /// The 0 degree is count from the bottom (south) direction and increase counterclockwise.
     /// </summary>
     /// <returns></returns>
-    public float GetMouseAngle() 
+    public float GetMouseAngle()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = transform.position.z; // Assuming the object and mouse are in the same 2D plane

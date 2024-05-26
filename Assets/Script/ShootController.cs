@@ -1,21 +1,17 @@
-﻿using System;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
 
 public class ShootingController : MonoBehaviour
 {
     public GameObject Bullet; // Reference to the bullet prefab
     private PlayerProps master;
-    private float coolDown = 1;
+    private float coolDown = 3;
     private float shootCooldown = 0.25f; // Cooldown time in seconds
     private float shootTimer = 0f; // Timer to track the cooldown
     public float bulletSpeed = 20f; // Speed of the bullet
 
     private void Start()
     {
-        master =  GetComponent<PlayerProps>();
+        master = GetComponent<PlayerProps>();
     }
     private void Update()
     {
@@ -49,7 +45,7 @@ public class ShootingController : MonoBehaviour
         //Tuy nhiên sprite của player thì quay xuống còn sprite súng thì quay sang ngang lên bị lệch
         //góc 90 độ nên phải tạo 2 cái quaternion khác nhau như dưới
         Quaternion rotationOfGun = Quaternion.Euler(0f, 0f, master.angle - 90);
-        Quaternion rotationOfMaster = Quaternion.Euler(0f, 0f, master.angle) ;
+        Quaternion rotationOfMaster = Quaternion.Euler(0f, 0f, master.angle);
 
         //Tạo 1 vị trí mới từ vị trị của Player, cộng thêm chiều dài offset về hướng mà súng quay tới
         Vector3 targetPosition = transform.position + (rotationOfGun * Vector3.right * gunOffset);

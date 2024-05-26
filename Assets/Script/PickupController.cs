@@ -38,7 +38,7 @@ public class PickupController : MonoBehaviour
         // No changes needed here since we're handling everything in Update()
     }
 
-    private void CarryTheGun()
+    public void CarryTheGun()
     {
         if (pickedObject != null)
         {
@@ -50,7 +50,7 @@ public class PickupController : MonoBehaviour
         }
     }
 
-    private void EquipWeapon(GameObject weapon = null)
+    public void EquipWeapon(GameObject weapon = null)
     {
         if (weapon == null)
         {
@@ -77,7 +77,7 @@ public class PickupController : MonoBehaviour
         }
     }
 
-    private void DropWeapon()
+    public void DropWeapon()
     {
         Debug.Log("Attempting to drop weapon.");
 
@@ -92,7 +92,7 @@ public class PickupController : MonoBehaviour
         }
     }
 
-    private void SwitchWeapon()
+    public void SwitchWeapon()
     {
         // First, drop the current weapon
         DropWeapon();

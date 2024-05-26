@@ -42,4 +42,12 @@ public class PlayerProps : MonoBehaviour
         // Calculate the angle in degrees
         return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90;
     }
+    public void TakeDamage(int amount)
+    {
+        hp -= amount;
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

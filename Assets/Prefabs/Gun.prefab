@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2363708552413925130}
   - component: {fileID: 4615942715488608167}
+  - component: {fileID: 7131553384744130833}
   - component: {fileID: 2425465644403225234}
   m_Layer: 0
   m_Name: Gun
@@ -71,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 263729519
+  m_SortingLayer: 1
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 0bd7bf42f88168d4b918cd7103b330af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -85,6 +86,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7131553384744130833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422872020211802964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa181f511ccf5514cb7d2a98f773a32f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmmo: 10
+  currentAmmo: 0
+  reloadTime: 3
+  fireRate: 10
+  AmmoDisplay: {fileID: 0}
+  pickupController: {fileID: 0}
 --- !u!61 &2425465644403225234
 BoxCollider2D:
   m_ObjectHideFlags: 0

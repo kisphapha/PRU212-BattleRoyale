@@ -3,10 +3,12 @@ using UnityEngine;
 public class PickupController : MonoBehaviour
 {
     private GameObject pickedObject; // Reference to the currently picked object
+    private ShootingController shootingController;
     private PlayerProps master;
     // Start is called before the first frame update
     void Start()
     {
+        shootingController = GetComponent<ShootingController>();
         master = GetComponent<PlayerProps>();
     }
 
@@ -74,6 +76,10 @@ public class PickupController : MonoBehaviour
             // Enable the object's collider and renderer to make it visually appear
             pickedObject.GetComponent<Collider2D>().enabled = true;
             master.isHeldingGun = true;
+            var gun = weapon.GetComponent<Gun>();
+            master.weapon = gun;
+            master.weapon.UpdateAmmoDisplay();
+            shootingController.shootCooldown = gun.fireRate;
         }
     }
 
@@ -89,6 +95,8 @@ public class PickupController : MonoBehaviour
             pickedObject.GetComponent<Collider2D>().enabled = true;
             master.isHeldingGun = false;
             pickedObject = null;
+            master.weapon.ResetAmmoDisplay();
+            master.weapon = null;
         }
     }
 

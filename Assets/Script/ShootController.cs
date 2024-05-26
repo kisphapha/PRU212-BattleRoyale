@@ -4,35 +4,41 @@ public class ShootingController : MonoBehaviour
 {
     public GameObject Bullet; // Reference to the bullet prefab
     private PlayerProps master;
-    private float coolDown = 3;
-    private float shootCooldown = 0.25f; // Cooldown time in seconds
+    public float shootCooldown = 0.25f; // Cooldown time in seconds
     private float shootTimer = 0f; // Timer to track the cooldown
     public float bulletSpeed = 20f; // Speed of the bullet
 
     private void Start()
     {
-        master = GetComponent<PlayerProps>();
+        master = gameObject.GetComponent<PlayerProps>();
     }
     private void Update()
     {
-        if (Input.GetMouseButton(0) && master.isHeldingGun)
+        if (master != null)
         {
-            if (shootTimer <= 0f)
+            if (Input.GetMouseButton(0) && master.isHeldingGun)
             {
-                Shoot();
-                shootTimer = shootCooldown; // Reset the cooldown timer
+                if (shootTimer <= 0f)
+                {
+                    if (master.weapon != null && master.weapon.currentAmmo > 0)
+                    {
+                        Shoot();
+                        master.weapon.Shoot();
+                        shootTimer = shootCooldown; // Reset the cooldown timer
+                    }
+                }
             }
-        }
 
-        if (shootTimer > 0f)
-        {
-            shootTimer -= Time.deltaTime; // Decrease the cooldown timer
-        }
+            if (shootTimer > 0f)
+            {
+                shootTimer -= Time.deltaTime; // Decrease the cooldown timer
+            }
+        }   
     }
 
     private void Shoot()
     {
-        int randomAngle = UnityEngine.Random.Range(-10, 10);
+        int randomAngle = Random.Range(-10, 10);
         //Gun offset để xác định khoảng cách để tạo viên đạn (đan nên tạo ra từ đầu súng thay vì
         //từ giữa súng)
         float gunOffset = 4f;

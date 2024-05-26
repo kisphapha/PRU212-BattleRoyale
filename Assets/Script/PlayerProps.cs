@@ -7,7 +7,7 @@ public class PlayerProps : MonoBehaviour
     public bool isHeldingGun = false;
     public float angle = 0f;
     public float offsetDistance = 1.75f; // Constant distance between the player and the picked object
-    public Gun weapon;
+    public GunEntity weapon;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +45,7 @@ public class PlayerProps : MonoBehaviour
     public void TakeDamage(int amount)
     {
         hp -= amount;
+        Debug.Log(hp);
         if (hp <= 0)
         {
             Destroy(gameObject);

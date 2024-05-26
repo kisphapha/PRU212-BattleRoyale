@@ -76,7 +76,7 @@ public class PickupController : MonoBehaviour
             // Enable the object's collider and renderer to make it visually appear
             pickedObject.GetComponent<Collider2D>().enabled = true;
             master.isHeldingGun = true;
-            var gun = weapon.GetComponent<Gun>();
+            var gun = weapon.GetComponent<GunEntity>();
             master.weapon = gun;
             master.weapon.UpdateAmmoDisplay();
             shootingController.shootCooldown = gun.fireRate;

@@ -10,7 +10,7 @@ public class DestroyOnCollision : MonoBehaviour
             PlayerProps playerHealth = other.GetComponent<PlayerProps>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(1);
+                playerHealth.TakeDamage(5);
             }
             Destroy(gameObject);
         }

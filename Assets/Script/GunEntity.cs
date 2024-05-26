@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
-public class Gun : MonoBehaviour
+public class GunEntity : MonoBehaviour
 {
     public int maxAmmo = 10;
     public int currentAmmo;

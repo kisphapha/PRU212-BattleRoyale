@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PickupController : MonoBehaviour
@@ -5,39 +6,50 @@ public class PickupController : MonoBehaviour
     private GameObject pickedObject; // Reference to the currently picked object
     private ShootingController shootingController;
     private PlayerProps master;
-    // Start is called before the first frame update
+
+    // List to store available weapons
+    private List<GameObject> availableWeapons = new List<GameObject>();
+    private int currentWeaponIndex = 0; // Index of the currently equipped weapon
+
     void Start()
     {
         shootingController = GetComponent<ShootingController>();
         master = GetComponent<PlayerProps>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         CarryTheGun();
 
-        // Check for input to drop or pick up/switch the weapon
+        // Check for input to drop or switch the weapon
         if (Input.GetKeyDown(KeyCode.G))
         {
             DropWeapon();
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
-            if (!master.isHeldingGun)
-            {
-                EquipWeapon(); // Equip a weapon if none is held
-            }
-            else
-            {
-                SwitchWeapon(); // Attempt to switch weapons if one is already held
-            }
+            SwitchWeapon();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // No changes needed here since we're handling everything in Update()
+        // Check if the colliding object is a weapon
+        if (other.CompareTag("PickUpItems"))
+        {
+            // Add the weapon to the list of available weapons
+            availableWeapons.Add(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        // Check if the exiting object is a weapon
+        if (other.CompareTag("PickUpItems"))
+        {
+            // Remove the weapon from the list of available weapons
+            availableWeapons.Remove(other.gameObject);
+        }
     }
 
     public void CarryTheGun()
@@ -52,60 +64,50 @@ public class PickupController : MonoBehaviour
         }
     }
 
-    public void EquipWeapon(GameObject weapon = null)
+    public void SwitchWeapon()
     {
-        if (weapon == null)
-        {
-            // Find the nearest weapon to equip
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 3f);
-            foreach (var collider in colliders)
-            {
-                if (collider.CompareTag("PickUpItems"))
-                {
-                    weapon = collider.gameObject;
-                    break;
-                }
-            }
-        }
+        // Drop the current weapon
+        DropWeapon();
 
-        if (weapon != null)
+        // Check if there are available weapons
+        if (availableWeapons.Count > 0)
         {
-            pickedObject = weapon;
-            pickedObject.transform.SetParent(transform); // Make the player character the parent of the picked object
-            Debug.Log("Equipped");
-            // Enable the object's collider and renderer to make it visually appear
-            pickedObject.GetComponent<Collider2D>().enabled = true;
-            master.isHeldingGun = true;
-            var gun = weapon.GetComponent<GunEntity>();
-            master.weapon = gun;
-            master.weapon.UpdateAmmoDisplay();
-            shootingController.shootCooldown = gun.fireRate;
+            // Move to the next weapon in the list
+            currentWeaponIndex = (currentWeaponIndex + 1) % availableWeapons.Count;
+
+            // Equip the new weapon
+            EquipWeapon(availableWeapons[currentWeaponIndex]);
         }
+    }
+
+    public void EquipWeapon(GameObject weapon)
+    {
+        pickedObject = weapon;
+        pickedObject.transform.SetParent(transform); // Make the player character the parent of the picked object
+        Debug.Log("Equipped");
+        pickedObject.GetComponent<Collider2D>().enabled = true;
+        master.isHeldingGun = true;
+        var gun = weapon.GetComponent<GunEntity>();
+        master.weapon = gun;
+        master.weapon.UpdateAmmoDisplay();
+        shootingController.shootCooldown = gun.fireRate;
     }
 
     public void DropWeapon()
     {
         Debug.Log("Attempting to drop weapon.");
-
         if (pickedObject != null)
         {
             pickedObject.transform.SetParent(null); // Remove the player character as the parent of the picked object
             Debug.Log("Dropped");
-            // Enable the object's collider and renderer to make it visually reappear
             pickedObject.GetComponent<Collider2D>().enabled = true;
             master.isHeldingGun = false;
             pickedObject = null;
-            master.weapon.ResetAmmoDisplay();
-            master.weapon = null;
+            if (master.weapon != null)
+            {
+                master.weapon.ResetAmmoDisplay();
+                master.weapon = null;
+            }
         }
-    }
-
-    public void SwitchWeapon()
-    {
-        // First, drop the current weapon
-        DropWeapon();
-
-        // Then, try to equip a new weapon
-        EquipWeapon();
     }
 }

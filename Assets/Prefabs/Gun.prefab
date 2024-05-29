@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2363708552413925130}
   - component: {fileID: 4615942715488608167}
-  - component: {fileID: 5251986497177160941}
-  - component: {fileID: 4984052661565266175}
   - component: {fileID: 2425465644403225234}
+  - component: {fileID: 7131553384744130833}
   m_Layer: 0
   m_Name: Gun
   m_TagString: PickUpItems
@@ -87,38 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7131553384744130833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1422872020211802964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa181f511ccf5514cb7d2a98f773a32f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4984052661565266175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1422872020211802964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c5d8e94dee06a84bb2dcdc253bd1531, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Bullet: {fileID: 0}
-  bulletSpeed: 20
-  maxAmmo: 10
-  currentAmmo: 0
-  reloadTime: 3
-  fireRate: 10
-  AmmoDisplay: {fileID: 0}
-  pickupController: {fileID: 0}
 --- !u!61 &2425465644403225234
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -164,3 +131,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.2, y: 2.09}
   m_EdgeRadius: 0
+--- !u!114 &7131553384744130833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422872020211802964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa181f511ccf5514cb7d2a98f773a32f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmmo: 10
+  currentAmmo: 0
+  reloadTime: 3
+  fireRate: 10
+  AmmoDisplay: {fileID: 0}
+  pickupController: {fileID: 0}

@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerProps : MonoBehaviour
 {
     public string characterName; // Name property
-    public int hp = 100; // HP property
+    public float hp = 100; // HP property
     public bool isHeldingGun = false;
     public float angle = 0f;
     public float offsetDistance = 1.75f; // Constant distance between the player and the picked object
@@ -42,7 +42,7 @@ public class PlayerProps : MonoBehaviour
         // Calculate the angle in degrees
         return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90;
     }
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         hp -= amount;
         Debug.Log(hp);

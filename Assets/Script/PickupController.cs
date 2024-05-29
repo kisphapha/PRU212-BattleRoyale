@@ -4,7 +4,6 @@ using UnityEngine;
 public class PickupController : MonoBehaviour
 {
     private GameObject pickedObject; // Reference to the currently picked object
-    private ShootingController shootingController;
     private PlayerProps master;
 
     // List to store available weapons
@@ -13,7 +12,6 @@ public class PickupController : MonoBehaviour
 
     void Start()
     {
-        shootingController = GetComponent<ShootingController>();
         master = GetComponent<PlayerProps>();
     }
 
@@ -93,9 +91,9 @@ public class PickupController : MonoBehaviour
         pickedObject.GetComponent<Collider2D>().enabled = true;
         master.isHeldingGun = true;
         var gun = weapon.GetComponent<GunEntity>();
+        gun.holder = master;
         master.weapon = gun;
         master.weapon.UpdateAmmoDisplay();
-        shootingController.shootCooldown = gun.fireRate;
     }
 
     public void DropWeapon()
@@ -110,6 +108,7 @@ public class PickupController : MonoBehaviour
             pickedObject = null;
             if (master.weapon != null)
             {
+                master.weapon.holder = null;
                 master.weapon.ResetAmmoDisplay();
                 master.weapon = null;
             }

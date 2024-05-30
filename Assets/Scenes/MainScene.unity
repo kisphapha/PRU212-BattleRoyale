@@ -313,7 +313,7 @@ GameObject:
   - component: {fileID: 295535885}
   - component: {fileID: 295535887}
   m_Layer: 0
-  m_Name: Tilemap
+  m_Name: MapBorder
   m_TagString: Solid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

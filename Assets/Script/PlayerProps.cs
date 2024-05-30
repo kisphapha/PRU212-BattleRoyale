@@ -11,7 +11,6 @@ public class PlayerProps : MonoBehaviour
     public float offsetDistance = 1.75f; // Constant distance between the player and the picked object
     public GunEntity weapon;
     public InventoryController inventoryController;
-    
 
     // Start is called before the first frame update
     void Start()

@@ -75,15 +75,17 @@ public class PickupController : MonoBehaviour
         //DropWeapon();
         if (inventoryController != null)
         {
-            int slot = inventoryController.FindAvailableSlot();
             // Check if there are available weapons
-            if (availableWeapons.Count > 0 && slot != 0)
+            if (availableWeapons.Count > 0)
             {
                 // Move to the next weapon in the list
                 currentWeaponIndex = (currentWeaponIndex + 1) % availableWeapons.Count;
-                inventoryController.Inventory[slot - 1] = availableWeapons[currentWeaponIndex];
+                var weapon = availableWeapons[currentWeaponIndex];
                 // Equip the new weapon
-                EquipWeapon(availableWeapons[currentWeaponIndex]);
+                if (inventoryController.InventoryAdd(weapon))
+                {
+                    EquipWeapon(weapon);
+                }
             }
         }
     }
@@ -94,8 +96,6 @@ public class PickupController : MonoBehaviour
         pickedObject.transform.SetParent(transform); // Make the player character the parent of the picked object
         Debug.Log("Equipped");
         pickedObject.GetComponent<Collider2D>().enabled = true;
-        pickedObject.SetActive(false);
-        inventoryController.handleSlotChange();
     }
 
     public void DropWeapon()
@@ -104,8 +104,7 @@ public class PickupController : MonoBehaviour
         var item = inventoryController.Inventory[inventoryController.currentSlot - 1];
         if (item != null)
         {
-            inventoryController.Inventory[inventoryController.currentSlot - 1] = null;
-            inventoryController.handleSlotChange();
+            inventoryController.InventoryRemove(inventoryController.currentSlot - 1);
             item.SetActive(true);
             item.transform.SetParent(null); // Remove the player character as the parent of the picked object
             Debug.Log("Dropped");

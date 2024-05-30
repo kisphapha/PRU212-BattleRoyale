@@ -10,9 +10,11 @@ public class InventoryController : MonoBehaviour
     public PlayerProps master;
     public int maxSlot = 3;
     public int currentSlot = 1;
+    private InventoryDrawer inventoryDrawer;
     // Start is called before the first frame update
     void Start()
     {
+        inventoryDrawer = GetComponent<InventoryDrawer>();
         master = GetComponent<PlayerProps>();
         //setup inventory
         for (int i = 0; i < maxSlot; i++)
@@ -25,16 +27,27 @@ public class InventoryController : MonoBehaviour
     void Update()
     {
         float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
-        if (scrollDelta > 0 && currentSlot > 1)
+        if (scrollDelta != 0)
         {
-            currentSlot--;
+            if (scrollDelta > 0)
+            {
+                currentSlot--;
+                if (currentSlot < 1)
+                {
+                    currentSlot = maxSlot;
+                }
+            }
+            if (scrollDelta < 0)
+            {
+                currentSlot++;
+                if (currentSlot > maxSlot)
+                {
+                    currentSlot = 1;
+                }
+            }
             handleSlotChange();
         }
-        if (scrollDelta < 0 && currentSlot < maxSlot)
-        {
-            currentSlot++;
-            handleSlotChange();
-        }
+
     }
     public void handleSlotChange()
     {
@@ -51,15 +64,24 @@ public class InventoryController : MonoBehaviour
         if (currentItem != null)
         {
             currentItem.SetActive(true);
-            master.isHeldingGun = true;
             var gun = currentItem.GetComponent<GunEntity>();
-            gun.holder = master;
-            master.weapon = gun;
-            master.weapon.UpdateAmmoDisplay();
+            if (gun != null)
+            {
+                gun.holder = master;
+                master.isHeldingGun = true;
+                master.weapon = gun;
+                master.weapon.UpdateAmmoDisplay();
+            }
         }
+        inventoryDrawer.UpdateInventoryFrame();
     }
     public int FindAvailableSlot()
     {
+        var currentItem = Inventory[currentSlot - 1];
+        if (currentItem == null)
+        {
+            return currentSlot;
+        }
         for (int i = 0; i < maxSlot; i++)
         {
             if (Inventory[i] == null)
@@ -69,5 +91,38 @@ public class InventoryController : MonoBehaviour
         }
         return 0;
     }
-
+    public bool InventoryAdd(GameObject item)
+    {
+        int slot = FindAvailableSlot();
+        if (slot > 0)
+        {
+            Inventory[slot - 1] = item;
+            inventoryDrawer.UpdateInventoryDisplay();
+            handleSlotChange();
+            if (slot != currentSlot)
+            {
+                item.SetActive(false);
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+    public bool InventoryRemove(int slot)
+    {
+        if (Inventory[slot] != null)
+        {
+            Inventory[slot] = null;
+            inventoryDrawer.UpdateInventoryDisplay();
+            handleSlotChange();
+            return true;
+        } else
+        {
+            return false;
+        }
+        
+    }
 }

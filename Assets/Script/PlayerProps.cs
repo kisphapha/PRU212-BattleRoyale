@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerProps : MonoBehaviour
@@ -8,13 +10,17 @@ public class PlayerProps : MonoBehaviour
     public float angle = 0f;
     public float offsetDistance = 1.75f; // Constant distance between the player and the picked object
     public GunEntity weapon;
+    public InventoryController inventoryController;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         var persistentData = FindObjectOfType<PersistentData>();
         characterName = persistentData.playerName;
+        inventoryController = GetComponent<InventoryController>();
         Debug.Log(characterName);
+
     }
 
     // Update is called once per frame
@@ -51,4 +57,6 @@ public class PlayerProps : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    
 }

@@ -6,7 +6,7 @@ public class PlayerProps : MonoBehaviour
     public float hp = 100; // HP property
     public bool isHeldingGun = false;
     public float angle = 0f;
-    public float offsetDistance = 1.75f; // Constant distance between the player and the picked object
+    //public float offsetDistance = 0; // Constant distance between the player and the picked object
     public GunEntity weapon;
 
     // Start is called before the first frame update

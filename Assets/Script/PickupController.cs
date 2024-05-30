@@ -57,13 +57,14 @@ public class PickupController : MonoBehaviour
             var gun = pickedObject.GetComponent<GunEntity>();
             if (gun != null)
             {
+                float gunSpriteLength = pickedObject.GetComponent<SpriteRenderer>().sprite.bounds.size.x;
                 float angle = master.GetMouseAngle();
                 Quaternion gunRotation = Quaternion.Euler(0f, 0f, angle - gun.spriteAngle - 90);
                 Quaternion masterRotation = Quaternion.Euler(0f, 0f, angle - 90);
-                Vector3 targetPosition = transform.position + (masterRotation * Vector3.right * master.offsetDistance);
+                Vector3 targetPosition = transform.position + (masterRotation * Vector3.right * gunSpriteLength / 4);
                 pickedObject.transform.position = targetPosition;
                 pickedObject.transform.rotation = gunRotation;
-            }          
+            }
         }
     }
 

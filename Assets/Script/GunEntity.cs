@@ -94,6 +94,14 @@ public class GunEntity : MonoBehaviour
                     return 45;
                 case "Pump_shotgun":
                     return 30;
+                case "Uzi":
+                    return 45;
+                case "MP5":
+                    return 30;
+                case "Deagle":
+                    return 45;
+                case "M4":
+                    return 30;
                 //TO-DO : Config mấy thăng còn lại, sprite nào mà quay ngang sang bên phải rồi thì khỏi cần.
                 default:
                     return 0;

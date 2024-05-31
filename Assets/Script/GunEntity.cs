@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using TMPro;
-using UnityEngine;
-using UnityEngine.Timeline;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
@@ -61,7 +58,7 @@ public class GunEntity : MonoBehaviour
         // Check if AmmoDisplay is assigned
         if (AmmoDisplay != null)
         {
-            AmmoDisplay.text = "Ammo: " ;
+            AmmoDisplay.text = "Ammo: ";
         }
         else
         {
@@ -72,8 +69,8 @@ public class GunEntity : MonoBehaviour
     {
         // Check if AmmoDisplay is assigned
         if (AmmoDisplay != null)
-        {        
-            AmmoDisplay.text = "Ammo: " + currentAmmo.ToString();          
+        {
+            AmmoDisplay.text = "Ammo: " + currentAmmo.ToString();
             // Update the UI text with current ammo count
         }
         else
@@ -98,10 +95,11 @@ public class GunEntity : MonoBehaviour
                 default:
                     return 0;
             }
-        } else
+        }
+        else
         {
             return 0;
         }
-        
+
     }
 }

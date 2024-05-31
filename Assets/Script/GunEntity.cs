@@ -28,9 +28,9 @@ public class GunEntity : MonoBehaviour
     {
         if (holder != null)
         {
-            if (Input.GetMouseButton(0) && holder.isHeldingGun)
+            if (Input.GetMouseButton(0))
             {
-                if (holder.weapon != null && holder.weapon.currentAmmo > 0)
+                if (holder.weapon != null && holder.weapon.currentAmmo > 0 && holder.weapon == this)
                 {
                     if (shootTimer <= 0f)
                     {

@@ -6,6 +6,7 @@ public class PickupController : MonoBehaviour
     private GameObject pickedObject; // Reference to the currently picked object
     private ShootingController shootingController;
     private PlayerProps master;
+    private HealingItem pickedUpHealingItem; // Reference to the currently picked up healing item
 
     // List to store available weapons
     private List<GameObject> availableWeapons = new List<GameObject>();
@@ -29,6 +30,13 @@ public class PickupController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.E))
         {
             SwitchWeapon();
+            PickUpHealingItem();
+        }
+        // Check for input to use the healing item
+        else if (Input.GetKeyDown(KeyCode.F) && pickedUpHealingItem != null)
+        {
+            pickedUpHealingItem.UseHealingItem();
+            pickedUpHealingItem = null; // Clear the reference after use
         }
     }
 
@@ -40,17 +48,28 @@ public class PickupController : MonoBehaviour
             // Add the weapon to the list of available weapons
             availableWeapons.Add(other.gameObject);
         }
+        // Check if the colliding object is a healing item
+        if (other.CompareTag("Healing"))
+        {
+            HealingItem healingItem = other.GetComponent<HealingItem>();
+            if (healingItem != null)
+            {
+                healingItem.PickUp(master); // Pass the player reference to the healing item
+                pickedUpHealingItem = healingItem; // Keep a reference to the picked-up healing item
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         // Check if the exiting object is a weapon
-        if (other.CompareTag("PickUpItems"))
+        if (other.CompareTag("PickUpItems") || other.CompareTag("Healing"))
         {
             // Remove the weapon from the list of available weapons
             availableWeapons.Remove(other.gameObject);
         }
     }
+
 
     public void CarryTheGun()
     {
@@ -61,6 +80,13 @@ public class PickupController : MonoBehaviour
             Vector3 targetPosition = transform.position + (rotation * Vector3.right * master.offsetDistance);
             pickedObject.transform.position = targetPosition;
             pickedObject.transform.rotation = rotation;
+        }
+    }
+    private void PickUpHealingItem()
+    {
+        if (pickedUpHealingItem != null)
+        {
+            pickedUpHealingItem.PickUp(master);
         }
     }
 

@@ -123,6 +123,242 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &15811845
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1422872020211802964, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_Name
+      value: GreenHeal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1422872020211802964, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1422872020211802964, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_TagString
+      value: Healing
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425465644403225234, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_Size.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425465644403225234, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_Size.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425465644403225234, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425465644403225234, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615942715488608167, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 570eb6b70d4690a4aaf6782004790e1e, type: 3}
+    - target: {fileID: 4615942715488608167, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615942715488608167, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 263729519
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131553384744130833, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: maxAmmo
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131553384744130833, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: fireRate
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131553384744130833, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: AmmoDisplay
+      value: 
+      objectReference: {fileID: 1473683522}
+    m_RemovedComponents:
+    - {fileID: 4984052661565266175, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+    - {fileID: 7131553384744130833, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1422872020211802964, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 744962604}
+  m_SourcePrefab: {fileID: 100100000, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+--- !u!1001 &40740031
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1422872020211802964, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_Name
+      value: RedHeal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1422872020211802964, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1422872020211802964, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_TagString
+      value: Healing
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363708552413925130, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425465644403225234, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_Size.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425465644403225234, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_Size.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425465644403225234, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2425465644403225234, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615942715488608167, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2db4ee6fc3f20f14fa332e8d9dad946f, type: 3}
+    - target: {fileID: 4615942715488608167, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4615942715488608167, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 263729519
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131553384744130833, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: maxAmmo
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131553384744130833, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: fireRate
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131553384744130833, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      propertyPath: AmmoDisplay
+      value: 
+      objectReference: {fileID: 1473683522}
+    m_RemovedComponents:
+    - {fileID: 4984052661565266175, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+    - {fileID: 7131553384744130833, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1422872020211802964, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1432124344}
+  m_SourcePrefab: {fileID: 100100000, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
 --- !u!1 &285054808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1498,6 +1734,25 @@ Transform:
   - {fileID: 295535884}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &744962600 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1422872020211802964, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+  m_PrefabInstance: {fileID: 15811845}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &744962604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744962600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ec8d41a480c1b49a02f11370813643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: GreenHeal
+  healAmount: 25
 --- !u!1001 &1134642900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1633,6 +1888,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e1fbd53e97089469216bb5a40707d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1432124340 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1422872020211802964, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+  m_PrefabInstance: {fileID: 40740031}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1432124344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432124340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ec8d41a480c1b49a02f11370813643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: RedHeal
+  healAmount: 100
 --- !u!1 &1442666612
 GameObject:
   m_ObjectHideFlags: 0
@@ -2870,3 +3144,5 @@ SceneRoots:
   - {fileID: 1898092061}
   - {fileID: 1134642900}
   - {fileID: 514894078}
+  - {fileID: 15811845}
+  - {fileID: 40740031}

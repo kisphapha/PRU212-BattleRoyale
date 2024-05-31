@@ -51,4 +51,8 @@ public class PlayerProps : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void PickUp(HealingItem item)
+    {
+        item.PickUp(this);
+    }
 }

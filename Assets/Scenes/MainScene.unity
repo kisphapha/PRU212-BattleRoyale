@@ -3411,11 +3411,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
---- !u!1 &800403343986125680 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9018847001660928362, guid: 379884fe78bd338449872764048f4519, type: 3}
-  m_PrefabInstance: {fileID: 6007128499244579016}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6007128499244579016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3438,11 +3433,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6243948520140557180, guid: 379884fe78bd338449872764048f4519, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.3686
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 6243948520140557180, guid: 379884fe78bd338449872764048f4519, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.22
+      value: 4.14
       objectReference: {fileID: 0}
     - target: {fileID: 6243948520140557180, guid: 379884fe78bd338449872764048f4519, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3480,13 +3475,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grenade
       objectReference: {fileID: 0}
+    - target: {fileID: 9018847001660928362, guid: 379884fe78bd338449872764048f4519, type: 3}
+      propertyPath: m_TagString
+      value: PickUpItems
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9018847001660928362, guid: 379884fe78bd338449872764048f4519, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8776950700264050189}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 379884fe78bd338449872764048f4519, type: 3}
 --- !u!1001 &8270047578616930836
 PrefabInstance:
@@ -3612,25 +3608,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919e711c10d257c4e83e7b56581f605d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8776950700264050189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 800403343986125680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6bd6d996fa5e244f9e0fd1d05f82f5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxGrenades: 5
-  currentGrenades: 0
-  throwRate: 1.5
-  grenadeSpeed: 15
-  GrenadeDisplay: {fileID: 530646706}
-  holder: {fileID: 0}
-  grenadePrefab: {fileID: 9018847001660928362, guid: 379884fe78bd338449872764048f4519, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3655,3 +3632,4 @@ SceneRoots:
   - {fileID: 392510275}
   - {fileID: 371509180}
   - {fileID: 377598170}
+  - {fileID: 6007128499244579016}

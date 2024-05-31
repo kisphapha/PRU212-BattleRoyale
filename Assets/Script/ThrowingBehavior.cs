@@ -6,6 +6,10 @@ namespace Assets.Script
     {
         public GrenadeEntity grenadeEntity;
 
+        private void Start()
+        {
+            grenadeEntity = GetComponent<GrenadeEntity>();
+        }
         public abstract void Throw();
     }
 }

@@ -54,23 +54,31 @@ public class InventoryController : MonoBehaviour
         if (currentItem != null)
         {
             currentItem.SetActive(false);
-            if (master.weapon != null)
+            if (master.holdingItem != null)
             {
-                master.weapon.ResetAmmoDisplay();
-                master.weapon = null;
+                var weapon = master.holdingItem.GetComponent<GunEntity>();
+                if (weapon != null)
+                {
+                    weapon.ResetAmmoDisplay();
+                }
+                master.holdingItem = null;
             }      
         }
         currentItem = Inventory[currentSlot - 1];
         if (currentItem != null)
         {
             currentItem.SetActive(true);
+            var item = currentItem.GetComponent<PickableItem>();
+            if (item != null)
+            {
+                item.holder = master;
+            }
+            master.holdingItem = currentItem;
             var gun = currentItem.GetComponent<GunEntity>();
             if (gun != null)
             {
-                gun.holder = master;
                 master.isHeldingGun = true;
-                master.weapon = gun;
-                master.weapon.UpdateAmmoDisplay();
+                gun.UpdateAmmoDisplay();
             }
         }
         inventoryDrawer.UpdateInventoryFrame();

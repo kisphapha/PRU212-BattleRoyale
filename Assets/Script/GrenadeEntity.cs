@@ -2,33 +2,34 @@ using Assets.Script;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GrenadeEntity : MonoBehaviour
+public class GrenadeEntity : PickableItem
 {
     public int maxGrenades = 5;
     public int currentGrenades;
     public float throwRate = 1.5f;
     public float grenadeSpeed = 15f;
-    public Text GrenadeDisplay; // Reference to the UI Text element
-    public PlayerProps holder;
+    //public Text GrenadeDisplay; // Reference to the UI Text element
     public GameObject grenadePrefab;
-    private GrenadeThrowController throwController;
+    private ThrowingBehavior throwController;
     private float throwTimer = 0f; // Timer to track the cooldown
 
     private void Start()
     {
-        throwController = GetComponent<GrenadeThrowController>();
+        throwController = GetComponent<ThrowingBehavior>();
         currentGrenades = maxGrenades;
-        UpdateGrenadeDisplay(); // Initialize grenade display
+        //UpdateGrenadeDisplay(); // Initialize grenade display
     }
 
     private void Update()
     {
-        if (holder != null)
+        if (holder != null && holder.holdingItem != null)
         {
-            if (Input.GetMouseButtonDown(1) && holder.isHoldingGrenade) // Assume right-click for throwing grenade
+            var holderGrenade = holder.holdingItem.GetComponent<GrenadeEntity>();
+            if (Input.GetMouseButtonDown(0) && holderGrenade == this) // Assume right-click for throwing grenade
             {
                 if (currentGrenades > 0 && throwTimer <= 0f)
                 {
+                    Debug.Log("Threw");
                     ThrowGrenade();
                     throwTimer = throwRate;
                 }
@@ -45,20 +46,20 @@ public class GrenadeEntity : MonoBehaviour
         currentGrenades--;
         Debug.Log("Grenades left: " + currentGrenades);
         throwController.Throw();
-        UpdateGrenadeDisplay(); // Update grenade display after throwing
+        //UpdateGrenadeDisplay(); // Update grenade display after throwing
     }
 
-    public void UpdateGrenadeDisplay()
-    {
-        // Check if GrenadeDisplay is assigned
-        if (GrenadeDisplay != null)
-        {
-            GrenadeDisplay.text = "Grenades: " + currentGrenades.ToString();
-            // Update the UI text with current grenade count
-        }
-        else
-        {
-            Debug.LogWarning("Grenade display is not assigned!");
-        }
-    }
+    //public void UpdateGrenadeDisplay()
+    //{
+    //    // Check if GrenadeDisplay is assigned
+    //    if (GrenadeDisplay != null)
+    //    {
+    //        GrenadeDisplay.text = "Grenades: " + currentGrenades.ToString();
+    //        // Update the UI text with current grenade count
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning("Grenade display is not assigned!");
+    //    }
+    //}
 }

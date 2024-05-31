@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
-public class GunEntity : MonoBehaviour
+public class GunEntity : PickableItem
 {
     public int maxAmmo = 10;
     public int currentAmmo;
@@ -12,7 +12,6 @@ public class GunEntity : MonoBehaviour
     private bool isReloading = false;
     public int spriteAngle; //0 độ bắt đầu từ góc 3h và tăng theo ngược chiều kim đồng hồ. Nếu sprite bị nghiêng, chỉnh số này theo góc nghiêng.
     public Text AmmoDisplay; // Reference to the UI Text element
-    public PlayerProps holder;
     public GameObject bullet;
     private ShootingBehavior shootingBehavior;
     private float shootTimer = 0f; // Timer to track the cooldown
@@ -28,9 +27,10 @@ public class GunEntity : MonoBehaviour
     {
         if (holder != null)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && holder.holdingItem != null)
             {
-                if (holder.weapon != null && holder.weapon.currentAmmo > 0 && holder.weapon == this)
+                var weapon = holder.holdingItem.GetComponent<GunEntity>();
+                if (weapon != null && weapon.currentAmmo > 0 && weapon == this)
                 {
                     if (shootTimer <= 0f)
                     {

@@ -43,22 +43,25 @@ public class InventoryDrawer : MonoBehaviour
     {
         var sprite1 = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/spr_inventory_slot.png", typeof(Sprite)); 
         var sprite2 = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/spr_inventory_slot_2.png", typeof(Sprite));
-
-        //Debug.Log(Resources.Load<Sprite>("spr_inventory_slot").name);
-        inventorySlotFrame1.sprite = sprite1;
-        inventorySlotFrame2.sprite = sprite1;
-        inventorySlotFrame3.sprite = sprite1;
-        switch (inventoryController.currentSlot)
+        if (inventorySlotFrame1 != null && inventorySlotFrame2 != null && inventorySlotFrame3 != null)
         {
-            case 1 :
-                inventorySlotFrame1.sprite = sprite2;
-                break;
-            case 2:
-                inventorySlotFrame2.sprite = sprite2;
-                break;
-            case 3:
-                inventorySlotFrame3.sprite = sprite2;
-                break;
+
+            //Debug.Log(Resources.Load<Sprite>("spr_inventory_slot").name);
+            inventorySlotFrame1.sprite = sprite1;
+            inventorySlotFrame2.sprite = sprite1;
+            inventorySlotFrame3.sprite = sprite1;
+            switch (inventoryController.currentSlot)
+            {
+                case 1 :
+                    inventorySlotFrame1.sprite = sprite2;
+                    break;
+                case 2:
+                    inventorySlotFrame2.sprite = sprite2;
+                    break;
+                case 3:
+                    inventorySlotFrame3.sprite = sprite2;
+                    break;
+            }
         }
     }
     public void UpdateInventoryDisplay()

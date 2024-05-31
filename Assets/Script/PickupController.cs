@@ -111,11 +111,19 @@ public class PickupController : MonoBehaviour
             item.GetComponent<Collider2D>().enabled = true;
             pickedObject = null;
             master.isHeldingGun = false;
-            if (master.weapon != null)
+            if (master.holdingItem != null)
             {
-                master.weapon.holder = null;
-                master.weapon.ResetAmmoDisplay();
-                master.weapon = null;
+                var cuurentItem = master.holdingItem.GetComponent<PickableItem>();
+                if (cuurentItem != null)
+                {
+                    cuurentItem.holder = null;
+                }
+                var weapon = master.holdingItem.GetComponent<GunEntity>();
+                if (weapon != null)
+                {
+                    weapon.ResetAmmoDisplay();
+                }
+                master.holdingItem = null;
             }
         }
     }

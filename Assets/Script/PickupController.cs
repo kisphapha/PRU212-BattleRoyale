@@ -30,13 +30,7 @@ public class PickupController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.E))
         {
             SwitchWeapon();
-            PickUpHealingItem();
-        }
-        // Check for input to use the healing item
-        else if (Input.GetKeyDown(KeyCode.F) && pickedUpHealingItem != null)
-        {
-            pickedUpHealingItem.UseHealingItem();
-            pickedUpHealingItem = null; // Clear the reference after use
+            //PickUpHealingItem();
         }
     }
 
@@ -48,22 +42,13 @@ public class PickupController : MonoBehaviour
             // Add the weapon to the list of available weapons
             availableWeapons.Add(other.gameObject);
         }
-        // Check if the colliding object is a healing item
-        if (other.CompareTag("Healing"))
-        {
-            HealingItem healingItem = other.GetComponent<HealingItem>();
-            if (healingItem != null)
-            {
-                healingItem.PickUp(master); // Pass the player reference to the healing item
-                pickedUpHealingItem = healingItem; // Keep a reference to the picked-up healing item
-            }
-        }
+       
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         // Check if the exiting object is a weapon
-        if (other.CompareTag("PickUpItems") || other.CompareTag("Healing"))
+        if (other.CompareTag("PickUpItems"))
         {
             // Remove the weapon from the list of available weapons
             availableWeapons.Remove(other.gameObject);
@@ -87,13 +72,6 @@ public class PickupController : MonoBehaviour
             }          
         }
     }
-    private void PickUpHealingItem()
-    {
-        if (pickedUpHealingItem != null)
-        {
-            pickedUpHealingItem.PickUp(master);
-        }
-    }
 
     public void SwitchWeapon()
     {
@@ -108,9 +86,13 @@ public class PickupController : MonoBehaviour
                 currentWeaponIndex = (currentWeaponIndex + 1) % availableWeapons.Count;
                 var weapon = availableWeapons[currentWeaponIndex];
                 // Equip the new weapon
-                if (inventoryController.InventoryAdd(weapon))
+                var result = inventoryController.InventoryAdd(weapon);
+                if (result == 1)
                 {
                     EquipWeapon(weapon);
+                } else if (result == 2)
+                {
+                    DestroyItem(weapon);
                 }
             }
         }
@@ -123,33 +105,50 @@ public class PickupController : MonoBehaviour
         Debug.Log("Equipped");
         pickedObject.GetComponent<Collider2D>().enabled = true;
     }
-
+    public void DestroyItem(GameObject gameObject)
+    {
+        Destroy(gameObject);
+    }
+    public void DropStackedItem(GameObject gameObject, GameObject sample)
+    {
+        var item = Instantiate(gameObject, transform.position, transform.rotation);
+        item.transform.localScale = sample.transform.lossyScale;
+        item.name = sample.name;
+    }
     public void DropWeapon()
     {
         Debug.Log("Attempting to drop weapon.");
         var item = inventoryController.Inventory[inventoryController.currentSlot - 1];
         if (item != null)
         {
-            inventoryController.InventoryRemove(inventoryController.currentSlot - 1);
-            item.SetActive(true);
-            item.transform.SetParent(null); // Remove the player character as the parent of the picked object
-            Debug.Log("Dropped");
-            item.GetComponent<Collider2D>().enabled = true;
-            pickedObject = null;
-            master.isHeldingGun = false;
-            if (master.holdingItem != null)
+            if (item.Amount > 1)
             {
-                var cuurentItem = master.holdingItem.GetComponent<PickableItem>();
-                if (cuurentItem != null)
+                DropStackedItem(item.GameObject, master.holdingItem);
+                inventoryController.InventoryRemove(inventoryController.currentSlot - 1);
+            }
+            else {
+                inventoryController.InventoryRemove(inventoryController.currentSlot - 1);
+                item.GameObject.SetActive(true);
+                item.GameObject.transform.SetParent(null); // Remove the player character as the parent of the picked object
+                Debug.Log("Dropped");
+                item.GameObject.GetComponent<Collider2D>().enabled = true;
+                pickedObject = null;
+                master.isHeldingGun = false;
+                var cuurentItem = master.holdingItem?.GetComponent<PickableItem>();
+                if (master.holdingItem != null)
                 {
-                    cuurentItem.holder = null;
+                    if (cuurentItem != null)
+                    {
+                        cuurentItem.holder = null;
+                        cuurentItem.inventoryController = null;
+                    }
+                    var weapon = master.holdingItem.GetComponent<GunEntity>();
+                    if (weapon != null)
+                    {
+                        weapon.ResetAmmoDisplay();
+                    }
+                    master.holdingItem = null;
                 }
-                var weapon = master.holdingItem.GetComponent<GunEntity>();
-                if (weapon != null)
-                {
-                    weapon.ResetAmmoDisplay();
-                }
-                master.holdingItem = null;
             }
         }
     }

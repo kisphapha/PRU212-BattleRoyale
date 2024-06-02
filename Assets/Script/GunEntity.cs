@@ -15,9 +15,9 @@ public class GunEntity : PickableItem
     public GameObject bullet;
     private ShootingBehavior shootingBehavior;
     private float shootTimer = 0f; // Timer to track the cooldown
-
     private void Start()
     {
+        Stackable = false;
         spriteAngle = getSpriteAngle();
         shootingBehavior = GetComponent<ShootingBehavior>();
         currentAmmo = maxAmmo;

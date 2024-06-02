@@ -9,36 +9,48 @@ public class GunEntity : PickableItem
     public float reloadTime = 3f;
     public float fireRate = 10f;
     public float bulletSpeed = 20f;
-    private bool isReloading = false;
     public int spriteAngle; //0 độ bắt đầu từ góc 3h và tăng theo ngược chiều kim đồng hồ. Nếu sprite bị nghiêng, chỉnh số này theo góc nghiêng.
     public Text AmmoDisplay; // Reference to the UI Text element
     public GameObject bullet;
     private ShootingBehavior shootingBehavior;
     private float shootTimer = 0f; // Timer to track the cooldown
+    public bool canShoot = false;
     private void Start()
     {
         Stackable = false;
         spriteAngle = getSpriteAngle();
         shootingBehavior = GetComponent<ShootingBehavior>();
         currentAmmo = maxAmmo;
+        if (AmmoDisplay == null)
+        {
+            AmmoDisplay = GameObject.FindWithTag("AmmoDisplayer")?.GetComponent<Text>();
+        }
     }
 
     private void Update()
     {
         if (holder != null)
         {
-            if (Input.GetMouseButton(0) && holder.holdingItem != null)
+            var weapon = holder.holdingItem?.GetComponent<GunEntity>();
+            if (weapon != null && weapon.currentAmmo > 0 && weapon == this)
             {
-                var weapon = holder.holdingItem.GetComponent<GunEntity>();
-                if (weapon != null && weapon.currentAmmo > 0 && weapon == this)
-                {
-                    if (shootTimer <= 0f)
-                    {
-                        Shoot();
-                        shootTimer = fireRate;
-                    }
-                }
+                canShoot = true;
+            } else
+            {
+                canShoot = false;
             }
+        } else
+        {
+            canShoot = false;
+        }
+
+        if (Input.GetMouseButton(0) && canShoot)
+        {
+            if (shootTimer <= 0f)
+            {
+                Shoot();
+                shootTimer = fireRate;
+            }             
         }
         if (shootTimer > 0f)
         {
@@ -55,6 +67,7 @@ public class GunEntity : PickableItem
     }
     public void ResetAmmoDisplay()
     {
+        shootingBehavior.OnDrop();
         // Check if AmmoDisplay is assigned
         if (AmmoDisplay != null)
         {
@@ -96,6 +109,8 @@ public class GunEntity : PickableItem
                 case "MP5":
                     return 30;
                 case "Deagle":
+                    return 45;
+                case "Glock":
                     return 45;
                 case "M4":
                     return 30;

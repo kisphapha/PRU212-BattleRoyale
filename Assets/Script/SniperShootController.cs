@@ -1,3 +1,4 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -5,7 +6,35 @@ namespace Assets.Script
 
 {
     public class SniperShootController : ShootingBehavior
-    {     
+    {
+        private CameraController cameraController;
+        public override void Start()
+        {
+            base.Start();
+            cameraController = gameObject.AddComponent<CameraController>();
+        }
+        private void Update()
+        {
+            if (cameraController != null && gunEntity.canShoot)
+            {
+                if (Input.GetMouseButtonDown(1))
+                {
+                    cameraController.setIsZoomingIn(true);
+                }
+
+                if (Input.GetMouseButtonUp(1))
+                {
+                    cameraController.setIsZoomingIn(false);
+                }
+            }         
+        }
+        public override void OnDrop()
+        {
+            if (cameraController != null)
+            {
+                cameraController.setIsZoomingIn(false);
+            }
+        }
         public override void Shoot()
         {
             int randomAngle = Random.Range(0,0);

@@ -7,11 +7,15 @@ public class ShootingBehavior : MonoBehaviour
 {
     public GunEntity gunEntity;
     // Start is called before the first frame update
-    private void Start()
+    public virtual void Start()
     {
         gunEntity = GetComponent<GunEntity>();
     }
     public virtual void Shoot()
+    {
+
+    }
+    public virtual void OnDrop()
     {
 
     }

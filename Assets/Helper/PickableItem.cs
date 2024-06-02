@@ -39,7 +39,7 @@ public class PickableItem : MonoBehaviour
             {
                 var currentSlotItem = inventoryController?.Inventory[i];
                 var pickUpItem = currentSlotItem?.GameObject.GetComponent<PickableItem>();
-                if (pickUpItem != null)
+                if (pickUpItem == this)
                 {
                     inventoryController.InventoryRemove(i);
                 }

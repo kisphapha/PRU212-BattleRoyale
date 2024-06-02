@@ -7,8 +7,8 @@ TagManager:
   - PickUpItems
   - Solid
   - Enermy
-  - Grenade
-  - Healing
+  - FollowCamera
+  - AmmoDisplayer
   layers:
   - Default
   - TransparentFX

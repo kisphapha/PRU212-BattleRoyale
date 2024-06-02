@@ -20,7 +20,7 @@ public class PickupController : MonoBehaviour
 
     void Update()
     {
-        CarryTheGun();
+        CarryTheItem();
 
         // Check for input to drop or switch the weapon
         if (Input.GetKeyDown(KeyCode.G))
@@ -56,21 +56,24 @@ public class PickupController : MonoBehaviour
     }
 
 
-    public void CarryTheGun()
+    public void CarryTheItem()
     {
         if (pickedObject != null)
         {
             var gun = pickedObject.GetComponent<GunEntity>();
+            var deviationAngle = 0;
             if (gun != null)
             {
-                float gunSpriteLength = pickedObject.GetComponent<SpriteRenderer>().sprite.bounds.size.x;
-                float angle = master.GetMouseAngle();
-                Quaternion gunRotation = Quaternion.Euler(0f, 0f, angle - gun.spriteAngle - 90);
-                Quaternion masterRotation = Quaternion.Euler(0f, 0f, angle - 90);
-                Vector3 targetPosition = transform.position + (masterRotation * Vector3.right * gunSpriteLength / 4);
-                pickedObject.transform.position = targetPosition;
-                pickedObject.transform.rotation = gunRotation;
+                deviationAngle = gun.spriteAngle;
             }
+            float itemSpriteLength = pickedObject.GetComponent<SpriteRenderer>().sprite.bounds.size.x 
+                * pickedObject.transform.lossyScale.x;
+            float angle = master.GetMouseAngle();
+            Quaternion itemRotation = Quaternion.Euler(0f, 0f, angle - deviationAngle - 90);
+            Quaternion masterRotation = Quaternion.Euler(0f, 0f, angle - 90);
+            Vector3 targetPosition = transform.position + (masterRotation * Vector3.right * itemSpriteLength/2);
+            pickedObject.transform.position = targetPosition;
+            pickedObject.transform.rotation = itemRotation;
         }
     }
 

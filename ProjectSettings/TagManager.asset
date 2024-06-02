@@ -8,6 +8,7 @@ TagManager:
   - Solid
   - Enermy
   - Grenade
+  - Healing
   layers:
   - Default
   - TransparentFX

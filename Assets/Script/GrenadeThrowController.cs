@@ -4,7 +4,7 @@ namespace Assets.Script
 {
     public class GrenadeThrowController : ThrowingBehavior
     {
-        public override void Throw()
+        public override GameObject Throw()
         {
             int randomAngle = Random.Range(-10, 10);  // Adjust angle spread as needed
             float throwOffset = 4f;  // Adjust throw offset as needed
@@ -16,6 +16,8 @@ namespace Assets.Script
             GameObject grenade = Instantiate(grenadeEntity.grenadePrefab, targetPosition, rotationOfMaster);
             Rigidbody2D grenadeRigidbody = grenade.GetComponent<Rigidbody2D>();
             grenadeRigidbody.velocity = direction * grenadeEntity.grenadeSpeed;
+
+            return grenade;
         }
     }
 }

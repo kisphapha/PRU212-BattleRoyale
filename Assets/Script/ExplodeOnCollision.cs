@@ -5,24 +5,30 @@ using UnityEngine;
 public class ExplodeOnCollision : MonoBehaviour
 {
     public GameObject explosionPrefab;
-    public float explosionRadius = 5.0f;
-    public float explosionForce = 700f;
+    private float explosionRadius;
+    private float explosionForce;
+    private float explosionDuration; // Duration for explosion effect to stay in scene
+    private float explosionDelay;
     public int maxColliders = 10; // Limit the number of colliders processed
-    public float explosionDuration = 0.25f; // Duration for explosion effect to stay in scene
-    public float explosionDelay = 3.0f;
-   private void Start()
+    private void Start()
     {
         // Start the explosion countdown
         StartCoroutine(ExplosionCountdown());
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public void Setup(float explosionRadius, float explosionForce, float explosionDuration, float explosionDelay)
     {
-        if (other.tag == "Solid" || other.tag == "Enermy" || other.tag == "Player")
-        {
-            Explode();
-        }
+        this.explosionRadius = explosionRadius;
+        this.explosionForce = explosionForce;
+        this.explosionDuration = explosionDuration;
+        this.explosionDelay = explosionDelay;
     }
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.tag == "Solid" || other.tag == "Enermy" || other.tag == "Player")
+    //    {
+    //        Explode();
+    //    }
+    //}
 
     private IEnumerator ExplosionCountdown()
     {

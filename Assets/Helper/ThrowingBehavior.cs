@@ -10,6 +10,6 @@ namespace Assets.Script
         {
             grenadeEntity = GetComponent<GrenadeEntity>();
         }
-        public abstract void Throw();
+        public abstract GameObject Throw();
     }
 }

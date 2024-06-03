@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 263729519
-  m_SortingLayer: 1
+  m_SortingLayerID: -326892039
+  m_SortingLayer: -1
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 570eb6b70d4690a4aaf6782004790e1e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holder: {fileID: 0}
+  inventoryController: {fileID: 0}
   Stackable: 0
-  Type: Healer
+  usingCoolDown: 0.5
   healAmount: 30

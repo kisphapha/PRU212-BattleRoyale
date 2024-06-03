@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 263729519
-  m_SortingLayer: 1
+  m_SortingLayerID: -326892039
+  m_SortingLayer: -1
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 4156fc02ba4289e43adc2aadcc9f0470, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -144,6 +144,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa181f511ccf5514cb7d2a98f773a32f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holder: {fileID: 0}
+  inventoryController: {fileID: 0}
+  Stackable: 0
+  usingCoolDown: 0.5
   maxAmmo: 30
   currentAmmo: 12
   reloadTime: 3
@@ -151,8 +155,8 @@ MonoBehaviour:
   bulletSpeed: 30
   spriteAngle: 45
   AmmoDisplay: {fileID: 0}
-  holder: {fileID: 0}
   bullet: {fileID: 2329323580639709198, guid: ca5431323b4170c4391e7e3bc3b9abeb, type: 3}
+  canShoot: 0
 --- !u!114 &549279178153010811
 MonoBehaviour:
   m_ObjectHideFlags: 0

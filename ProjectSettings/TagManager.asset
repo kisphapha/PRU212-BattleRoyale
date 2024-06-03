@@ -4,21 +4,26 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PickUpItems
+  - Barrel
   - Solid
   - Enermy
   - FollowCamera
   - AmmoDisplayer
+  - Box
+  - PickUpItems
+  - Grenade
+  - Enermy
+  - Roof
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Background
+  - 
   - Water
   - UI
-  - Player
   - 
   - 
+  - Collectable
   - 
   - 
   - 
@@ -43,12 +48,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
+  - name: Background
+    uniqueID: 2899893983
     locked: 0
   - name: Player
-    uniqueID: 263729519
+    uniqueID: 3968075257
     locked: 0
-  - name: Background
-    uniqueID: 3549296889
+  - name: Default
+    uniqueID: 0
     locked: 0

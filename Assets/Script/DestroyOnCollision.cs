@@ -14,6 +14,12 @@ public class DestroyOnCollision : MonoBehaviour
                 Debug.Log(rb.velocity.magnitude);
                 playerHealth.TakeDamage(rb.velocity.magnitude);
             }
+            var gernade = GetComponent<GrenadeEntity>();
+            Debug.Log("Gernade in Destroy: " + gernade);
+            if (gernade != null)
+            {
+                gernade.Explode();
+            }
             Destroy(gameObject);
         }
     }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1807865837488204307}
   - component: {fileID: 7162333174335116492}
   - component: {fileID: -1225078845959063666}
+  - component: {fileID: -1864393476424786535}
   m_Layer: 0
   m_Name: Grenade
   m_TagString: PickUpItems
@@ -145,12 +146,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holder: {fileID: 0}
+  inventoryController: {fileID: 0}
   Stackable: 0
-  maxGrenades: 5
-  currentGrenades: 0
+  usingCoolDown: 0.5
   throwRate: 1.5
   grenadeSpeed: 15
+  explosionRadius: 5
+  explosionForce: 700
   grenadePrefab: {fileID: 1492652577327857182, guid: 91ba7e452c471904ab325bede81b7bcd, type: 3}
+  explosionPrefab: {fileID: 5517814556368148150, guid: acbbc2cf99a7027459b3ccc5ec89f2c6, type: 3}
 --- !u!114 &-1225078845959063666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,3 +168,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grenadeEntity: {fileID: 0}
+--- !u!114 &-1864393476424786535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9018847001660928362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1025778fcaf906442acf8fb11d439199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

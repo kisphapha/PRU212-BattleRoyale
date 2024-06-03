@@ -23,4 +23,4 @@ namespace Assets.Script
             }        
         }
     }
-}
+}   

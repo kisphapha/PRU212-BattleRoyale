@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2561947326488515175}
   - component: {fileID: -806782492628149240}
   - component: {fileID: 3335766440103635048}
+  - component: {fileID: -2150177921740265868}
+  - component: {fileID: 677823024842924857}
   m_Layer: 0
   m_Name: GrenadeThrow
   m_TagString: Untagged
@@ -30,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -143,7 +145,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -161,4 +163,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac3a6c43813e044da4db0daa7d32e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyDelay: 5
+  destroyDelay: 10
+--- !u!114 &-2150177921740265868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492652577327857182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1025778fcaf906442acf8fb11d439199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &677823024842924857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492652577327857182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 162993bbae8193e488af72cc2f02cd28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 5517814556368148150, guid: acbbc2cf99a7027459b3ccc5ec89f2c6, type: 3}
+  explosionRadius: 5
+  explosionForce: 700
+  maxColliders: 10
+  explosionDuration: 0.25
+  explosionDelay: 1
+  flyDuration: 1

@@ -25,7 +25,7 @@ public class ArrowMovement : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Roof")
+        if (collision.tag == "Roof" && tag == "Player")
         {
             FadingSprite o = collision.GetComponent<FadingSprite>();
             o.FadeOut();
@@ -33,7 +33,7 @@ public class ArrowMovement : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.tag == "Roof")
+        if(collision.tag == "Roof" && tag == "Player")
         {
            FadingSprite o = collision.GetComponent<FadingSprite>();
             o.FadeIn();

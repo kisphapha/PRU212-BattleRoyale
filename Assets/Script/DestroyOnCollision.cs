@@ -14,6 +14,7 @@ public class DestroyOnCollision : MonoBehaviour
                 Debug.Log(rb.velocity.magnitude);
                 playerHealth.TakeDamage(rb.velocity.magnitude);
             }
+            Destroy(gameObject);
         }
         else if(other.tag == "Box") 
         { 

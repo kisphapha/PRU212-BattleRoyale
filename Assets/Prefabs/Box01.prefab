@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2154260001783460101}
   - component: {fileID: 1203165867661605207}
   - component: {fileID: 6182061484590506255}
+  - component: {fileID: -4072775712546107095}
   m_Layer: 0
   m_Name: Box01
   m_TagString: Box
@@ -145,3 +146,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   particles: {fileID: 0}
+--- !u!50 &-4072775712546107095
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5911797991559755895}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 50
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

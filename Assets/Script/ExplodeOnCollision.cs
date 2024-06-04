@@ -9,7 +9,7 @@ public class ExplodeOnCollision : MonoBehaviour
     private float explosionForce;
     private float explosionDuration; // Duration for explosion effect to stay in scene
     private float explosionDelay;
-    public int maxColliders = 10; // Limit the number of colliders processed
+    //public int maxColliders = 10; // Limit the number of colliders processed
     private void Start()
     {
         // Start the explosion countdown
@@ -57,11 +57,11 @@ public class ExplodeOnCollision : MonoBehaviour
         int processedCount = 0;
         foreach (Collider2D nearbyObject in colliders)
         {
-            if (processedCount >= maxColliders)
-            {
-                Debug.LogWarning("Exceeded max colliders limit. Skipping the rest.");
-                break;
-            }
+            //if (processedCount >= maxColliders)
+            //{
+            //    Debug.LogWarning("Exceeded max colliders limit. Skipping the rest.");
+            //    break;
+            //}
 
             Rigidbody2D rb = nearbyObject.GetComponent<Rigidbody2D>();
             if (rb != null)

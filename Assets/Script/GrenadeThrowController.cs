@@ -7,7 +7,7 @@ namespace Assets.Script
         public override GameObject Throw()
         {
             int randomAngle = Random.Range(-10, 10);  // Adjust angle spread as needed
-            float throwOffset = 4f;  // Adjust throw offset as needed
+            float throwOffset = 2f;  // Adjust throw offset as needed
             Quaternion rotationRandom = Quaternion.Euler(0f, 0f, randomAngle);
             Quaternion rotationOfThrow = Quaternion.Euler(0f, 0f, grenadeEntity.holder.angle - 90);
             Quaternion rotationOfMaster = Quaternion.Euler(0f, 0f, grenadeEntity.holder.angle);

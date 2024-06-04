@@ -151,6 +151,8 @@ MonoBehaviour:
   throwRate: 1.5
   grenadeSpeed: 15
   explosionRadius: 5
+  explosionDuration: 0.25
+  explosionDelay: 3
   explosionForce: 700
   grenadePrefab: {fileID: 1492652577327857182, guid: 91ba7e452c471904ab325bede81b7bcd,
     type: 3}

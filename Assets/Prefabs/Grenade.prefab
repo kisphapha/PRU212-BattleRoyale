@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7162333174335116492}
   - component: {fileID: -1225078845959063666}
   - component: {fileID: -1864393476424786535}
+  - component: {fileID: -4966561902314518001}
   m_Layer: 0
   m_Name: Grenade
   m_TagString: PickUpItems
@@ -180,3 +181,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1025778fcaf906442acf8fb11d439199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &-4966561902314518001
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9018847001660928362}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b86f247a6b7cb4840b5d985694b8b365, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

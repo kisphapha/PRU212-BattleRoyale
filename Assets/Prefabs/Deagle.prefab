@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -2877013218920387447}
   m_Layer: 8
   m_Name: Deagle
-  m_TagString: Untagged
+  m_TagString: PickUpItems
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

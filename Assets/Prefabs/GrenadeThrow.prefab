@@ -123,7 +123,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1492652577327857182}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: de988ab5bf32a284c9bbccb2d4005a61, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -161,9 +161,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162993bbae8193e488af72cc2f02cd28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 3034672169960007723, guid: ae89d257d16a97840b95b8fb2bc87c80, type: 3}
-  explosionRadius: 5
-  explosionForce: 700
-  maxColliders: 10
-  explosionDuration: 0.25
-  explosionDelay: 1
+  explosionPrefab: {fileID: 3034672169960007723, guid: ae89d257d16a97840b95b8fb2bc87c80,
+    type: 3}

@@ -48,6 +48,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
+  explosionPrefab: {fileID: 3034672169960007723, guid: ae89d257d16a97840b95b8fb2bc87c80,
+    type: 3}
+  smokeParticlePrefab: {fileID: 8147614975853303179, guid: 5e40cf96bba202448b5133a7a356291f,
+    type: 3}
+  explosionRadius: 12
+  explosionForce: 700
+  explosionDuration: 1.2
 --- !u!212 &4374600326002386106
 SpriteRenderer:
   m_ObjectHideFlags: 0

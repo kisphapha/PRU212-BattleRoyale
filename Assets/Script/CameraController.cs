@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public CinemachineVirtualCamera virtualCamera;
-    public float zoomOutOrthographicSize = 45f; // The target orthographic size when zoomed out
+    public float zoomOutOrthographicSize = 30f; // The target orthographic size when zoomed out
     public float zoomSpeed = 2f; // The speed at which the camera zooms
 
     private float originalOrthographicSize;

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1807865837488204307}
   - component: {fileID: 7162333174335116492}
   - component: {fileID: -1225078845959063666}
+  - component: {fileID: -4966561902314518001}
   m_Layer: 8
   m_Name: Grenade
   m_TagString: PickUpItems
@@ -150,11 +151,13 @@ MonoBehaviour:
   usingCoolDown: 0.5
   throwRate: 1.5
   grenadeSpeed: 15
-  explosionRadius: 5
+  explosionRadius: 8
   explosionDuration: 1.2
   explosionDelay: 2.5
   explosionForce: 700
   grenadePrefab: {fileID: 1492652577327857182, guid: 91ba7e452c471904ab325bede81b7bcd,
+    type: 3}
+  smokeParticlePrefab: {fileID: 8147614975853303179, guid: 5e40cf96bba202448b5133a7a356291f,
     type: 3}
   explosionPrefab: {fileID: 5517814556368148150, guid: acbbc2cf99a7027459b3ccc5ec89f2c6,
     type: 3}

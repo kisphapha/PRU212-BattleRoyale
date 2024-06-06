@@ -5,6 +5,11 @@ using UnityEngine;
 public class TNTBarrels : MonoBehaviour
 {
     public float hp = 100;
+    public GameObject explosionPrefab;
+    public GameObject smokeParticlePrefab;
+    public float explosionRadius;
+    public float explosionForce;
+    public float explosionDuration; // Duration for explosion effect to stay in scene
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +27,10 @@ public class TNTBarrels : MonoBehaviour
         Debug.Log(hp);
         if (hp <= 0)
         {
-            Destroy(gameObject);
+            var exploder = gameObject.AddComponent<ExplodeOnCollision>();
+            exploder.Setup(explosionRadius, explosionForce,explosionDuration,0.5f);
+            exploder.explosionPrefab = explosionPrefab;
+            exploder.smokeParticlePrefab = smokeParticlePrefab;
         }
     }
 }

@@ -12,6 +12,7 @@ public class GrenadeEntity : PickableItem
     public float explosionForce = 700f;
     //public Text GrenadeDisplay; // Reference to the UI Text element
     public GameObject grenadePrefab;
+    public GameObject smokeParticlePrefab;
     private ThrowingBehavior throwController;
     public GameObject explosionPrefab;
     private void Start()
@@ -38,6 +39,7 @@ public class GrenadeEntity : PickableItem
         if (grenadeThrowing != null)
         {
             grenadeThrowing.Setup(explosionRadius,explosionForce,explosionDuration,explosionDelay);
+            grenadeThrowing.smokeParticlePrefab = smokeParticlePrefab;
         }
     }
 

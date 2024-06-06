@@ -1,10 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplodeOnCollision : MonoBehaviour
 {
     public GameObject explosionPrefab;
+    public GameObject smokeParticlePrefab;
     private float explosionRadius;
     private float explosionForce;
     private float explosionDuration; // Duration for explosion effect to stay in scene
@@ -47,8 +47,10 @@ public class ExplodeOnCollision : MonoBehaviour
             Debug.LogError("Explosion prefab not assigned.");
             return;
         }
-
+        //radius = 8f
         GameObject explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
+        GameObject smoke = Instantiate(smokeParticlePrefab, transform.position, transform.rotation);
+        explosion.transform.localScale = new Vector3(explosionRadius * 2, explosionRadius * 2, explosionRadius * 2);
 
         // Apply explosion force to nearby objects
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
@@ -68,6 +70,24 @@ public class ExplodeOnCollision : MonoBehaviour
             {
                 Vector2 explosionDirection = nearbyObject.transform.position - transform.position;
                 rb.AddForce(explosionDirection.normalized * explosionForce);
+            }
+            PlayerProps player = nearbyObject.GetComponent<PlayerProps>();
+            if (player != null)
+            {
+                float distance = Vector3.Distance(transform.position, nearbyObject.transform.position);
+                player.TakeDamage(500 / Mathf.Max(1, distance));
+            }
+            BreakBoxes box = nearbyObject.GetComponent<BreakBoxes>();
+            if (box != null)
+            {
+                float distance = Vector3.Distance(transform.position, nearbyObject.transform.position);
+                box.TakeDamage(500 / Mathf.Max(1, distance));
+            }
+            TNTBarrels tnt = nearbyObject.GetComponent<TNTBarrels>();
+            if (tnt != null)
+            {
+                float distance = Vector3.Distance(transform.position, nearbyObject.transform.position);
+                tnt.TakeDamage(500 / Mathf.Max(1, distance));
             }
             processedCount++;
         }

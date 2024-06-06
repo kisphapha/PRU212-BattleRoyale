@@ -161,8 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162993bbae8193e488af72cc2f02cd28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 5517814556368148150, guid: acbbc2cf99a7027459b3ccc5ec89f2c6,
-    type: 3}
+  explosionPrefab: {fileID: 3034672169960007723, guid: ae89d257d16a97840b95b8fb2bc87c80, type: 3}
   explosionRadius: 5
   explosionForce: 700
   maxColliders: 10

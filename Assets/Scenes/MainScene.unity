@@ -2794,8 +2794,22 @@ MonoBehaviour:
     type: 3}
   housePrefab: {fileID: 8763752801256221054, guid: b89bdadec49e7784cb9a5363d29f5558,
     type: 3}
-  boxesPrefab: []
-  houseGrid: {fileID: 0}
+  boxesPrefab:
+  - {fileID: 5911797991559755895, guid: 4a5d70a3b02a5ea41a9ab51397dc3f0a, type: 3}
+  - {fileID: 3235861663864513795, guid: 75e51486af6024c45bc7df2a2b218fc2, type: 3}
+  - {fileID: 5233550883219992550, guid: 665e4df3a7f9b2b49b2768c372cafee9, type: 3}
+  gunsPrefab:
+  - {fileID: 8587897360863721779, guid: d8a2520eaa3b63a4391edce37d19b011, type: 3}
+  - {fileID: 4853242329998868259, guid: a7c6cd0fe829cec44ad1e68916e34924, type: 3}
+  - {fileID: 7165919836379820104, guid: 10fb0ce396c2ae148b6057d377e511c2, type: 3}
+  - {fileID: 3453501241808845769, guid: 2830ee6f67ab961488d70fcf3147c9a8, type: 3}
+  - {fileID: 7746408280139996937, guid: bcc394a6d0c227f4095103c94d031d52, type: 3}
+  - {fileID: 8981191990690358037, guid: f481dfb25157e1345b39591ebce4e1d8, type: 3}
+  - {fileID: 1422872020211802964, guid: f2bba322bd38d5b439477b717507ba80, type: 3}
+  utilitesPrefab:
+  - {fileID: 3496646623388927301, guid: 737c4f76b868c2a48a397fd0cc22a2e4, type: 3}
+  - {fileID: 9018847001660928362, guid: 379884fe78bd338449872764048f4519, type: 3}
+  mapBorder: {fileID: 295535883}
 --- !u!1 &1072676977
 GameObject:
   m_ObjectHideFlags: 0

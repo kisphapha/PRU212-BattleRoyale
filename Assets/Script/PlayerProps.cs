@@ -57,4 +57,20 @@ public class PlayerProps : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Roof")
+        {
+            FadingSprite o = collision.GetComponent<FadingSprite>();
+            o.FadeOut();
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Roof")
+        {
+            FadingSprite o = collision.GetComponent<FadingSprite>();
+            o.FadeIn();
+        }
+    }
 }

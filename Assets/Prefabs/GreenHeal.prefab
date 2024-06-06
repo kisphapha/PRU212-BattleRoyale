@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1073121453257577074}
   - component: {fileID: 5766399100070168895}
   - component: {fileID: -8607314258125906105}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GreenHeal
   m_TagString: PickUpItems
   m_Icon: {fileID: 0}

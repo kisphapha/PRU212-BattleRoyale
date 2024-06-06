@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7921819929669738710}
   - component: {fileID: 1634008595496672946}
   - component: {fileID: 1500867313698218242}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: KSG
   m_TagString: PickUpItems
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3928035752960151255}
   - component: {fileID: 5484251779211333542}
   - component: {fileID: 1865449344070505046}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pump
   m_TagString: PickUpItems
   m_Icon: {fileID: 0}

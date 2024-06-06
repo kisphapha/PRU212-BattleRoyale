@@ -23,20 +23,5 @@ public class ArrowMovement : MonoBehaviour
         Vector2 movement = new Vector2(moveX, moveY);
         rb.velocity = movement * moveSpeed;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Roof" && tag == "Player")
-        {
-            FadingSprite o = collision.GetComponent<FadingSprite>();
-            o.FadeOut();
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.tag == "Roof" && tag == "Player")
-        {
-           FadingSprite o = collision.GetComponent<FadingSprite>();
-            o.FadeIn();
-        }
-    }
+   
 }

@@ -107,7 +107,7 @@ public class PickupController : MonoBehaviour
         pickedObject = weapon;
         pickedObject.transform.SetParent(transform); // Make the player character the parent of the picked object
         Debug.Log("Equipped");
-        pickedObject.GetComponent<Collider2D>().enabled = true;
+        pickedObject.GetComponent<Collider2D>().enabled = false;
     }
     public void DestroyItem(GameObject gameObject)
     {

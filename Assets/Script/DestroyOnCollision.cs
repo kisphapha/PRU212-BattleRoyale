@@ -17,7 +17,7 @@ public class DestroyOnCollision : MonoBehaviour
             Destroy(gameObject);
         }
         else if(other.tag == "Box") 
-        { 
+        {
             BreakBoxes boxHealth = other.GetComponent<BreakBoxes>();
             if (boxHealth != null)
             {
@@ -25,7 +25,8 @@ public class DestroyOnCollision : MonoBehaviour
                 boxHealth.TakeDamage(rb.velocity.magnitude);
             }
             Destroy(gameObject);
-        }else if (other.tag == "Barrel")
+        }
+        else if (other.tag == "Barrel")
         {
             TNTBarrels tntHealth = other.GetComponent<TNTBarrels>();
             if (tntHealth != null)

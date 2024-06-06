@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 1807865837488204307}
   - component: {fileID: 7162333174335116492}
   - component: {fileID: -1225078845959063666}
-  - component: {fileID: -4966561902314518001}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Grenade
   m_TagString: PickUpItems
   m_Icon: {fileID: 0}

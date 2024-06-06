@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8685454311464262977}
   - component: {fileID: 2438088987472385015}
   - component: {fileID: 204684528226805296}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Glock
   m_TagString: PickUpItems
   m_Icon: {fileID: 0}

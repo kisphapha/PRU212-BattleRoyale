@@ -12,7 +12,12 @@ GameObject:
   - component: {fileID: 710562926578942328}
   - component: {fileID: 2549715084050441360}
   - component: {fileID: 2290792066592710533}
-  m_Layer: 0
+  - component: {fileID: 1673301543685503927}
+  - component: {fileID: 209332788472472926}
+  - component: {fileID: 3043488166711917143}
+  - component: {fileID: 6166893620252487580}
+  - component: {fileID: 7060424695305655896}
+  m_Layer: 6
   m_Name: SolidWall
   m_TagString: Solid
   m_Icon: {fileID: 0}
@@ -527,6 +532,86 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!114 &1673301543685503927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498423289446318429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa0352a4d56abd42ad2fc69deb72448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 13.974215, y: 4.4305773, z: 4}
+  m_Center: {x: -7.0796003, y: -1.2839512, z: 0}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
+--- !u!114 &209332788472472926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498423289446318429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa0352a4d56abd42ad2fc69deb72448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 13.974216, y: 4.534617, z: 4}
+  m_Center: {x: 10.636839, y: -1.3016808, z: 0}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
+--- !u!114 &3043488166711917143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498423289446318429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa0352a4d56abd42ad2fc69deb72448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 0.79151154, y: 31.498453, z: 4}
+  m_Center: {x: -13.740704, y: 12.249988, z: 0}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
+--- !u!114 &6166893620252487580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498423289446318429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa0352a4d56abd42ad2fc69deb72448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 0.9372215, y: 31.498453, z: 4}
+  m_Center: {x: 17.222624, y: 12.249988, z: 0}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
+--- !u!114 &7060424695305655896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498423289446318429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa0352a4d56abd42ad2fc69deb72448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 31.93523, y: 3.7449417, z: 4}
+  m_Center: {x: 1.676115, y: 26.327942, z: 0}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1763085485145136197
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,6 +2407,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HouseRoof
+      objectReference: {fileID: 0}
+    - target: {fileID: 2377404820181239804, guid: 4ca9604554bc54f608984cba5088222e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2377404820181239804, guid: 4ca9604554bc54f608984cba5088222e,
         type: 3}

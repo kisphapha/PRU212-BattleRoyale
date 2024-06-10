@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2319804269929415084}
   - component: {fileID: 2510937760008179584}
   - component: {fileID: 2021218495466975195}
-  m_Layer: 0
+  - component: {fileID: -1064125248916294702}
+  m_Layer: 6
   m_Name: spr_tree
   m_TagString: Solid
   m_Icon: {fileID: 0}
@@ -120,3 +121,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &-1064125248916294702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811585887272614969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa0352a4d56abd42ad2fc69deb72448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 1.8250469, y: 1.5422958, z: 4}
+  m_Center: {x: -0.007201493, y: -0.056091726, z: 0}
+  m_Area: 1
+  m_AffectedAgents: ffffffff

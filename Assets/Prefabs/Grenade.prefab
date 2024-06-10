@@ -150,7 +150,7 @@ MonoBehaviour:
   Stackable: 0
   usingCoolDown: 0.5
   throwRate: 1.5
-  grenadeSpeed: 15
+  grenadeSpeed: 10
   explosionRadius: 8
   explosionDuration: 1.2
   explosionDelay: 2.5

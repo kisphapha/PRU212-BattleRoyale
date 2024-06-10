@@ -1,3 +1,4 @@
+using NavMeshPlus.Components;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,25 +13,26 @@ public class TerrianGenerator : MonoBehaviour
     public int roomHeight = 96;
     public GameObject treePrefab;
     public GameObject housePrefab;
+    public GameObject playerAI;
     public List<GameObject> boxesPrefab;
     public List<GameObject> gunsPrefab;
     public List<GameObject> utilitesPrefab;
     public GameObject mapBorder;
     private int numberOfTree;
+    private int numberOfAIPlayer;
     private int numberOfHouse;
     private int numberOfBoxes;
     private int numberOfGuns;
     private int numberOfUtilities;
-    private TilemapCollider2D mapBorderCollider;
     void Start()
     {
         var r = new System.Random();
         numberOfTree = r.Next(10,20);
+        numberOfAIPlayer = 1;// r.Next(10,20);
         numberOfHouse = 3;// r.Next(3,5);
         numberOfBoxes = r.Next(30,40);
         numberOfGuns = r.Next(15,25);
         numberOfUtilities = r.Next(15,25);
-        mapBorderCollider = mapBorder.GetComponent<TilemapCollider2D>();
 
         Generate();
     }
@@ -102,5 +104,15 @@ public class TerrianGenerator : MonoBehaviour
             var util = Instantiate(utilityPrefab, position, Quaternion.Euler(0, 0, r.Next(360)));
             util.name = utilityPrefab.name;
         }
+        //Generate AI enemies
+        for (var i = 0; i < numberOfAIPlayer; i++)
+        {
+            var position = new Vector3(transform.position.x + r.Next(roomWidth), transform.position.y + r.Next(roomHeight), 0);
+            var enemy = Instantiate(playerAI, position, Quaternion.Euler(0, 0, r.Next(360)));
+            enemy.name = "Enemy " + i;
+        }
+
+        var navMeshSurface = GameObject.Find("NavMesh").GetComponent<NavMeshSurface>();
+        navMeshSurface.BuildNavMesh();
     }
 }

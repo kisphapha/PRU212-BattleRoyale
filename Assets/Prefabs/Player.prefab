@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 6994480327040062522}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,7 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b12cb1b50e374e42a93793a27e8c155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Inventory: []
   currentItem: {fileID: 0}
   master: {fileID: 0}
   maxSlot: 3
@@ -160,10 +159,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a6fe4dfa8b94e64795f558e4d68dd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   inventorySlot1: {fileID: 0}
   inventorySlot2: {fileID: 0}
   inventorySlot3: {fileID: 0}
+  inventorySlotFrame1: {fileID: 0}
+  inventorySlotFrame2: {fileID: 0}
+  inventorySlotFrame3: {fileID: 0}
+  inventorySlotAmount1: {fileID: 0}
+  inventorySlotAmount2: {fileID: 0}
+  inventorySlotAmount3: {fileID: 0}
 --- !u!114 &4644789388448763775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,9 +195,10 @@ MonoBehaviour:
   characterName: 
   hp: 100
   isHeldingGun: 0
+  isHoldingGrenade: 0
   angle: 0
   offsetDistance: 1.75
-  weapon: {fileID: 0}
+  holdingItem: {fileID: 0}
   inventoryController: {fileID: 0}
 --- !u!58 &6994480327040062522
 CircleCollider2D:

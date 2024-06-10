@@ -151,8 +151,8 @@ MonoBehaviour:
   maxAmmo: 30
   currentAmmo: 12
   reloadTime: 3
-  fireRate: 0.25
-  bulletSpeed: 30
+  fireRate: 1
+  bulletSpeed: 45
   spriteAngle: 45
   AmmoDisplay: {fileID: 0}
   bullet: {fileID: 2329323580639709198, guid: ca5431323b4170c4391e7e3bc3b9abeb, type: 3}

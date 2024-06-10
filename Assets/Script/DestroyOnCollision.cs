@@ -11,8 +11,12 @@ public class DestroyOnCollision : MonoBehaviour
             PlayerProps playerHealth = other.GetComponent<PlayerProps>();
             if (playerHealth != null)
             {
-                Debug.Log(rb.velocity.magnitude);
                 playerHealth.TakeDamage(rb.velocity.magnitude);
+            }
+            PlayerAIProps enemyHealth = other.GetComponent<PlayerAIProps>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(rb.velocity.magnitude);
             }
             Destroy(gameObject);
         }

@@ -64,7 +64,7 @@ public class ExplodeOnCollision : MonoBehaviour
             //    Debug.LogWarning("Exceeded max colliders limit. Skipping the rest.");
             //    break;
             //}
-
+            float distance = Vector3.Distance(transform.position, nearbyObject.transform.position);
             Rigidbody2D rb = nearbyObject.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
@@ -74,19 +74,31 @@ public class ExplodeOnCollision : MonoBehaviour
             PlayerProps player = nearbyObject.GetComponent<PlayerProps>();
             if (player != null)
             {
-                float distance = Vector3.Distance(transform.position, nearbyObject.transform.position);
                 player.TakeDamage(500 / Mathf.Max(1, distance));
+                var movement = nearbyObject.GetComponent<ArrowMovement>();
+                if (movement != null)
+                {
+                    movement.Stunned(2);
+                }
+            }
+            PlayerAIProps playerAI = nearbyObject.GetComponent<PlayerAIProps>();
+            if (playerAI != null)
+            {
+                playerAI.TakeDamage(500 / Mathf.Max(1, distance));
+                var movement = nearbyObject.GetComponent<AIChase>();
+                if (movement != null)
+                {
+                    movement.Stunned(2);
+                }
             }
             BreakBoxes box = nearbyObject.GetComponent<BreakBoxes>();
             if (box != null)
             {
-                float distance = Vector3.Distance(transform.position, nearbyObject.transform.position);
                 box.TakeDamage(500 / Mathf.Max(1, distance));
             }
             TNTBarrels tnt = nearbyObject.GetComponent<TNTBarrels>();
             if (tnt != null)
             {
-                float distance = Vector3.Distance(transform.position, nearbyObject.transform.position);
                 tnt.TakeDamage(500 / Mathf.Max(1, distance));
             }
             processedCount++;

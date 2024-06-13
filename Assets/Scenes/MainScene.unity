@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239f507211f6f514281e6029e86f89c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetCircleTransform: {fileID: 0}
+  targetCircleTransform: {fileID: 1729142287}
 --- !u!1 &285054808
 GameObject:
   m_ObjectHideFlags: 0
@@ -4495,7 +4495,7 @@ GameObject:
   - component: {fileID: 2139152030}
   m_Layer: 0
   m_Name: BackgroundImage
-  m_TagString: Untagged
+  m_TagString: BackGroundMapTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

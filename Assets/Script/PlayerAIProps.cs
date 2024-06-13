@@ -9,6 +9,7 @@ public class PlayerAIProps : MonoBehaviour
     public float offsetDistance = 1.75f; // Constant distance between the player and the picked object
     public GameObject holdingItem;
 
+    private float checkBorderTimer;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,18 +20,17 @@ public class PlayerAIProps : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotateWithMouse();
+        checkBorderTimer += Time.deltaTime;
+        if (checkBorderTimer >= 1.5f)
+        {
+            if (DamageCircle.IsOutsideCircle_Static(gameObject.transform.position))
+            {
+                TakeDamage(10);
+            }
+            checkBorderTimer = 0f;
+        }
     }
 
-    private void RotateWithMouse()
-    {
-
-    }
-    /// <summary>
-    /// Get the angle in degree between mouse position and the object.
-    /// The 0 degree is count from the bottom (south) direction and increase counterclockwise.
-    /// </summary>
-    /// <returns></returns>
     public void TakeDamage(float amount)
     {
         hp -= amount;

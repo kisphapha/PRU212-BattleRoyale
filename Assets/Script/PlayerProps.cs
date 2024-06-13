@@ -13,6 +13,8 @@ public class PlayerProps : MonoBehaviour
     public GameObject holdingItem;
     public InventoryController inventoryController;
 
+    private float checkBorderTimer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,15 @@ public class PlayerProps : MonoBehaviour
     void Update()
     {
         RotateWithMouse();
+        checkBorderTimer += Time.deltaTime;
+        if (checkBorderTimer >= 1.5f)
+        {
+            if (DamageCircle.IsOutsideCircle_Static(gameObject.transform.position))
+            {
+                TakeDamage(10);
+            }
+            checkBorderTimer = 0f;
+        }
     }
 
     private void RotateWithMouse()
@@ -34,6 +45,7 @@ public class PlayerProps : MonoBehaviour
         angle = GetMouseAngle();
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
+
     /// <summary>
     /// Get the angle in degree between mouse position and the object.
     /// The 0 degree is count from the bottom (south) direction and increase counterclockwise.

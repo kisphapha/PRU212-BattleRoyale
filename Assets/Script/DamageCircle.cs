@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DamageCircle : MonoBehaviour
 {
-
     private static DamageCircle instance;
 
     [SerializeField] private Transform targetCircleTransform;
@@ -13,8 +15,12 @@ public class DamageCircle : MonoBehaviour
     private Transform leftTransform;
     private Transform rightTransform;
 
-    private float circleShrinkSpeed;
+    public float circleShrinkSpeed = 20f;
+    public float roomSize = 146f;
+    public float shrinkTimeBetween = 30f;
+    public float startAfter = 30f;
     private float shrinkTimer;
+    private bool isStarted = false;
 
     private Vector3 circleSize;
     private Vector3 circlePosition;
@@ -25,9 +31,6 @@ public class DamageCircle : MonoBehaviour
     private void Awake()
     {
         instance = this;
-
-        circleShrinkSpeed = 20f;
-
         circleTransform = transform.Find("circle");
         topTransform = transform.Find("top");
         bottomTransform = transform.Find("bottom");
@@ -35,15 +38,16 @@ public class DamageCircle : MonoBehaviour
         rightTransform = transform.Find("right");
         GameObject backGround = GameObject.FindGameObjectWithTag("BackGroundMapTag");
         Vector3 targetPosition = new Vector3(backGround.transform.position.x, backGround.transform.position.y);
-        SetTargetCircle(targetPosition, new Vector3(160, 160), 5f);
-        SetCircleSize(targetPosition, new Vector3(200, 200));
+        SetCircleSize(targetPosition, new Vector3(roomSize, roomSize));
+        SetTargetCircle(targetPosition, new Vector3(roomSize, roomSize), 0f);
+        StartAfter(startAfter);
     }
-
+    
     private void Update()
     {
         shrinkTimer -= Time.deltaTime;
 
-        if (shrinkTimer < 0)
+        if (shrinkTimer < 0 && isStarted)
         {
             Vector3 sizeChangeVector = (targetCircleSize - circleSize).normalized;
             Vector3 newCircleSize = circleSize + sizeChangeVector * Time.deltaTime * circleShrinkSpeed;
@@ -60,7 +64,16 @@ public class DamageCircle : MonoBehaviour
             }
         }
     }
+    private void StartAfter(float duration)
+    {
+        StartCoroutine(StartShrinking(duration));
+    }
 
+    private IEnumerator StartShrinking(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isStarted = true;
+    }
     private void GenerateTargetCircle()
     {
         float shrinkSizeAmount = Random.Range(3f, 12f);
@@ -76,7 +89,7 @@ public class DamageCircle : MonoBehaviour
         Vector3 generatedTargetCirclePosition = circlePosition +
             new Vector3(Random.Range(-maxOffsetX, maxOffsetX), Random.Range(-maxOffsetY, maxOffsetY));
 
-        float shrinkTime = Random.Range(1f, 6f);
+        float shrinkTime = shrinkTimeBetween;
 
         SetTargetCircle(generatedTargetCirclePosition, generatedTargetCircleSize, shrinkTime);
     }

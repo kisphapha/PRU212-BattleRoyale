@@ -10,6 +10,9 @@ public class TNTBarrels : MonoBehaviour
     public float explosionRadius;
     public float explosionForce;
     public float explosionDuration; // Duration for explosion effect to stay in scene
+
+    private float checkBorderTimer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +22,15 @@ public class TNTBarrels : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        checkBorderTimer += Time.deltaTime;
+        if (checkBorderTimer >= 1.5f)
+        {
+            if (DamageCircle.IsOutsideCircle_Static(gameObject.transform.position))
+            {
+                TakeDamage(10);
+            }
+            checkBorderTimer = 0f;
+        }
     }
     public void TakeDamage(float amount)
     {

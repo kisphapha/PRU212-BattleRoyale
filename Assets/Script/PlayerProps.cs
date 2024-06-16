@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerProps : MonoBehaviour
 {
     public string characterName; // Name property
@@ -10,9 +8,12 @@ public class PlayerProps : MonoBehaviour
     public bool isHoldingGrenade = false;
     public float angle = 0f;
     public float offsetDistance = 1.75f; // Constant distance between the player and the picked object
+
+    private bool isDead;
     public GameObject holdingItem;
     public InventoryController inventoryController;
-
+    public GameOver gameOverManager;
+    public Image healthBar;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,9 +53,11 @@ public class PlayerProps : MonoBehaviour
     {
         hp -= amount;
         Debug.Log(hp);
-        if (hp <= 0)
+        if (hp <= 0 && !isDead)
         {
+            isDead = true;
             Destroy(gameObject);
+            gameOverManager.gameOver();
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

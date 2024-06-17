@@ -18,8 +18,12 @@ public class PlayerProps : MonoBehaviour
     void Start()
     {
         var persistentData = FindObjectOfType<PersistentData>();
-        characterName = persistentData.playerName;
+        if (persistentData != null)
+        {
+            characterName = persistentData.playerName;
+        }
         inventoryController = GetComponent<InventoryController>();
+        gameOverManager = GetComponent<GameOver>();
         Debug.Log(characterName);
 
     }
@@ -56,8 +60,8 @@ public class PlayerProps : MonoBehaviour
         if (hp <= 0 && !isDead)
         {
             isDead = true;
-            Destroy(gameObject);
             gameOverManager.gameOver();
+            Destroy(gameObject);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

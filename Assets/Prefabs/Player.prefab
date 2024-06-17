@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -8116221040782375751}
   - component: {fileID: -4079546713022415837}
   - component: {fileID: 4644789388448763775}
+  - component: {fileID: -8991059899500704119}
   - component: {fileID: -6323808391552475640}
   - component: {fileID: 6994480327040062522}
   m_Layer: 0
@@ -180,6 +181,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919e711c10d257c4e83e7b56581f605d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8991059899500704119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2772031318629303491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e12fb6c1a8c2934e82bd5a30240f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverUI: {fileID: 0}
 --- !u!114 &-6323808391552475640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +214,8 @@ MonoBehaviour:
   offsetDistance: 1.75
   holdingItem: {fileID: 0}
   inventoryController: {fileID: 0}
+  gameOverManager: {fileID: 0}
+  healthBar: {fileID: 0}
 --- !u!58 &6994480327040062522
 CircleCollider2D:
   m_ObjectHideFlags: 0

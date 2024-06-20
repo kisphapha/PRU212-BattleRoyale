@@ -3905,7 +3905,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 7398, y: 3420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &866798878
@@ -5810,6 +5810,26 @@ PrefabInstance:
       propertyPath: characterName
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4795478274118478100, guid: 997909053a98dfd44a0f2c54993824e1,
+        type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 5126840154654832434, guid: 997909053a98dfd44a0f2c54993824e1,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5126840154654832434, guid: 997909053a98dfd44a0f2c54993824e1,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7440093758329015394, guid: 997909053a98dfd44a0f2c54993824e1,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9211227580573474114, guid: 997909053a98dfd44a0f2c54993824e1,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -5843,17 +5863,17 @@ PrefabInstance:
     - target: {fileID: 9211227580573474114, guid: 997909053a98dfd44a0f2c54993824e1,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9211227580573474114, guid: 997909053a98dfd44a0f2c54993824e1,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9211227580573474114, guid: 997909053a98dfd44a0f2c54993824e1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9211227580573474114, guid: 997909053a98dfd44a0f2c54993824e1,
         type: 3}

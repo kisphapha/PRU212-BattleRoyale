@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class PickupController : MonoBehaviour
 {
-    private GameObject pickedObject; // Reference to the currently picked object
     private PlayerProps master;
-    private HealingItem pickedUpHealingItem; // Reference to the currently picked up healing item
 
     // List to store available weapons
     private List<GameObject> availableWeapons = new List<GameObject>();
@@ -58,22 +56,23 @@ public class PickupController : MonoBehaviour
 
     public void CarryTheItem()
     {
-        if (pickedObject != null)
+        var item = inventoryController.Inventory[inventoryController.currentSlot - 1];
+        if (item != null)
         {
-            var gun = pickedObject.GetComponent<GunEntity>();
+            var gun = item.GameObject.GetComponent<GunEntity>();
             var deviationAngle = 0;
             if (gun != null)
             {
                 deviationAngle = gun.spriteAngle;
             }
-            float itemSpriteLength = pickedObject.GetComponent<SpriteRenderer>().sprite.bounds.size.x 
-                * pickedObject.transform.lossyScale.x;
-            float angle = master.GetMouseAngle();
+            float itemSpriteLength = item.GameObject.GetComponent<SpriteRenderer>().sprite.bounds.size.x 
+                * item.GameObject.transform.lossyScale.x;
+            float angle = master.angle;
             Quaternion itemRotation = Quaternion.Euler(0f, 0f, angle - deviationAngle - 90);
             Quaternion masterRotation = Quaternion.Euler(0f, 0f, angle - 90);
             Vector3 targetPosition = transform.position + (masterRotation * Vector3.right * itemSpriteLength/2);
-            pickedObject.transform.position = targetPosition;
-            pickedObject.transform.rotation = itemRotation;
+            item.GameObject.transform.position = targetPosition;
+            item.GameObject.transform.rotation = itemRotation;
         }
     }
 
@@ -104,10 +103,8 @@ public class PickupController : MonoBehaviour
 
     public void EquipWeapon(GameObject weapon)
     {
-        pickedObject = weapon;
-        pickedObject.transform.SetParent(transform); // Make the player character the parent of the picked object
-        Debug.Log("Equipped");
-        pickedObject.GetComponent<Collider2D>().enabled = false;
+        weapon.transform.SetParent(transform); // Make the player character the parent of the picked object
+        weapon.GetComponent<Collider2D>().enabled = false;
     }
     public void DestroyItem(GameObject gameObject)
     {
@@ -136,7 +133,6 @@ public class PickupController : MonoBehaviour
                 item.GameObject.transform.SetParent(null); // Remove the player character as the parent of the picked object
                 Debug.Log("Dropped");
                 item.GameObject.GetComponent<Collider2D>().enabled = true;
-                pickedObject = null;
                 master.isHeldingGun = false;
                 var cuurentItem = master.holdingItem?.GetComponent<PickableItem>();
                 if (master.holdingItem != null)

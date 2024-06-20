@@ -3,20 +3,21 @@ using UnityEngine.UI;
 public class PlayerProps : MonoBehaviour
 {
     public string characterName; // Name property
-    public float hp = 100; // HP property
+    public float hp, hpMax = 100; // HP property
     public bool isHeldingGun = false;
     public bool isHoldingGrenade = false;
     public float angle = 0f;
     public float offsetDistance = 1.75f; // Constant distance between the player and the picked object
-
-    private bool isDead;
     public GameObject holdingItem;
     public InventoryController inventoryController;
-
-    private float checkBorderTimer;
+    public ArrowMovement mover;
 
     public GameOver gameOverManager;
-    public Image healthBar;
+
+    private float checkBorderTimer;
+    private bool isDead;
+    private FloatingHealthBar floatingHealthBar;
+    private FloatingName floatingName;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,14 +28,15 @@ public class PlayerProps : MonoBehaviour
         }
         inventoryController = GetComponent<InventoryController>();
         gameOverManager = GetComponent<GameOver>();
-        Debug.Log(characterName);
-
+        floatingHealthBar = GetComponentInChildren<FloatingHealthBar>();
+        floatingName = GetComponentInChildren<FloatingName>();
+        mover = GetComponentInChildren<ArrowMovement>();
+        floatingName.UpdateName(characterName);
     }
 
     // Update is called once per frame
     void Update()
     {
-        RotateWithMouse();
         checkBorderTimer += Time.deltaTime;
         if (checkBorderTimer >= 1.5f)
         {
@@ -46,30 +48,14 @@ public class PlayerProps : MonoBehaviour
         }
     }
 
-    private void RotateWithMouse()
-    {
-        angle = GetMouseAngle();
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-    }
-
-    /// <summary>
-    /// Get the angle in degree between mouse position and the object.
-    /// The 0 degree is count from the bottom (south) direction and increase counterclockwise.
-    /// </summary>
-    /// <returns></returns>
-    public float GetMouseAngle()
-    {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = transform.position.z; // Assuming the object and mouse are in the same 2D plane
-        // Calculate the direction from the object to the mouse position
-        Vector3 direction = mousePosition - transform.position;
-        // Calculate the angle in degrees
-        return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90;
-    }
     public void TakeDamage(float amount)
     {
         hp -= amount;
-        Debug.Log(hp);
+        if (hp > hpMax)
+        {
+            hp = hpMax;
+        }
+        floatingHealthBar.UpdateHealthBar(hp, hpMax);
         if (hp <= 0 && !isDead)
         {
             isDead = true;

@@ -8,14 +8,20 @@ public class ArrowMovement : MonoBehaviour
     private bool stunned = false;
 
     private Rigidbody2D rb;
+    private GameObject parent;
+    private PlayerProps player;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        parent = transform.parent.gameObject;
+        player = parent.GetComponent<PlayerProps>();
+        rb = parent.GetComponent<Rigidbody2D>();
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     private void Update()
     {
+        RotateWithMouse();
         if (!stunned)
         {
             float moveX = Input.GetAxisRaw("Horizontal");
@@ -26,6 +32,13 @@ public class ArrowMovement : MonoBehaviour
         }
     }
 
+    private void RotateWithMouse()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var direction = mousePosition - transform.position;
+        player.angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90;
+        transform.rotation = Quaternion.Euler(Vector3.forward * player.angle);
+    }
     public void Stunned(float duration)
     {
         StartCoroutine(StunnedCoroutine(duration));

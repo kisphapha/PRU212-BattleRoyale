@@ -75,7 +75,7 @@ public class ExplodeOnCollision : MonoBehaviour
             if (player != null)
             {
                 player.TakeDamage(500 / Mathf.Max(1, distance));
-                var movement = nearbyObject.GetComponent<ArrowMovement>();
+                var movement = nearbyObject.GetComponentInChildren<ArrowMovement>();
                 if (movement != null)
                 {
                     movement.Stunned(2);

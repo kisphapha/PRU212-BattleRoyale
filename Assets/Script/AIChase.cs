@@ -11,7 +11,6 @@ public class AIChase : MonoBehaviour
     //public LayerMask obstacleLayer; // Layer mask to specify which objects are considered obstacles
     private GameObject target;
     private bool stunned;
-    private float distance;
     Vector2 direction;
     NavMeshAgent agent;
 
@@ -23,10 +22,12 @@ public class AIChase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //parent = transform.parent.gameObject;
         agent = GetComponent<NavMeshAgent>();
         agent.updateUpAxis = false;
         agent.updateRotation = false;
         rb = GetComponent<Rigidbody2D>();
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     // Update is called once per frame
@@ -47,7 +48,7 @@ public class AIChase : MonoBehaviour
             agent.SetDestination(target.transform.position);
             direction = target.transform.position - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+            transform.rotation = Quaternion.Euler(Vector3.forward * angle * -1);
             //distance = Vector2.Distance(transform.position, target.transform.position);
             //
             //direction.Normalize();

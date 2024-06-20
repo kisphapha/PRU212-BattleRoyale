@@ -48,7 +48,7 @@ public class AIChase : MonoBehaviour
             agent.SetDestination(target.transform.position);
             direction = target.transform.position - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(Vector3.forward * angle * -1);
+            transform.rotation = Quaternion.Euler(Vector3.forward * angle) * Quaternion.Euler(0f,0f,180f);
             //distance = Vector2.Distance(transform.position, target.transform.position);
             //
             //direction.Normalize();

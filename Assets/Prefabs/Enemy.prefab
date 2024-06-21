@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 7111646394615899384}
   - component: {fileID: 8554147908883114527}
   - component: {fileID: -1083250592106666341}
+  - component: {fileID: 7295256347342570428}
   - component: {fileID: 5988469429509835542}
+  - component: {fileID: 8022761580993504867}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Player
@@ -181,6 +183,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7295256347342570428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6448517485007375906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d157a92b252f90c4aaf68babaf04da6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickUp: {fileID: 0}
+  detectionRadius: 1
+  speed: 1
 --- !u!195 &5988469429509835542
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -203,3 +220,15 @@ NavMeshAgent:
   m_BaseOffset: 1.945
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8022761580993504867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6448517485007375906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3b07b0f96cf140429789d2aeadd2588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -5,6 +5,8 @@ using UnityEngine;
 public class AIPIckUp : MonoBehaviour
 {
     public GameObject pickUp;
+    public CustomTrigger triggerPickUp;
+    public CustomTrigger triggerPlayer;
     private GameObject pickedObject; // Reference to the currently picked object
     private PlayerAIProps master;
     private HealingItem pickedUpHealingItem; // Reference to the currently picked up healing item
@@ -20,6 +22,7 @@ public class AIPIckUp : MonoBehaviour
     public float speed = 1f;
     bool active = false;
     public int count = 3;
+
     void Start()
     {
         inventoryController = GetComponent<InventoryController>();
@@ -41,12 +44,25 @@ public class AIPIckUp : MonoBehaviour
             transform.rotation = Quaternion.Euler(Vector3.forward * angle);
         }
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void Awake()
+    {
+        triggerPickUp.onTriggerEnter += OnTriggerPickUP;
+
+        triggerPlayer.onTriggerEnter += OnTrigger2D;
+        triggerPlayer.onTriggerExit += OnTriggerOut2D;
+    }
+    private void OnTriggerPickUP(Collider2D other)
+    {
+        if (other.CompareTag("PickUpItems"))
+        {
+            pickUp = other.gameObject;
+        }
+    }
+    private void OnTrigger2D(Collider2D other)
     {
         // Check if the colliding object is a weapon
         if (other.CompareTag("PickUpItems"))
         {
-            count--;
             // Add the weapon to the list of available weapons
             availableWeapons.Add(other.gameObject);
 
@@ -58,12 +74,11 @@ public class AIPIckUp : MonoBehaviour
             other.gameObject.tag = "Untagged";
             //this.enabled = false;
         }
-
     }
 
 
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerOut2D(Collider2D other)
     {
         // Check if the exiting object is a weapon
         if (other.CompareTag("PickUpItems"))
@@ -99,6 +114,8 @@ public class AIPIckUp : MonoBehaviour
     }
     public void EquipWeapon(GameObject weapon)
     {
+
+        count--;
         pickedObject = weapon;
         pickedObject.transform.SetParent(transform); // Make the player character the parent of the picked object
         Debug.Log("Equipped");

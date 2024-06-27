@@ -85,7 +85,7 @@ public class ExplodeOnCollision : MonoBehaviour
             if (playerAI != null)
             {
                 playerAI.TakeDamage(500 / Mathf.Max(1, distance));
-                var movement = nearbyObject.GetComponent<AIChase>();
+                var movement = nearbyObject.GetComponent<AIBehavior>();
                 if (movement != null)
                 {
                     movement.Stunned(2);

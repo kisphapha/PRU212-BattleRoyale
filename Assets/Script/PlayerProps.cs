@@ -3,7 +3,7 @@ using UnityEngine.UI;
 public class PlayerProps : MonoBehaviour
 {
     public string characterName; // Name property
-    public float hp, hpMax = 100; // HP property
+    public float hp = 100, hpMax = 100; // HP property
     public bool isHeldingGun = false;
     public bool isHoldingGrenade = false;
     public float angle = 0f;

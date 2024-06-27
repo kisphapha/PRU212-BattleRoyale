@@ -28,7 +28,7 @@ public class TerrianGenerator : MonoBehaviour
     {
         var r = new System.Random();
         numberOfTree = r.Next(10,20);
-        numberOfAIPlayer = 1;// r.Next(10,20);
+        numberOfAIPlayer = 5;//r.Next(1,1);
         numberOfHouse = 3;// r.Next(3,5);
         numberOfBoxes = r.Next(30,40);
         numberOfGuns = r.Next(15,25);

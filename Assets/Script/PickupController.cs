@@ -14,6 +14,7 @@ public class PickupController : MonoBehaviour
     {
         inventoryController = GetComponent<InventoryController>();
         master = GetComponent<PlayerProps>();
+        
     }
 
     void Update()

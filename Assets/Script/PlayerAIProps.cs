@@ -1,14 +1,13 @@
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAIProps : MonoBehaviour
 {
     public string characterName; // Name property
-    public float hp, hpMax = 100; // HP property
+    public float hp = 100, hpMax = 100; // HP property
     public float offsetDistance = 1.75f; // Constant distance between the player and the picked object
     public GameObject holdingItem;
+    [HideInInspector] public int gunNumber = 0 ;
+    [HideInInspector] public int otherItemNumber = 0;
 
     private FloatingHealthBar floatingHealthBar;
     private FloatingName floatingName;
@@ -17,7 +16,7 @@ public class PlayerAIProps : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        characterName = "Random Bullshit";
+        characterName = gameObject.name;
         floatingHealthBar = GetComponentInChildren<FloatingHealthBar>();
         floatingName = GetComponentInChildren<FloatingName>();
         floatingName.UpdateName(characterName);

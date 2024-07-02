@@ -33,30 +33,7 @@ public class AIPickUp : MonoBehaviour
     void Update()
     {
         CarryTheItem();
-        //distance = Vector2.Distance(transform.position, pickUp.transform.position);
-        //Vector2 direction = pickUp.transform.position - transform.position;
-        //direction.Normalize();
-        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        //if (!active)
-        //{
-        //    transform.position = Vector2.MoveTowards(transform.position, pickUp.transform.position, speed * Time.deltaTime);
-        //    transform.rotation = Quaternion.Euler(Vector3.forward * angle);
-        //}
     }
-    private void Awake()
-    {
-        //triggerPickUp.onTriggerEnter += OnTriggerPickUP;
-
-        //triggerPlayer.onTriggerEnter += OnTrigger2D;
-        //triggerPlayer.onTriggerExit += OnTriggerOut2D;
-    }
-    //private void OnTriggerPickUP(Collider2D other)
-    //{
-    //    if (other.CompareTag("PickUpItems"))
-    //    {
-    //        pickUp = other.gameObject;
-    //    }
-    //}
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Check if the colliding object is a weapon

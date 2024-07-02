@@ -15,11 +15,15 @@ public class HealingItem : PickableItem
 
     public void UseHealingItem()
     {
-
         // Apply healing
-        holder.TakeDamage(-healAmount); // Use negative damage to heal
-        Debug.Log($"{name} healed {holder.hp} HP");
-        //Destroy(gameObject); // Optionally destroy the item after use
+        if (holderAI != null)
+        {
+            holderAI.TakeDamage(-healAmount);
+
+        } else if (holder != null)
+        {
+            holder.TakeDamage(-healAmount);
+        }
     }
 
 }

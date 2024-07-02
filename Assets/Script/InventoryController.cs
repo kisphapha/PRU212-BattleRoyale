@@ -152,7 +152,7 @@ public class InventoryController : MonoBehaviour
         }
         return status;
     }
-    public bool InventoryRemove(int slot)
+    public bool InventoryRemove(int slot, bool isUse = false)
     {
         if (Inventory[slot] != null)
         {
@@ -161,6 +161,12 @@ public class InventoryController : MonoBehaviour
                 Inventory[slot].Amount--;
             } else
             {
+                if (isUse)
+                {
+                    var item = Inventory[slot];
+                    Destroy(item.GameObject);
+                }
+
                 Inventory[slot] = null;
             }
             inventoryDrawer.UpdateInventoryDisplay();

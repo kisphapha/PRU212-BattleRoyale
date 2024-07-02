@@ -105,7 +105,12 @@ public class AIInventory : MonoBehaviour
             {
                 currentItem = item;
             }
-           
+            var pickItem = item.GetComponent<PickableItem>();
+            if (pickItem != null)
+            {
+                pickItem.holderAI = master;
+                pickItem.inventoryControllerAI = this;
+            }
         }
         else
         {
@@ -137,7 +142,7 @@ public class AIInventory : MonoBehaviour
             }
         }
     }
-    public bool InventoryRemove(int slot)
+    public bool InventoryRemove(int slot, bool isUse = false)
     {
         if (Inventory[slot] != null)
         {
@@ -148,6 +153,10 @@ public class AIInventory : MonoBehaviour
             }
             else
             {
+                if (isUse)
+                {
+                    Destroy(item.GameObject);
+                }
                 Inventory[slot] = null;
             }
             checkItemType(item.GameObject, true);
@@ -160,7 +169,12 @@ public class AIInventory : MonoBehaviour
             return false;
         }
     }
-    public bool SwitchToWeapon()
+    public void SwitchTo(int slot)
+    {
+        currentSlot = slot;
+        handleSlotChange();
+    }
+    public int FindWeaponSlot()
     {
         for (var i = 0; i < maxSlot; i++)
         {
@@ -169,12 +183,41 @@ public class AIInventory : MonoBehaviour
                 var gun = Inventory[i].GameObject.GetComponent<GunEntity>();
                 if (gun != null)
                 {
-                    currentSlot = i + 1;
-                    handleSlotChange();
+                    return i;
                 }
             }
         }
-        return false;
+        return -1;
+    }
+    public int FindGrenadeSlot()
+    {
+        for (var i = 0; i < maxSlot; i++)
+        {
+            if (Inventory[i] != null)
+            {
+                var grenade = Inventory[i].GameObject.GetComponent<GrenadeEntity>();
+                if (grenade != null)
+                {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+    public int FindHealerSlot()
+    {
+        for (var i = 0; i < maxSlot; i++)
+        {
+            if (Inventory[i] != null)
+            {
+                var healer = Inventory[i].GameObject.GetComponent<HealingItem>();
+                if (healer != null)
+                {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
     public bool IsFull()
     {

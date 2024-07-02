@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -66,7 +67,7 @@ public class AIBehavior : MonoBehaviour
                 WalkingAround();
                 break;
             case 1:
-                CheckPathAndDistance();
+                Attacking();
                 break;
             case 2:
                 GoFindItem(0);
@@ -95,10 +96,6 @@ public class AIBehavior : MonoBehaviour
             }
             if (master.gunNumber > 0 && distanceToNearestEnemy < distanceChasing)
             {
-                if (inventoryController.GetCurrentItem()?.GetComponent<GunEntity>() == null)
-                {
-                    inventoryController.SwitchToWeapon();
-                }
                 behavior = 1;
             }
             if (!inventoryController.IsFull() && master.gunNumber == 0)
@@ -107,12 +104,38 @@ public class AIBehavior : MonoBehaviour
             }
         }
     }
-    void CheckPathAndDistance()
+    void Attacking()
     {
         if (target != null)
         {
+            //Approach player if close enough
             Vector3 targetPosition = target.transform.position;
             distanceToTarget = Vector2.Distance(transform.position, targetPosition);
+            var r = new System.Random();
+            if (r.Next(60) <= 1)
+            {
+                int weaponSlot = inventoryController.FindWeaponSlot();
+                if (weaponSlot != -1)
+                {
+                    inventoryController.SwitchTo(weaponSlot + 1);
+                }
+            }
+            if (r.Next(150) <= 1 && distanceToTarget < distanceBetween * 2)
+            {
+                int grenadeSlot = inventoryController.FindGrenadeSlot();
+                if (grenadeSlot != -1)
+                {
+                    inventoryController.SwitchTo(grenadeSlot + 1);
+                }
+            }
+            if (master.hp < master.hpMax && r.Next(300 - Math.Min(290, (int)(master.hpMax - master.hp) * 30)) <= 1)
+            {
+                int healerSlot = inventoryController.FindHealerSlot();
+                if (healerSlot != -1)
+                {
+                    inventoryController.SwitchTo(healerSlot + 1);
+                }
+            }
             if (!Physics2D.Linecast(transform.position, targetPosition, obstacleLayer) && distanceToTarget < distanceBetween)
             {
                 agent.isStopped = true;
@@ -120,6 +143,7 @@ public class AIBehavior : MonoBehaviour
                 WalkingAround();
                 return;
             }
+            
             agent.SetDestination(targetPosition);
             rb.velocity = Vector2.zero;
         }
@@ -133,7 +157,7 @@ public class AIBehavior : MonoBehaviour
         walkingStep += Time.deltaTime;
         if (walkingStep > maxStep)
         {
-            var randomDirection = Random.insideUnitCircle.normalized;
+            var randomDirection = UnityEngine.Random.insideUnitCircle.normalized;
             rb.velocity = randomDirection * speed;
             maxStep = 0;
             walkingStep = 0;

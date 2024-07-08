@@ -196,6 +196,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6025336227308377276, guid: e32ddcb6ec946894f99d75456cdfe8de,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6128520936090980461, guid: e32ddcb6ec946894f99d75456cdfe8de,
         type: 3}
       propertyPath: inventorySlot1
@@ -241,6 +246,11 @@ PrefabInstance:
       propertyPath: inventorySlotAmount3
       value: 
       objectReference: {fileID: 488076327}
+    - target: {fileID: 7335117393339451963, guid: e32ddcb6ec946894f99d75456cdfe8de,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7780449139813067887, guid: e32ddcb6ec946894f99d75456cdfe8de,
         type: 3}
       propertyPath: gameOverUI
@@ -5675,6 +5685,7 @@ GameObject:
   - component: {fileID: 2139152029}
   - component: {fileID: 2139152031}
   - component: {fileID: 2139152030}
+  - component: {fileID: 2139152032}
   m_Layer: 0
   m_Name: BackgroundImage
   m_TagString: BackGroundMapTag
@@ -5739,6 +5750,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139152028}
   m_CullTransparentMesh: 1
+--- !u!114 &2139152032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139152028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60994c4e411d7304090bf63f21f6877b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2140381391
 GameObject:
   m_ObjectHideFlags: 0

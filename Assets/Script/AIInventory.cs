@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class AIInventory : MonoBehaviour
 {
@@ -24,7 +22,7 @@ public class AIInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void handleSlotChange()
     {
@@ -88,7 +86,7 @@ public class AIInventory : MonoBehaviour
                     GameObject = item,
                     Amount = 1
                 };
-                checkItemType(item,true);
+                checkItemType(item, true);
                 status = 1;
             }
             else
@@ -101,7 +99,8 @@ public class AIInventory : MonoBehaviour
             if (slot != currentSlot)
             {
                 item.SetActive(false);
-            } else
+            }
+            else
             {
                 currentItem = item;
             }
@@ -110,6 +109,7 @@ public class AIInventory : MonoBehaviour
             {
                 pickItem.holderAI = master;
                 pickItem.inventoryControllerAI = this;
+                //Debug.Log($"{master}");
             }
         }
         else
@@ -126,11 +126,13 @@ public class AIInventory : MonoBehaviour
             if (isAdd)
             {
                 master.gunNumber++;
-            } else
+            }
+            else
             {
                 master.gunNumber--;
             }
-        } else
+        }
+        else
         {
             if (isAdd)
             {
@@ -235,4 +237,5 @@ public class AIInventory : MonoBehaviour
     {
         return Inventory[currentSlot - 1]?.GameObject;
     }
+
 }

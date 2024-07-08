@@ -25,6 +25,8 @@ public class PickableItem : MonoBehaviour
                 }
             }
         }
+
+
         if (holderAI != null && Stackable)
         {
             var r = new System.Random();
@@ -43,6 +45,8 @@ public class PickableItem : MonoBehaviour
         {
             timer -= Time.deltaTime; // Decrease the cooldown timer
         }
+
+
     }
     public void UseStackableItem()
     {
@@ -63,7 +67,7 @@ public class PickableItem : MonoBehaviour
     public void UseStackableItemAsAI()
     {
         if (holderAI != null && inventoryControllerAI != null)
-        { 
+        {
             for (var i = 0; i < inventoryControllerAI.maxSlot; i++)
             {
                 var currentSlotItem = inventoryControllerAI?.Inventory[i];

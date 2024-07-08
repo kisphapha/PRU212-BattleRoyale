@@ -1,10 +1,6 @@
 using NavMeshPlus.Components;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 
 public class TerrianGenerator : MonoBehaviour
 {
@@ -27,12 +23,12 @@ public class TerrianGenerator : MonoBehaviour
     void Start()
     {
         var r = new System.Random();
-        numberOfTree = r.Next(10,20);
-        numberOfAIPlayer = 1;//r.Next(1,1);
-        numberOfHouse = 3;// r.Next(3,5);
-        numberOfBoxes = r.Next(30,40);
-        numberOfGuns = r.Next(15,25);
-        numberOfUtilities = r.Next(15,25);
+        numberOfTree = r.Next(10, 20);
+        numberOfAIPlayer = 20;
+        numberOfHouse = r.Next(3, 5);
+        numberOfBoxes = r.Next(30, 40);
+        numberOfGuns = r.Next(15, 25);
+        numberOfUtilities = r.Next(15, 25);
 
         Generate();
     }
@@ -79,7 +75,7 @@ public class TerrianGenerator : MonoBehaviour
             }
         }
 
-        
+
         //Generate Boxes
         for (var i = 0; i < numberOfBoxes; i++)
         {

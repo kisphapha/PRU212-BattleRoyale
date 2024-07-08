@@ -35,11 +35,13 @@ public class GunEntity : PickableItem
             if (weapon != null && weapon.currentAmmo > 0 && weapon == this)
             {
                 canShoot = true;
-            } else
+            }
+            else
             {
                 canShoot = false;
             }
-        } else
+        }
+        else
         {
             canShoot = false;
         }
@@ -50,7 +52,7 @@ public class GunEntity : PickableItem
             {
                 Shoot();
                 shootTimer = fireRate;
-            }             
+            }
         }
         if (shootTimer > 0f)
         {

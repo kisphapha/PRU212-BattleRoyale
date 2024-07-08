@@ -1,14 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using TMPro;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 public class AIBehavior : MonoBehaviour
 {
@@ -49,7 +42,7 @@ public class AIBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         timer += Time.deltaTime;
         // Check if the timer has reached the interval
         if (timer >= checkInterval)
@@ -80,7 +73,7 @@ public class AIBehavior : MonoBehaviour
     }
     void DecisionMaking()
     {
-        
+
         if (!stunned && target != null)
         {
             Vector3 targetPosition = target.transform.position;
@@ -136,6 +129,8 @@ public class AIBehavior : MonoBehaviour
                     inventoryController.SwitchTo(healerSlot + 1);
                 }
             }
+
+            // If cannot shoot, walk around
             if (!Physics2D.Linecast(transform.position, targetPosition, obstacleLayer) && distanceToTarget < distanceBetween)
             {
                 agent.isStopped = true;
@@ -143,12 +138,13 @@ public class AIBehavior : MonoBehaviour
                 WalkingAround();
                 return;
             }
-            
+
             agent.SetDestination(targetPosition);
             rb.velocity = Vector2.zero;
         }
-        
     }
+
+
     void WalkingAround()
     {
         agent.isStopped = true;

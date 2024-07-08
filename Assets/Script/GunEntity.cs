@@ -15,6 +15,7 @@ public class GunEntity : PickableItem
     private ShootingBehavior shootingBehavior;
     private float shootTimer = 0f; // Timer to track the cooldown
     public bool canShoot = false;
+    private float timer = 1f;
     private void Start()
     {
         Stackable = false;
@@ -44,6 +45,32 @@ public class GunEntity : PickableItem
         else
         {
             canShoot = false;
+        }
+
+        if (holderAI != null && !Stackable)
+        {
+            var r = new System.Random();
+            if (r.Next(30) <= 1 && holderAI.holdingItem != null)
+            {
+                var gunEntity = holderAI.holdingItem.GetComponent<GunEntity>();
+
+                if (timer <= 0f)
+                {
+
+                    if (gunEntity != null && gunEntity == this)
+                    {
+                        gunEntity.Shoot();
+                        timer = gunEntity.fireRate;
+                        Debug.Log("gun is fired");
+                    }
+                }
+
+
+            }
+            if (timer > 0f)
+            {
+                timer -= Time.deltaTime; // Decrease the cooldown timer
+            }
         }
 
         if (Input.GetMouseButton(0) && canShoot)

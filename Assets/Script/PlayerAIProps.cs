@@ -13,9 +13,12 @@ public class PlayerAIProps : MonoBehaviour
     private FloatingName floatingName;
     private bool isDead;
     private float checkBorderTimer;
+    private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
+        gameManager.PlayerChange(1);
         characterName = gameObject.name;
         floatingHealthBar = GetComponentInChildren<FloatingHealthBar>();
         floatingName = GetComponentInChildren<FloatingName>();
@@ -49,6 +52,7 @@ public class PlayerAIProps : MonoBehaviour
         {
             isDead = true;
             Destroy(gameObject);
+            gameManager.PlayerChange(-1);
         }
     }
 }

@@ -145,14 +145,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holder: {fileID: 0}
+  holderAI: {fileID: 0}
   inventoryController: {fileID: 0}
+  inventoryControllerAI: {fileID: 0}
   Stackable: 0
   usingCoolDown: 0.5
   maxAmmo: 30
   currentAmmo: 15
   reloadTime: 3
   fireRate: 0.25
-  bulletSpeed: 20
+  bulletSpeed: 40
   spriteAngle: 45
   AmmoDisplay: {fileID: 0}
   bullet: {fileID: 2329323580639709198, guid: ca5431323b4170c4391e7e3bc3b9abeb, type: 3}

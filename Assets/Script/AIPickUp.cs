@@ -12,13 +12,10 @@ public class AIPickUp : MonoBehaviour
     private AIBehavior chase;
     // List to store available weapons
     private AIInventory inventoryController;
-    private int currentWeaponIndex = 0; // Index of the currently equipped weapon
                                         // Start is called before the first frame update
 
     public float detectionRadius = 1f;
-    private float distance = 1f;
     public float speed = 1f;
-    bool active = false;
     public int count = 3;
 
     void Start()
@@ -44,6 +41,11 @@ public class AIPickUp : MonoBehaviour
                 // Move to the next weapon in the list
                 var weapon = other.gameObject;
                 // Equip the new weapon
+                var gun = weapon.GetComponent<GunEntity>();
+                if (gun != null && gun.currentAmmo == 0)
+                {
+                    return;
+                }
                 var result = inventoryController.InventoryAdd(weapon);
                 if (result == 1)
                 {

@@ -11,12 +11,12 @@ public class DestroyOnCollision : MonoBehaviour
             PlayerProps playerHealth = other.GetComponent<PlayerProps>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(rb.velocity.magnitude);
+                playerHealth.TakeDamage(rb.velocity.magnitude / 2);
             }
             PlayerAIProps enemyHealth = other.GetComponent<PlayerAIProps>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(rb.velocity.magnitude);
+                enemyHealth.TakeDamage(rb.velocity.magnitude / 2);
             }
             Destroy(gameObject);
         }
@@ -26,7 +26,7 @@ public class DestroyOnCollision : MonoBehaviour
             if (boxHealth != null)
             {
                 Debug.Log(rb.velocity.magnitude);
-                boxHealth.TakeDamage(rb.velocity.magnitude);
+                boxHealth.TakeDamage(rb.velocity.magnitude / 2);
             }
             Destroy(gameObject);
         }
@@ -36,7 +36,7 @@ public class DestroyOnCollision : MonoBehaviour
             if (tntHealth != null)
             {
                 Debug.Log(rb.velocity.magnitude);
-                tntHealth.TakeDamage(rb.velocity.magnitude);
+                tntHealth.TakeDamage(rb.velocity.magnitude / 2);
             }
             Destroy(gameObject);
         }

@@ -161,8 +161,7 @@ public class AIInventory : MonoBehaviour
                 }
                 Inventory[slot] = null;
             }
-            checkItemType(item.GameObject, true);
-            //inventoryDrawer.UpdateInventoryDisplay();
+            checkItemType(item.GameObject, false);
             handleSlotChange();
             return true;
         }

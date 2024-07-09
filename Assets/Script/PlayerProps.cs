@@ -14,6 +14,7 @@ public class PlayerProps : MonoBehaviour
 
     public GameOver gameOverManager;
 
+    private GameManager gameManager;
     private float checkBorderTimer;
     private bool isDead;
     private FloatingHealthBar floatingHealthBar;
@@ -32,6 +33,8 @@ public class PlayerProps : MonoBehaviour
         floatingName = GetComponentInChildren<FloatingName>();
         mover = GetComponentInChildren<ArrowMovement>();
         floatingName.UpdateName(characterName);
+        gameManager = FindObjectOfType<GameManager>();
+        gameManager.PlayerChange(1);
     }
 
     // Update is called once per frame
@@ -60,6 +63,7 @@ public class PlayerProps : MonoBehaviour
         {
             isDead = true;
             gameOverManager.gameOver();
+            gameManager.PlayerChange(-1);
             Destroy(gameObject);
         }
     }

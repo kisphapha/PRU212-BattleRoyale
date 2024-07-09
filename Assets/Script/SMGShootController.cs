@@ -7,7 +7,7 @@ namespace Assets.Script
     {
         public override void Shoot()
         {
-            int randomAngle = Random.Range(-7, 7);
+            int randomAngle = Random.Range(-15, 15);
             float gunOffset = 4f;
             if (gunEntity.holderAI != null)
             {

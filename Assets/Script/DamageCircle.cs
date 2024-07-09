@@ -16,7 +16,7 @@ public class DamageCircle : MonoBehaviour
     private Transform rightTransform;
 
     public float circleShrinkSpeed = 20f;
-    public float roomSize = 146f;
+    public float roomSize = 233f;
     public float shrinkTimeBetween = 30f;
     public float startAfter = 30f;
     private float shrinkTimer;

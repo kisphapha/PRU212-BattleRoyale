@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Progress;
 
 public class AIBehavior : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class AIBehavior : MonoBehaviour
     private float distanceToTarget;
     private bool stunned;
     public int behavior = 0; //0 : Walking arround //1:Chase player //2: Go get a weapon //3: Go get an item //4: Retreat 
+    public bool isAttackable;
     NavMeshAgent agent;
     private PlayerAIProps master;
     private AIInventory inventoryController;
@@ -81,7 +83,6 @@ public class AIBehavior : MonoBehaviour
             angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(Vector3.forward * angle) * Quaternion.Euler(0f, 0f, 180f);
             var distanceToNearestEnemy = Vector2.Distance(transform.position, targetPosition);
-
             behavior = 0;
             if (!inventoryController.IsFull())
             {
@@ -90,6 +91,11 @@ public class AIBehavior : MonoBehaviour
             if (master.gunNumber > 0 && distanceToNearestEnemy < distanceChasing)
             {
                 behavior = 1;
+                isAttackable = true;
+                if (Physics2D.Linecast(transform.position, targetPosition, obstacleLayer))
+                {
+                    isAttackable = false;
+                } 
             }
             if (!inventoryController.IsFull() && master.gunNumber == 0)
             {
@@ -111,6 +117,20 @@ public class AIBehavior : MonoBehaviour
                 if (weaponSlot != -1)
                 {
                     inventoryController.SwitchTo(weaponSlot + 1);
+                    var gun = master.holdingItem.GetComponent<GunEntity>();
+                    if (gun.currentAmmo == 0)
+                    {
+                        var holdingItem = master.holdingItem;
+                        inventoryController.InventoryRemove(weaponSlot);
+                        holdingItem.SetActive(true);
+                        holdingItem.transform.SetParent(null);
+                        holdingItem.GetComponent<Collider2D>().enabled = true;
+                        var item = holdingItem.GetComponent<PickableItem>();
+                        item.holderAI = null;
+                        item.inventoryControllerAI = null;
+                        //Debug.Log("Gun ran out of ammo, dropped, he is now has " + master.gunNumber + " guns");
+                        //master.gunNumber--;
+                    }
                 }
             }
             if (r.Next(150) <= 1 && distanceToTarget < distanceBetween * 2)
@@ -167,10 +187,23 @@ public class AIBehavior : MonoBehaviour
     void GoFindItem(int mode)
     {
         var target = GetNearestItem(mode);
-        Vector3 targetPosition = target.transform.position;
-        distanceToTarget = Vector2.Distance(transform.position, targetPosition);
-        agent.SetDestination(targetPosition);
-        rb.velocity = Vector2.zero;
+        if (target == null)
+        {
+            target = GetNearestItem(1);
+        }
+
+        if (target != null)
+        {
+            Vector3 targetPosition = target.transform.position;
+            distanceToTarget = Vector2.Distance(transform.position, targetPosition);
+            agent.SetDestination(targetPosition);
+            rb.velocity = Vector2.zero;
+        }         
+         else
+         {
+            WalkingAround();
+         }
+        
     }
     public void Stunned(float duration)
     {

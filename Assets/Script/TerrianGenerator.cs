@@ -5,8 +5,8 @@ using UnityEngine;
 public class TerrianGenerator : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int roomWidth = 146;
-    public int roomHeight = 96;
+    public int roomWidth = 182;
+    public int roomHeight = 233;
     public GameObject treePrefab;
     public GameObject housePrefab;
     public GameObject playerAI;
@@ -23,12 +23,12 @@ public class TerrianGenerator : MonoBehaviour
     void Start()
     {
         var r = new System.Random();
-        numberOfTree = r.Next(10, 20);
+        numberOfTree = r.Next(20, 30);
         numberOfAIPlayer = 20;
         numberOfHouse = r.Next(3, 5);
         numberOfBoxes = r.Next(30, 40);
-        numberOfGuns = r.Next(15, 25);
-        numberOfUtilities = r.Next(15, 25);
+        numberOfGuns = r.Next(20, 30);
+        numberOfUtilities = r.Next(20, 30);
 
         Generate();
     }

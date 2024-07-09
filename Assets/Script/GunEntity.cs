@@ -15,7 +15,7 @@ public class GunEntity : PickableItem
     private ShootingBehavior shootingBehavior;
     private float shootTimer = 0f; // Timer to track the cooldown
     public bool canShoot = false;
-    private float timer = 1f;
+    private float AiGunTimer = 1f;
     private void Start()
     {
         Stackable = false;
@@ -47,30 +47,27 @@ public class GunEntity : PickableItem
             canShoot = false;
         }
 
-        if (holderAI != null && !Stackable)
+        if (holderAI != null)
         {
             var r = new System.Random();
-            if (r.Next(30) <= 1 && holderAI.holdingItem != null)
+            if (holderAI.holdingItem != null)
             {
-                var gunEntity = holderAI.holdingItem.GetComponent<GunEntity>();
-
-                if (timer <= 0f)
+                var weapon = holderAI.holdingItem.GetComponent<GunEntity>();
+                if (r.Next(30) <= 1 && weapon != null && weapon.currentAmmo > 0 && weapon == this &&
+                    holderAI.GetComponent<AIBehavior>().isAttackable)
                 {
-
-                    if (gunEntity != null && gunEntity == this)
+                    if (AiGunTimer <= 0f)
                     {
-                        gunEntity.Shoot();
-                        timer = gunEntity.fireRate;
-                        Debug.Log("gun is fired");
+                        Shoot();
+                        AiGunTimer = fireRate;
                     }
                 }
-
-
+                if (AiGunTimer > 0f)
+                {
+                    AiGunTimer -= Time.deltaTime; // Decrease the cooldown timer
+                }
             }
-            if (timer > 0f)
-            {
-                timer -= Time.deltaTime; // Decrease the cooldown timer
-            }
+            
         }
 
         if (Input.GetMouseButton(0) && canShoot)
@@ -92,7 +89,10 @@ public class GunEntity : PickableItem
         currentAmmo--;
         Debug.Log(currentAmmo);
         shootingBehavior.Shoot();
-        UpdateAmmoDisplay(); // Update ammo display after shooting
+        if (holderAI == null)
+        {
+            UpdateAmmoDisplay(); // Update ammo display after shooting
+        }
     }
     public void ResetAmmoDisplay()
     {

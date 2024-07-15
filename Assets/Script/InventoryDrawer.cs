@@ -7,19 +7,29 @@ using UnityEngine.UI;
 public class InventoryDrawer : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Image inventorySlot1;
-    public Image inventorySlot2;
-    public Image inventorySlot3;
-    public Image inventorySlotFrame1;
-    public Image inventorySlotFrame2;
-    public Image inventorySlotFrame3;
-    public Text inventorySlotAmount1;
-    public Text inventorySlotAmount2;
-    public Text inventorySlotAmount3;
+    private Image inventorySlot1;
+    private Image inventorySlot2;
+    private Image inventorySlot3;
+    private Image inventorySlotFrame1;
+    private Image inventorySlotFrame2;
+    private Image inventorySlotFrame3;
+    private Text inventorySlotAmount1;
+    private Text inventorySlotAmount2;
+    private Text inventorySlotAmount3;
     private InventoryController inventoryController;
 
     private void Start()
     {
+        inventorySlot1 = GameObject.Find("Slot1").GetComponent<Image>();
+        inventorySlot2 = GameObject.Find("Slot2").GetComponent<Image>();
+        inventorySlot3 = GameObject.Find("Slot3").GetComponent<Image>();
+        inventorySlotAmount1 = GameObject.Find("Slot1_Amount").GetComponent<Text>();
+        inventorySlotAmount2 = GameObject.Find("Slot2_Amount").GetComponent<Text>();
+        inventorySlotAmount3 = GameObject.Find("Slot3_Amount").GetComponent<Text>();
+        inventorySlotFrame1 = GameObject.Find("Slot1_Frame").GetComponent<Image>();
+        inventorySlotFrame2 = GameObject.Find("Slot2_Frame").GetComponent<Image>();
+        inventorySlotFrame3 = GameObject.Find("Slot3_Frame").GetComponent<Image>();
+
         SetImageVisibility(inventorySlot1,false);
         SetImageVisibility(inventorySlot2,false);
         SetImageVisibility(inventorySlot3,false);

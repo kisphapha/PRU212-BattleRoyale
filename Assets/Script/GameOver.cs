@@ -3,11 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
-    public GameObject gameOverUI;
+    private GameObject gameOverUI;
     private Vector3 startPosition;
     // Start is called before the first frame update
     void Start()
     {
+        gameOverUI = GameObject.Find("GameOverUI");
         if (gameOverUI != null)
         {
             startPosition = gameOverUI.transform.position;

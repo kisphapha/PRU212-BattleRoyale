@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 public class PlayerProps : MonoBehaviour
@@ -19,9 +20,13 @@ public class PlayerProps : MonoBehaviour
     private bool isDead;
     private FloatingHealthBar floatingHealthBar;
     private FloatingName floatingName;
+    private CinemachineVirtualCamera cmv;
     // Start is called before the first frame update
     void Start()
     {
+        cmv = GameObject.Find("FollowCamera").GetComponent<CinemachineVirtualCamera>();
+        cmv.Follow = gameObject.transform;
+
         var persistentData = FindObjectOfType<PersistentData>();
         if (persistentData != null)
         {

@@ -11,18 +11,19 @@ public class PickupController : MonoBehaviour
     private InventoryController inventoryController;
     private int currentWeaponIndex = 0; // Index of the currently equipped weapon
     private PhotonView view;
+    private GameManager gameManager;
 
     void Start()
     {
         inventoryController = GetComponent<InventoryController>();
         master = GetComponent<PlayerProps>();
         view = GetComponent<PhotonView>();
-        
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()
     {
-        if (view.IsMine)
+        if (view.IsMine && gameManager.isStarted)
         {
             CarryTheItem();
 

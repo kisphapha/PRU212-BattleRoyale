@@ -13,6 +13,7 @@ public class ExplodeOnCollision : MonoBehaviour
     private float explosionDuration; // Duration for explosion effect to stay in scene
     private float explosionDelay;
     private PhotonView view;
+    public GameObject master;
     private float timer;
 
     //public int maxColliders = 10; // Limit the number of colliders processed
@@ -86,7 +87,7 @@ public class ExplodeOnCollision : MonoBehaviour
             PlayerProps player = nearbyObject.GetComponent<PlayerProps>();
             if (player != null)
             {
-                player.TakeDamage(500 / Mathf.Max(1, distance));
+                player.TakeDamage(500 / Mathf.Max(1, distance), master);
                 var movement = nearbyObject.GetComponentInChildren<ArrowMovement>();
                 if (movement != null)
                 {
@@ -96,7 +97,7 @@ public class ExplodeOnCollision : MonoBehaviour
             PlayerAIProps playerAI = nearbyObject.GetComponent<PlayerAIProps>();
             if (playerAI != null)
             {
-                playerAI.TakeDamage(500 / Mathf.Max(1, distance));
+                playerAI.TakeDamage(500 / Mathf.Max(1, distance), master);
                 var movement = nearbyObject.GetComponent<AIBehavior>();
                 if (movement != null)
                 {

@@ -2299,7 +2299,7 @@ namespace Photon.Pun
                     }
                     else
                     {
-                        Debug.LogError("Ev Destroy Failed. Could not find PhotonView with instantiationId " + instantiationId + ". Sent by actorNr: " + actorNr);
+                        //Debug.LogError("Ev Destroy Failed. Could not find PhotonView with instantiationId " + instantiationId + ". Sent by actorNr: " + actorNr);
                     }
 
                     break;

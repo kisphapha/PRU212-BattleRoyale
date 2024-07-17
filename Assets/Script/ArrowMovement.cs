@@ -13,6 +13,7 @@ public class ArrowMovement : MonoBehaviour
     private GameObject parent;
     private PlayerProps player;
     private PhotonView photonView;
+    private GameManager gameManager;
     private void Start()
     {
         parent = transform.parent.gameObject;
@@ -20,14 +21,15 @@ public class ArrowMovement : MonoBehaviour
         rb = parent.GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         photonView = parent.GetComponent<PhotonView>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Update()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine )
         {
             RotateWithMouse();
-            if (!stunned)
+            if (!stunned && gameManager.isStarted)
             {
                 float moveX = Input.GetAxisRaw("Horizontal");
                 float moveY = Input.GetAxisRaw("Vertical");

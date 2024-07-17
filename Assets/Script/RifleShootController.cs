@@ -20,6 +20,7 @@ namespace Assets.Script
                 var moverTransform = gunEntity.holderAI.gameObject.transform;
                 Vector3 direction = rotationRandom * moverTransform.right * -1;
                 GameObject bullet = PhotonNetwork.Instantiate(gunEntity.bullet.name, targetPosition, rotationOfMaster);
+                bullet.GetComponent<DestroyOnCollision>().master = gunEntity.holderAI.gameObject;
                 Rigidbody2D bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
                 bulletRigidbody.velocity = direction * gunEntity.bulletSpeed;
             }
@@ -33,6 +34,7 @@ namespace Assets.Script
                 Vector3 direction = rotationRandom * moverTransform.up * -1;
                 GameObject bullet = PhotonNetwork.Instantiate(gunEntity.bullet.name, targetPosition, rotationOfMaster);
                 Rigidbody2D bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
+                bullet.GetComponent<DestroyOnCollision>().master = gunEntity.holder.gameObject;
                 bulletRigidbody.velocity = direction * gunEntity.bulletSpeed;
             }
 

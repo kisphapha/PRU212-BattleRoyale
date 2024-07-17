@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,7 @@ public class AIPickUp : MonoBehaviour
     // List to store available weapons
     private AIInventory inventoryController;
     private PhotonView view;
-
+    private GameManager gameManager;
     public float detectionRadius = 1f;
     public float speed = 1f;
     public int count = 3;
@@ -25,7 +26,8 @@ public class AIPickUp : MonoBehaviour
         inventoryController = GetComponent<AIInventory>();
         master = GetComponent<PlayerAIProps>();
         chase = GetComponent<AIBehavior>();
-        //chase.enabled = false;
+        gameManager = FindObjectOfType<GameManager>();
+
     }
 
     // Update is called once per frame
@@ -36,37 +38,31 @@ public class AIPickUp : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Check if the colliding object is a weapon
-        if (other.CompareTag("PickUpItems"))
+        if (gameManager != null && gameManager.isStarted)
         {
-            if (inventoryController != null)
+            if (other.CompareTag("PickUpItems"))
             {
-                // Move to the next weapon in the list
-                var weapon = other.gameObject;
-                // Equip the new weapon
-                var gun = weapon.GetComponent<GunEntity>();
-                if (gun != null && gun.currentAmmo == 0)
+                if (inventoryController != null)
                 {
-                    return;
-                }
-                var result = inventoryController.InventoryAdd(weapon);
-                if (result == 1)
-                {
-                    EquipWeapon(weapon);
-                }
-                else if (result == 2)
-                {
-                    view.RPC("DestroyItemRPC", RpcTarget.AllBuffered, weapon.GetPhotonView().ViewID);
+                    // Move to the next weapon in the list
+                    var weapon = other.gameObject;
+                    // Equip the new weapon
+                    var gun = weapon.GetComponent<GunEntity>();
+                    if (gun != null && gun.currentAmmo == 0)
+                    {
+                        return;
+                    }
+                    var result = inventoryController.InventoryAdd(weapon);
+                    if (result == 1)
+                    {
+                        EquipWeapon(weapon);
+                    }
+                    else if (result == 2)
+                    {
+                        view.RPC("DestroyItemRPC", RpcTarget.AllBuffered, weapon.GetPhotonView().ViewID);
+                    }
                 }
             }
-            //Debug.Log("should pick up");
-
-            //EquipWeapon(other.gameObject);
-            //if (count <= 0)
-            //{
-            //    active = true;
-            //}
-            //other.gameObject.tag = "Untagged";
-            //this.enabled = false;
         }
     }
 

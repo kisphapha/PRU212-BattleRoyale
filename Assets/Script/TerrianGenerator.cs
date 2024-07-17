@@ -46,7 +46,7 @@ public class TerrianGenerator : MonoBehaviourPunCallbacks
     {
         var r = new System.Random();
         numberOfTree = r.Next(20, 30);
-        numberOfAIPlayer = 1;
+        numberOfAIPlayer = r.Next(5,10);
         numberOfHouse = r.Next(3, 5);
         numberOfBoxes = r.Next(30, 40);
         numberOfGuns = r.Next(20, 30);

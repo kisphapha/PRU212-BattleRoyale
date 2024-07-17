@@ -18,19 +18,28 @@ public class GunEntity : PickableItem
     public bool canShoot = false;
     private float AiGunTimer = 1f;
     private PhotonView view;
+    private AudioSource audioSource;
     private void Start()
     {
         Stackable = false;
         spriteAngle = getSpriteAngle();
         shootingBehavior = GetComponent<ShootingBehavior>();
         currentAmmo = maxAmmo;
+        audioSource = GetComponent<AudioSource>();
         if (AmmoDisplay == null)
         {
             AmmoDisplay = GameObject.FindWithTag("AmmoDisplayer")?.GetComponent<Text>();
         }
         view = GetComponent<PhotonView>();
     }
-
+    [PunRPC]
+    private void PlayShootSound()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+    }
     private void Update()
     {
         if (holder != null)
@@ -90,13 +99,12 @@ public class GunEntity : PickableItem
     public void Shoot()
     {
         currentAmmo--;
-        view.RPC("SyncCurrentAmmo", RpcTarget.OthersBuffered, currentAmmo);
+        view.RPC("PlayShootSound", RpcTarget.All);
         shootingBehavior.Shoot();
         if (holderAI == null)
         {
             UpdateAmmoDisplay(); // Update ammo display after shooting
-        }     
-
+        }
     }
     public void ResetAmmoDisplay()
     {

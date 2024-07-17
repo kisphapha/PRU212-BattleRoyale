@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -38,7 +39,10 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         Application.Quit();
     }
+    //public override void OnDisconnected(DisconnectCause cause)
+    //{
+    //    SceneManager.LoadScene("LoadingScene");
+    //}
 
-   
 
 }

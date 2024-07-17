@@ -6,7 +6,7 @@ using UnityEngine.Timeline;
 public class DestroyOnCollision : MonoBehaviour
 {
     private PhotonView view;
-
+    public GameObject master;
     private void Start()
     {
         view = GetComponent<PhotonView>();
@@ -30,12 +30,12 @@ public class DestroyOnCollision : MonoBehaviour
             PlayerProps playerHealth = other.GetComponent<PlayerProps>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(rb.velocity.magnitude / 2);
+                playerHealth.TakeDamage(rb.velocity.magnitude / 2, master);
             }
             PlayerAIProps enemyHealth = other.GetComponent<PlayerAIProps>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(rb.velocity.magnitude / 2);
+                enemyHealth.TakeDamage(rb.velocity.magnitude / 2, master);
             }
             if (view != null && view.IsMine)
             {

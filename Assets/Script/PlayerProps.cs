@@ -1,5 +1,6 @@
 using Cinemachine;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 public class PlayerProps : MonoBehaviour
@@ -14,13 +15,14 @@ public class PlayerProps : MonoBehaviour
     public InventoryController inventoryController;
     public ArrowMovement mover;
     public PhotonView view;
-
+    public int killCount;
     public GameOver gameOverManager;
 
     private GameManager gameManager;
     private float checkBorderTimer;
     private bool isDead;
     private FloatingHealthBar floatingHealthBar;
+    private FloatingKillCounter floatingKillCounter;
     private FloatingName floatingName;
     // Start is called before the first frame update
     void Start()
@@ -29,14 +31,15 @@ public class PlayerProps : MonoBehaviour
         gameOverManager = GetComponent<GameOver>();
         floatingHealthBar = GetComponentInChildren<FloatingHealthBar>();
         floatingName = GetComponentInChildren<FloatingName>();
+        floatingKillCounter = GetComponentInChildren<FloatingKillCounter>();
         mover = GetComponentInChildren<ArrowMovement>();
         gameManager = FindObjectOfType<GameManager>();
-        gameManager.PlayerChange(1);
+
         view = GetComponent<PhotonView>();
         if (view.IsMine)
         {
             // Find and configure the Cinemachine virtual camera to follow this player
-
+            gameManager.UpdatePlayerCount();
             characterName = PhotonNetwork.NickName;
             floatingName.UpdateName(characterName);
 
@@ -66,10 +69,23 @@ public class PlayerProps : MonoBehaviour
             checkBorderTimer = 0f;
         }
     }
-
-    public void TakeDamage(float amount)
+    public void EarnKill()
     {
+        Debug.Log("Earned a kill!");
+        killCount++;
+        if (floatingKillCounter != null)
+        {
+            floatingKillCounter.UpdateKill(killCount);
+        }
 
+        view.RPC("SyncKills", RpcTarget.OthersBuffered, killCount);
+    }
+    public void TakeDamage(float amount, GameObject causer = null)
+    {
+        if (causer != null)
+        {
+            Debug.Log("Getting damaged from " + causer.name);
+        }
         hp -= amount;
         if (hp > hpMax)
         {
@@ -78,14 +94,26 @@ public class PlayerProps : MonoBehaviour
         if (floatingHealthBar != null)
         {
             floatingHealthBar.UpdateHealthBar(hp, hpMax);
-            if (hp <= 0 && !isDead)
-            {
-                isDead = true;
-                view.RPC("SyncDeath", RpcTarget.AllBuffered);
-            }
-            view.RPC("SyncHealth", RpcTarget.OthersBuffered, hp);
         }
-        
+        if (hp <= 0 && !isDead)
+        {
+            isDead = true;
+            if (causer != null)
+            {
+                var player = causer.GetComponent<PlayerProps>();
+                if (player != null)
+                {
+                    player.EarnKill();
+                }
+                var ai = causer.GetComponent<PlayerAIProps>();
+                if (ai != null)
+                {
+                    ai.EarnKill();
+                }
+            }
+            view.RPC("SyncDeath", RpcTarget.AllBuffered);
+        }
+        view.RPC("SyncHealth", RpcTarget.OthersBuffered, hp);        
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -106,8 +134,12 @@ public class PlayerProps : MonoBehaviour
     }
     private void OnDestroy()
     {
-        gameManager.PlayerChange(-1);
-        gameOverManager.gameOver();
+        if (view.IsMine)
+        {
+            gameManager.gameOverController.gameOver();
+            gameManager.gameOverController.UpdateKillCount(killCount);
+        }
+        gameManager.UpdatePlayerCount();
     }
     //[PunRPC]
     //void SyncName(string name)
@@ -125,6 +157,15 @@ public class PlayerProps : MonoBehaviour
         if (floatingHealthBar != null)
         {
             floatingHealthBar.UpdateHealthBar(syncHealth, hpMax);
+        }
+    }
+    [PunRPC]
+    void SyncKills(int kills)
+    {
+        killCount = kills;
+        if (floatingKillCounter != null)
+        {
+            floatingKillCounter.UpdateKill(kills);
         }
     }
     [PunRPC]

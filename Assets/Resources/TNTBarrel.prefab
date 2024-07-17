@@ -241,3 +241,4 @@ MonoBehaviour:
   smokeParticlePrefab: {fileID: 8147614975853303179, guid: 5e40cf96bba202448b5133a7a356291f,
     type: 3}
   isTriggered: 0
+  master: {fileID: 0}

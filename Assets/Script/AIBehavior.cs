@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.PunBasics;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -24,7 +25,7 @@ public class AIBehavior : MonoBehaviour
     private float walkingStep = 0f; // To count time walking freely
     private float maxStep = 0f; // To count time walking freely
     private float timer;
-
+    private GameManager gameManager;
     private Rigidbody2D rb;
 
     // Start is called before the first frame update
@@ -38,6 +39,7 @@ public class AIBehavior : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         master = GetComponent<PlayerAIProps>();
         inventoryController = GetComponent<AIInventory>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -54,23 +56,27 @@ public class AIBehavior : MonoBehaviour
             // Reset the timer
             timer = 0f;
         }
-        DecisionMaking();
-        switch (behavior)
+        if (gameManager.isStarted)
         {
-            case 0:
-                WalkingAround();
-                break;
-            case 1:
-                Attacking();
-                break;
-            case 2:
-                GoFindItem(0);
-                break;
-            case 3:
-                GoFindItem(1);
-                break;
+            DecisionMaking();
+            switch (behavior)
+            {
+                case 0:
+                    WalkingAround();
+                    break;
+                case 1:
+                    Attacking();
+                    break;
+                case 2:
+                    GoFindItem(0);
+                    break;
+                case 3:
+                    GoFindItem(1);
+                    break;
 
+            }
         }
+
     }
     void DecisionMaking()
     {

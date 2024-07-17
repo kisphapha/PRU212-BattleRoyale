@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.Asteroids;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -12,7 +13,8 @@ namespace Assets.Script
             Vector3 direction, targetPosition;
             Quaternion rotationOfMaster;
             float throwOffset = 2f;
-            int randomAngle = Random.Range(-10, 10); 
+            int randomAngle = Random.Range(-10, 10);
+            GameObject holderObject = null;
             //AI behavior
             if (grenadeEntity.holderAI != null)
             {
@@ -23,7 +25,8 @@ namespace Assets.Script
                 rotationOfMaster = Quaternion.Euler(0f, 0f, AIBehavior.angle);
                 targetPosition = grenadeEntity.holderAI.transform.position + (rotationOfThrow * Vector3.right * throwOffset);
                 var moverTransform = grenadeEntity.holderAI.transform;
-                direction = rotationRandom * moverTransform.right * -1;            
+                direction = rotationRandom * moverTransform.right * -1;
+                holderObject = grenadeEntity.holderAI.gameObject;
             } 
             //Player Behavior
             else
@@ -34,8 +37,10 @@ namespace Assets.Script
                 targetPosition = grenadeEntity.holder.transform.position + (rotationOfThrow * Vector3.right * throwOffset);
                 var moverTransform = grenadeEntity.holder.mover.gameObject.transform;
                 direction = rotationRandom * moverTransform.up * -1;
+                holderObject = grenadeEntity.holder.gameObject;
             }
             GameObject grenade = PhotonNetwork.Instantiate(grenadeEntity.grenadePrefab.name, targetPosition, rotationOfMaster);
+            grenade.GetComponent<ExplodeOnCollision>().master = holderObject;
             Rigidbody2D grenadeRigidbody = grenade.GetComponent<Rigidbody2D>();
             grenadeRigidbody.velocity = direction * grenadeEntity.grenadeSpeed;
             return grenade;

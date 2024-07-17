@@ -1,4 +1,5 @@
 using Cinemachine;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 public class PlayerProps : MonoBehaviour
@@ -12,6 +13,7 @@ public class PlayerProps : MonoBehaviour
     public GameObject holdingItem;
     public InventoryController inventoryController;
     public ArrowMovement mover;
+    public PhotonView view;
 
     public GameOver gameOverManager;
 
@@ -20,26 +22,35 @@ public class PlayerProps : MonoBehaviour
     private bool isDead;
     private FloatingHealthBar floatingHealthBar;
     private FloatingName floatingName;
-    private CinemachineVirtualCamera cmv;
     // Start is called before the first frame update
     void Start()
     {
-        cmv = GameObject.Find("FollowCamera").GetComponent<CinemachineVirtualCamera>();
-        cmv.Follow = gameObject.transform;
-
-        var persistentData = FindObjectOfType<PersistentData>();
-        if (persistentData != null)
-        {
-            characterName = persistentData.playerName;
-        }
         inventoryController = GetComponent<InventoryController>();
         gameOverManager = GetComponent<GameOver>();
         floatingHealthBar = GetComponentInChildren<FloatingHealthBar>();
         floatingName = GetComponentInChildren<FloatingName>();
         mover = GetComponentInChildren<ArrowMovement>();
-        floatingName.UpdateName(characterName);
         gameManager = FindObjectOfType<GameManager>();
         gameManager.PlayerChange(1);
+        view = GetComponent<PhotonView>();
+        if (view.IsMine)
+        {
+            // Find and configure the Cinemachine virtual camera to follow this player
+
+            characterName = PhotonNetwork.NickName;
+            floatingName.UpdateName(characterName);
+
+            var virtualCam = FindObjectOfType<CinemachineVirtualCamera>();
+            if (virtualCam != null)
+            {
+                virtualCam.Follow = transform;
+                virtualCam.LookAt = transform;
+            }
+        } else
+        {
+            characterName = view.Owner.CustomProperties["PlayerName"].ToString();
+            floatingName.UpdateName(characterName);
+        }
     }
 
     // Update is called once per frame
@@ -58,19 +69,24 @@ public class PlayerProps : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+
         hp -= amount;
         if (hp > hpMax)
         {
             hp = hpMax;
         }
-        floatingHealthBar.UpdateHealthBar(hp, hpMax);
-        if (hp <= 0 && !isDead)
+        if (floatingHealthBar != null)
         {
-            isDead = true;
-            gameOverManager.gameOver();
-            gameManager.PlayerChange(-1);
-            Destroy(gameObject);
+            floatingHealthBar.UpdateHealthBar(hp, hpMax);
+            if (hp <= 0 && !isDead)
+            {
+                isDead = true;
+                view.RPC("SyncDeath", RpcTarget.AllBuffered);
+            }
+            view.RPC("SyncHealth", RpcTarget.OthersBuffered, hp);
         }
+        
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -87,5 +103,33 @@ public class PlayerProps : MonoBehaviour
             FadingSprite o = collision.GetComponent<FadingSprite>();
             o.FadeIn();
         }
+    }
+    private void OnDestroy()
+    {
+        gameManager.PlayerChange(-1);
+        gameOverManager.gameOver();
+    }
+    //[PunRPC]
+    //void SyncName(string name)
+    //{
+    //    if (floatingName != null)
+    //    {
+    //        characterName = name;
+    //        floatingName.UpdateName(name);
+    //    }
+    //}
+    [PunRPC]
+    void SyncHealth(float syncHealth)
+    {
+        hp = syncHealth;
+        if (floatingHealthBar != null)
+        {
+            floatingHealthBar.UpdateHealthBar(syncHealth, hpMax);
+        }
+    }
+    [PunRPC]
+    void SyncDeath()
+    {
+        Destroy(gameObject);
     }
 }

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerAIProps : MonoBehaviour
@@ -14,6 +15,7 @@ public class PlayerAIProps : MonoBehaviour
     private bool isDead;
     private float checkBorderTimer;
     private GameManager gameManager;
+    private PhotonView view;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,7 @@ public class PlayerAIProps : MonoBehaviour
         floatingHealthBar = GetComponentInChildren<FloatingHealthBar>();
         floatingName = GetComponentInChildren<FloatingName>();
         floatingName.UpdateName(characterName);
+        view = GetComponent<PhotonView>();
 
     }
 
@@ -47,12 +50,35 @@ public class PlayerAIProps : MonoBehaviour
         {
             hp = hpMax;
         }
-        floatingHealthBar.UpdateHealthBar(hp, hpMax);
-        if (hp <= 0 && !isDead)
+        if (floatingHealthBar != null)
         {
-            isDead = true;
-            Destroy(gameObject);
-            gameManager.PlayerChange(-1);
+            floatingHealthBar.UpdateHealthBar(hp, hpMax);
+            if (hp <= 0 && !isDead)
+            {
+                isDead = true;
+                view.RPC("SyncDeath", RpcTarget.AllBuffered);
+            }
+            view.RPC("SyncHealth", RpcTarget.OthersBuffered, hp);
         }
+    }
+
+    public void OnDestroy()
+    {
+        gameManager.PlayerChange(-1);
+    }
+
+    [PunRPC]
+    void SyncHealth(float syncHealth)
+    {
+        hp = syncHealth;
+        if (floatingHealthBar != null)
+        {
+            floatingHealthBar.UpdateHealthBar(syncHealth, hpMax);
+        }
+    }
+    [PunRPC]
+    void SyncDeath()
+    {
+        Destroy(gameObject);
     }
 }

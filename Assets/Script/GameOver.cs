@@ -19,7 +19,10 @@ public class GameOver : MonoBehaviour
 
     public void gameOver()
     {
-        gameOverUI.transform.position = startPosition;
+        if (gameOverUI != null)
+        {
+            gameOverUI.transform.position = startPosition;
+        }
 
     }
 

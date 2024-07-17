@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
@@ -16,6 +17,7 @@ public class GunEntity : PickableItem
     private float shootTimer = 0f; // Timer to track the cooldown
     public bool canShoot = false;
     private float AiGunTimer = 1f;
+    private PhotonView view;
     private void Start()
     {
         Stackable = false;
@@ -26,6 +28,7 @@ public class GunEntity : PickableItem
         {
             AmmoDisplay = GameObject.FindWithTag("AmmoDisplayer")?.GetComponent<Text>();
         }
+        view = GetComponent<PhotonView>();
     }
 
     private void Update()
@@ -87,12 +90,13 @@ public class GunEntity : PickableItem
     public void Shoot()
     {
         currentAmmo--;
-        Debug.Log(currentAmmo);
+        view.RPC("SyncCurrentAmmo", RpcTarget.OthersBuffered, currentAmmo);
         shootingBehavior.Shoot();
         if (holderAI == null)
         {
             UpdateAmmoDisplay(); // Update ammo display after shooting
-        }
+        }     
+
     }
     public void ResetAmmoDisplay()
     {
@@ -153,5 +157,14 @@ public class GunEntity : PickableItem
             return 0;
         }
 
+    }
+
+    [PunRPC]
+    void SyncCurrentAmmo(int currentAmmo)
+    {
+
+        var gun = gameObject.GetComponent<GunEntity>();
+        gun.currentAmmo = currentAmmo;
+        
     }
 }

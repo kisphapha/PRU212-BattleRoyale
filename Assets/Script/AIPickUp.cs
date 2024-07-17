@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class AIPickUp : MonoBehaviour
     private AIBehavior chase;
     // List to store available weapons
     private AIInventory inventoryController;
-                                        // Start is called before the first frame update
+    private PhotonView view;
 
     public float detectionRadius = 1f;
     public float speed = 1f;
@@ -20,6 +21,7 @@ public class AIPickUp : MonoBehaviour
 
     void Start()
     {
+        view = GetComponent<PhotonView>();
         inventoryController = GetComponent<AIInventory>();
         master = GetComponent<PlayerAIProps>();
         chase = GetComponent<AIBehavior>();
@@ -53,8 +55,8 @@ public class AIPickUp : MonoBehaviour
                 }
                 else if (result == 2)
                 {
-                    Destroy(weapon);
-                }              
+                    view.RPC("DestroyItemRPC", RpcTarget.AllBuffered, weapon.GetPhotonView().ViewID);
+                }
             }
             //Debug.Log("should pick up");
 
@@ -89,14 +91,59 @@ public class AIPickUp : MonoBehaviour
             Quaternion itemRotation = Quaternion.Euler(0f, 0f, angle - deviationAngle);
             Quaternion masterRotation = Quaternion.Euler(Vector3.forward * angle);
             Vector3 targetPosition = transform.position + (masterRotation * Vector3.right * itemSpriteLength/2);
-            item.GameObject.transform.position = targetPosition;
-            item.GameObject.transform.rotation = itemRotation;
+            view.RPC("SyncItemTransform", RpcTarget.All, item.GameObject.GetPhotonView().ViewID, targetPosition, itemRotation);
         }
     }
     public void EquipWeapon(GameObject weapon)
     {
-        weapon.transform.SetParent(transform); // Make the player character the parent of the picked object
-        weapon.GetComponent<Collider2D>().enabled = false;
+        PhotonView weaponView = weapon.GetComponent<PhotonView>();
+        if (weaponView != null && !weaponView.IsMine)
+        {
+            weaponView.TransferOwnership(PhotonNetwork.LocalPlayer);
+        }
+
+        // Call the RPC method to equip the weapon
+        view.RPC("EquipWeaponRPC", RpcTarget.AllBuffered, weaponView.ViewID);
     }
-   
+
+
+    [PunRPC]
+    void SyncItemTransform(int itemViewId, Vector3 targetPosition, Quaternion itemRotation)
+    {
+        PhotonView itemView = PhotonView.Find(itemViewId);
+        if (itemView != null)
+        {
+            GameObject item = itemView.gameObject;
+            item.transform.position = targetPosition;
+            item.transform.rotation = itemRotation;
+        }
+    }
+
+    [PunRPC]
+    private void EquipWeaponRPC(int weaponViewID)
+    {
+        // Find the weapon by its PhotonView ID
+        PhotonView weaponView = PhotonView.Find(weaponViewID);
+        if (weaponView != null)
+        {
+            GameObject weapon = weaponView.gameObject;
+            weapon.transform.SetParent(transform); // Make the player character the parent of the picked object
+            weapon.GetComponent<Collider2D>().enabled = false;
+        }
+        else
+        {
+            Debug.LogError("Failed to find weapon with PhotonView ID: " + weaponViewID);
+        }
+    }
+    [PunRPC]
+    private void DestroyItemRPC(int viewId)
+    {
+        PhotonView itemView = PhotonView.Find(viewId);
+        if (itemView != null)
+        {
+            GameObject item = itemView.gameObject;
+            Destroy(item);
+        }
+    }
+
 }

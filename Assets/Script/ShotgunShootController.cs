@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 namespace Assets.Script
@@ -21,7 +22,7 @@ namespace Assets.Script
                     Vector3 targetPosition = gunEntity.holderAI.transform.position + (rotationOfGun * Vector3.right * gunOffset);
                     var moverTransform = gunEntity.holderAI.gameObject.transform;
                     Vector3 direction = rotationRandom * moverTransform.right * -1;
-                    GameObject bullet = Instantiate(gunEntity.bullet, targetPosition, rotationOfMaster);
+                    GameObject bullet = PhotonNetwork.Instantiate(gunEntity.bullet.name, targetPosition, rotationOfMaster);
                     Rigidbody2D bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
                     bulletRigidbody.velocity = direction * gunEntity.bulletSpeed;
 
@@ -34,7 +35,7 @@ namespace Assets.Script
                     Vector3 targetPosition = gunEntity.holder.transform.position + (rotationOfGun * Vector3.right * gunOffset);
                     var moverTransform = gunEntity.holder.mover.gameObject.transform;
                     Vector3 direction = rotationRandom * moverTransform.up * -1;
-                    GameObject bullet = Instantiate(gunEntity.bullet, targetPosition, rotationOfMaster);
+                    GameObject bullet = PhotonNetwork.Instantiate(gunEntity.bullet.name, targetPosition, rotationOfMaster);
                     Rigidbody2D bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
                     bulletRigidbody.velocity = direction * gunEntity.bulletSpeed;
                 }

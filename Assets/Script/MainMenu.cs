@@ -1,21 +1,44 @@
-using System.Collections;
+using Photon.Pun;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : MonoBehaviourPunCallbacks
 {
+    public TMP_InputField roomInput;
+    public TMP_InputField nameInput;
+    public GameManager gameManager;
     public void PlayGame()
     {
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+        PhotonNetwork.JoinRoom(roomInput.text);
+    }
+
+    public void CreateRoom()
+    {
+        PhotonNetwork.CreateRoom(roomInput.text);
     }
     public void BackToMainMenu()
     {
-        SceneManager.LoadScene(0);
+        PhotonNetwork.LeaveRoom();
     }
+    public override void OnJoinedRoom()
+    {
+        PhotonNetwork.NickName = nameInput.text;
+        PhotonNetwork.LoadLevel("MainScene");
+    }
+    public override void OnLeftRoom()
+    {
+        Debug.Log("Left the room. Returning to the main menu.");
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public void QuitGame()
     {
         Application.Quit();
     }
+
+   
 
 }

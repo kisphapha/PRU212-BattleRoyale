@@ -1,3 +1,4 @@
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -34,7 +35,7 @@ namespace Assets.Script
                 var moverTransform = grenadeEntity.holder.mover.gameObject.transform;
                 direction = rotationRandom * moverTransform.up * -1;
             }
-            GameObject grenade = Instantiate(grenadeEntity.grenadePrefab, targetPosition, rotationOfMaster);
+            GameObject grenade = PhotonNetwork.Instantiate(grenadeEntity.grenadePrefab.name, targetPosition, rotationOfMaster);
             Rigidbody2D grenadeRigidbody = grenade.GetComponent<Rigidbody2D>();
             grenadeRigidbody.velocity = direction * grenadeEntity.grenadeSpeed;
             return grenade;

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -11,10 +12,12 @@ public class InventoryController : MonoBehaviour
     public int maxSlot = 3;
     public int currentSlot = 1;
     private InventoryDrawer inventoryDrawer;
+    private PhotonView view;
     // Start is called before the first frame update//
     void Start()
     {
         inventoryDrawer = GetComponent<InventoryDrawer>();
+        view = GetComponent<PhotonView>();
         master = GetComponent<PlayerProps>();
         //setup inventory
         for (int i = 0; i < maxSlot; i++)
@@ -26,34 +29,36 @@ public class InventoryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
-        if (scrollDelta != 0)
+        if (view.IsMine)
         {
-            if (scrollDelta > 0)
+            float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
+            if (scrollDelta != 0)
             {
-                currentSlot--;
-                if (currentSlot < 1)
+                if (scrollDelta > 0)
                 {
-                    currentSlot = maxSlot;
+                    currentSlot--;
+                    if (currentSlot < 1)
+                    {
+                        currentSlot = maxSlot;
+                    }
                 }
-            }
-            if (scrollDelta < 0)
-            {
-                currentSlot++;
-                if (currentSlot > maxSlot)
+                if (scrollDelta < 0)
                 {
-                    currentSlot = 1;
+                    currentSlot++;
+                    if (currentSlot > maxSlot)
+                    {
+                        currentSlot = 1;
+                    }
                 }
+                handleSlotChange();
             }
-            handleSlotChange();
         }
-
     }
     public void handleSlotChange()
     {
         if (currentItem != null)
         {
-            currentItem.SetActive(false);
+            view.RPC("SetItemActiveRPC", RpcTarget.AllBuffered, currentItem.GetPhotonView().ViewID, false);
             if (master.holdingItem != null)
             {
                 var weapon = master.holdingItem.GetComponent<GunEntity>();
@@ -67,8 +72,7 @@ public class InventoryController : MonoBehaviour
         currentItem = Inventory[currentSlot - 1]?.GameObject;
         if (currentItem != null)
         {
-            currentItem.SetActive(true);
-            
+            view.RPC("SetItemActiveRPC", RpcTarget.AllBuffered, currentItem.GetPhotonView().ViewID, true);
             master.holdingItem = currentItem;
             var gun = currentItem.GetComponent<GunEntity>();
             if (gun != null)
@@ -136,7 +140,7 @@ public class InventoryController : MonoBehaviour
             inventoryDrawer.UpdateInventoryDisplay();
             if (slot != currentSlot)
             {
-                item.SetActive(false);
+                view.RPC("SetItemActiveRPC", RpcTarget.AllBuffered, item.GetPhotonView().ViewID, false);
             }
             var pickItem = item.GetComponent<PickableItem>();
             if (pickItem != null)
@@ -164,7 +168,7 @@ public class InventoryController : MonoBehaviour
                 if (isUse)
                 {
                     var item = Inventory[slot];
-                    Destroy(item.GameObject);
+                    view.RPC("DestroyItemAfterUseRPC", RpcTarget.AllBuffered, item.GameObject.GetPhotonView().ViewID);
                 }
 
                 Inventory[slot] = null;
@@ -175,6 +179,27 @@ public class InventoryController : MonoBehaviour
         } else
         {
             return false;
+        }
+    }
+    [PunRPC]
+    private void DestroyItemAfterUseRPC(int itemViewID)
+    {
+        PhotonView itemView = PhotonView.Find(itemViewID);
+        if (itemView != null)
+        {
+            GameObject item = itemView.gameObject;
+            Destroy(item);
+        }
+    }
+
+    [PunRPC]
+    private void SetItemActiveRPC(int itemViewID, bool isActive)
+    {
+        PhotonView itemView = PhotonView.Find(itemViewID);
+        if (itemView != null)
+        {
+            GameObject item = itemView.gameObject;
+            item.SetActive(isActive);
         }
     }
 }

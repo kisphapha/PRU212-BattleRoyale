@@ -8,6 +8,7 @@ public class BreakBoxes : MonoBehaviour
     public float hp = 100;
     public GameObject particles;
     private PhotonView view;
+    public AudioClip breakAudioClip;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,13 +23,20 @@ public class BreakBoxes : MonoBehaviour
             PhotonNetwork.Instantiate(particles.name, transform.position, transform.rotation);         
             //PhotonNetwork.Destroy(gameObject); // Destroy the object across the network
             view.RPC("DestroyObject",RpcTarget.AllBufferedViaServer);
+            view.RPC("PlayBreakSound", RpcTarget.All);
 
-            //if (view.Owner != PhotonNetwork.LocalPlayer)
-            //{
-            //    view.TransferOwnership(PhotonNetwork.LocalPlayer);
-            //    //StartCoroutine(DestroyAfterOwnershipTransfer());
-            //}
-            //PhotonNetwork.Destroy(gameObject);            
+        }
+    }
+    [PunRPC]
+    private void PlayBreakSound()
+    {
+        if (breakAudioClip != null)
+        {
+            float distance = Vector3.Distance(Camera.main.transform.position, transform.position);
+            if (distance <= 60)
+            {
+                AudioSource.PlayClipAtPoint(breakAudioClip, transform.position);
+            }
         }
     }
     [PunRPC]

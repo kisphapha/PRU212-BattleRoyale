@@ -70,7 +70,7 @@ public class AIPickUp : MonoBehaviour
     public void CarryTheItem()
     {
         var item = inventoryController.Inventory[inventoryController.currentSlot - 1];
-        if (item != null)
+        if (item != null && item.GameObject != null)
         {
             var gun = item.GameObject.GetComponent<GunEntity>();
             var deviationAngle = 0;

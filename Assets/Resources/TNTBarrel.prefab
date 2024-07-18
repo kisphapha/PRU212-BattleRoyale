@@ -242,3 +242,4 @@ MonoBehaviour:
     type: 3}
   isTriggered: 0
   master: {fileID: 0}
+  explodeAudioClip: {fileID: 8300000, guid: 8be1ad0fb42603342b9eadee93e87e41, type: 3}

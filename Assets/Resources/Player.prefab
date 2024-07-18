@@ -556,7 +556,6 @@ GameObject:
   - component: {fileID: 4434896467822755374}
   - component: {fileID: 6128520936090980461}
   - component: {fileID: 5800875669349849439}
-  - component: {fileID: 7780449139813067887}
   - component: {fileID: 8473175325200018652}
   - component: {fileID: 7229185876347559153}
   - component: {fileID: 7891005267871480347}
@@ -627,18 +626,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919e711c10d257c4e83e7b56581f605d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7780449139813067887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6025336227308377276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e12fb6c1a8c2934e82bd5a30240f796, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8473175325200018652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,7 +650,8 @@ MonoBehaviour:
   mover: {fileID: 0}
   view: {fileID: 0}
   killCount: 0
-  gameOverManager: {fileID: 0}
+  killEarnClip: {fileID: 8300000, guid: d1d5a865db117124eaf5862ae5cfcd69, type: 3}
+  failClip: {fileID: 8300000, guid: fedde6f2849a20c43b2dc0f34cf30cb0, type: 3}
 --- !u!58 &7229185876347559153
 CircleCollider2D:
   m_ObjectHideFlags: 0

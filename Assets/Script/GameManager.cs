@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int startTime = 30;
     public bool isStarted = false;
     public GameOver gameOverController;
+    public AudioClip victoryAudio;
     private PhotonView view;
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
             startTime--;
         }
         view.RPC("DisappearDisplay", RpcTarget.AllBufferedViaServer);
+        PhotonNetwork.CurrentRoom.IsOpen = false;
     }
 
     [PunRPC]
@@ -70,9 +72,11 @@ public class GameManager : MonoBehaviour
         {
             gameOverController.Win(prefabInstances[0]);
             var player = prefabInstances[0].GetComponent<PlayerProps>();
-            if (player != null)
+            if (player != null && view.IsMine)
             {
-                player.gameOverManager.UpdateKillCount(player.killCount);
+                gameOverController.UpdateKillCount(player.killCount);
+                AudioSource.PlayClipAtPoint(victoryAudio, prefabInstances[0].transform.position);
+                player.Win();
             }
             var virtualCam = FindObjectOfType<CinemachineVirtualCamera>();
             if (virtualCam != null)

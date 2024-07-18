@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
 
 public class GunEntity : PickableItem
@@ -19,6 +20,7 @@ public class GunEntity : PickableItem
     private float AiGunTimer = 1f;
     private PhotonView view;
     private AudioSource audioSource;
+    public AudioClip shootingAudioClip;
     private void Start()
     {
         Stackable = false;
@@ -35,9 +37,13 @@ public class GunEntity : PickableItem
     [PunRPC]
     private void PlayShootSound()
     {
-        if (audioSource != null)
+        if (shootingAudioClip != null)
         {
-            audioSource.Play();
+            float distance = Vector3.Distance(Camera.main.transform.position, transform.position);
+            if (distance <= 60)
+            {
+                AudioSource.PlayClipAtPoint(shootingAudioClip, transform.position);
+            }
         }
     }
     private void Update()

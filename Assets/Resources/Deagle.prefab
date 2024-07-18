@@ -117,6 +117,7 @@ MonoBehaviour:
   AmmoDisplay: {fileID: 0}
   bullet: {fileID: 2329323580639709198, guid: ca5431323b4170c4391e7e3bc3b9abeb, type: 3}
   canShoot: 0
+  shootingAudioClip: {fileID: 8300000, guid: 55ef8a56dd73a724dac8beb97235b0d2, type: 3}
 --- !u!114 &-2877013218920387447
 MonoBehaviour:
   m_ObjectHideFlags: 0

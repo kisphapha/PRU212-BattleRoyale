@@ -150,6 +150,7 @@ MonoBehaviour:
   hp: 100
   particles: {fileID: 4297027070153714040, guid: be9229d4be23f9041b3e27eda8b3f086,
     type: 3}
+  breakAudioClip: {fileID: 8300000, guid: 065913fc25f80234aa5d37c9d51d1224, type: 3}
 --- !u!50 &-5741722729872179282
 Rigidbody2D:
   serializedVersion: 4

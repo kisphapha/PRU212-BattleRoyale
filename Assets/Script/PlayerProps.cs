@@ -16,7 +16,8 @@ public class PlayerProps : MonoBehaviour
     public ArrowMovement mover;
     public PhotonView view;
     public int killCount;
-    public GameOver gameOverManager;
+    public AudioClip killEarnClip;
+    public AudioClip failClip;
 
     private GameManager gameManager;
     private float checkBorderTimer;
@@ -24,11 +25,11 @@ public class PlayerProps : MonoBehaviour
     private FloatingHealthBar floatingHealthBar;
     private FloatingKillCounter floatingKillCounter;
     private FloatingName floatingName;
+
     // Start is called before the first frame update
     void Start()
     {
         inventoryController = GetComponent<InventoryController>();
-        gameOverManager = GetComponent<GameOver>();
         floatingHealthBar = GetComponentInChildren<FloatingHealthBar>();
         floatingName = GetComponentInChildren<FloatingName>();
         floatingKillCounter = GetComponentInChildren<FloatingKillCounter>();
@@ -77,7 +78,9 @@ public class PlayerProps : MonoBehaviour
         {
             floatingKillCounter.UpdateKill(killCount);
         }
-
+        AudioSource.PlayClipAtPoint(killEarnClip, transform.position);
+        var killRecord = PlayerPrefs.GetInt("kills") + 1;
+        PlayerPrefs.SetInt("kills",killRecord);
         view.RPC("SyncKills", RpcTarget.OthersBuffered, killCount);
     }
     public void TakeDamage(float amount, GameObject causer = null)
@@ -111,6 +114,7 @@ public class PlayerProps : MonoBehaviour
                     ai.EarnKill();
                 }
             }
+            AudioSource.PlayClipAtPoint(failClip, transform.position);
             view.RPC("SyncDeath", RpcTarget.AllBuffered);
         }
         view.RPC("SyncHealth", RpcTarget.OthersBuffered, hp);        
@@ -118,7 +122,7 @@ public class PlayerProps : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Roof")
+        if (collision.tag == "Roof" && view != null && view.IsMine)
         {
             FadingSprite o = collision.GetComponent<FadingSprite>();
             o.FadeOut();
@@ -126,7 +130,7 @@ public class PlayerProps : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Roof")
+        if (collision.tag == "Roof" && view != null && view.IsMine)
         {
             FadingSprite o = collision.GetComponent<FadingSprite>();
             o.FadeIn();
@@ -141,15 +145,15 @@ public class PlayerProps : MonoBehaviour
         }
         gameManager.UpdatePlayerCount();
     }
-    //[PunRPC]
-    //void SyncName(string name)
-    //{
-    //    if (floatingName != null)
-    //    {
-    //        characterName = name;
-    //        floatingName.UpdateName(name);
-    //    }
-    //}
+    public void Win()
+    {
+        if (view.IsMine)
+        {
+            var winRecord = PlayerPrefs.GetInt("wins") + 1;
+            PlayerPrefs.SetInt("wins", winRecord);
+        }
+    }
+
     [PunRPC]
     void SyncHealth(float syncHealth)
     {

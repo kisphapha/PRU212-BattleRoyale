@@ -29,7 +29,6 @@ public class TerrianGenerator : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             // Check if the terrain has already been generated
-            Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties["TerrainGenerated"]);
             if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("TerrainGenerated") ||
                 !(bool)PhotonNetwork.CurrentRoom.CustomProperties["TerrainGenerated"])
             {

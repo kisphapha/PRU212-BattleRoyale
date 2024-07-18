@@ -15,6 +15,7 @@ public class ExplodeOnCollision : MonoBehaviour
     private PhotonView view;
     public GameObject master;
     private float timer;
+    public AudioClip explodeAudioClip;
 
     //public int maxColliders = 10; // Limit the number of colliders processed
     private void Start()
@@ -33,6 +34,7 @@ public class ExplodeOnCollision : MonoBehaviour
                 {
                     timer += Time.deltaTime * 2;
                     view.RPC("SyncCounting", RpcTarget.AllBufferedViaServer, timer, explosionDelay, isTriggered);
+
                 }
             }
         }
@@ -62,11 +64,22 @@ public class ExplodeOnCollision : MonoBehaviour
             var time = explosion.GetComponent<DestroyAfterATime>();
             time.destroyDelay = explosionDuration;
             time.Unlock();
-
+            view.RPC("PlayExplodeSound", RpcTarget.All);
             view.RPC("DestroyObjectOnExplode", RpcTarget.AllBufferedViaServer);
         }
     }
-
+    [PunRPC]
+    private void PlayExplodeSound()
+    {
+        if (explodeAudioClip != null)
+        {
+            float distance = Vector3.Distance(Camera.main.transform.position, transform.position);
+            if (distance <= 120)
+            {
+                AudioSource.PlayClipAtPoint(explodeAudioClip, transform.position);
+            }
+        }
+    }
     [PunRPC]
     private void DestroyObjectOnExplode()
     {

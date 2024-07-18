@@ -3,7 +3,11 @@ guid: 162993bbae8193e488af72cc2f02cd28
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - explosionPrefab: {instanceID: 0}
+  - smokeParticlePrefab: {instanceID: 0}
+  - master: {instanceID: 0}
+  - explodeAudioClip: {fileID: 8300000, guid: 8be1ad0fb42603342b9eadee93e87e41, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

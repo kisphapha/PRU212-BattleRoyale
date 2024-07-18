@@ -152,6 +152,8 @@ MonoBehaviour:
   Stackable: 0
   usingCoolDown: 0.5
   healAmount: 30
+  HealClip: {fileID: 8300000, guid: 9cc3d8b99e97f0042a71dd143e0095b3, type: 3}
+  view: {fileID: 0}
 --- !u!114 &-4264618011213173059
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,6 @@
+using Photon.Pun;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,25 +12,31 @@ public class ArrowMovement : MonoBehaviour
     private Rigidbody2D rb;
     private GameObject parent;
     private PlayerProps player;
-
+    private PhotonView photonView;
+    private GameManager gameManager;
     private void Start()
     {
         parent = transform.parent.gameObject;
         player = parent.GetComponent<PlayerProps>();
         rb = parent.GetComponent<Rigidbody2D>();
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        photonView = parent.GetComponent<PhotonView>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Update()
     {
-        RotateWithMouse();
-        if (!stunned)
+        if (photonView.IsMine )
         {
-            float moveX = Input.GetAxisRaw("Horizontal");
-            float moveY = Input.GetAxisRaw("Vertical");
+            RotateWithMouse();
+            if (!stunned && gameManager.isStarted)
+            {
+                float moveX = Input.GetAxisRaw("Horizontal");
+                float moveY = Input.GetAxisRaw("Vertical");
 
-            Vector2 movement = new Vector2(moveX, moveY);
-            rb.velocity = movement * moveSpeed;
+                Vector2 movement = new Vector2(moveX, moveY);
+                rb.velocity = movement * moveSpeed;
+            }
         }
     }
 

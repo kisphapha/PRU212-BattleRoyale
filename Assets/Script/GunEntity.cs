@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
 
 public class GunEntity : PickableItem
@@ -16,18 +18,34 @@ public class GunEntity : PickableItem
     private float shootTimer = 0f; // Timer to track the cooldown
     public bool canShoot = false;
     private float AiGunTimer = 1f;
+    private PhotonView view;
+    private AudioSource audioSource;
+    public AudioClip shootingAudioClip;
     private void Start()
     {
         Stackable = false;
         spriteAngle = getSpriteAngle();
         shootingBehavior = GetComponent<ShootingBehavior>();
         currentAmmo = maxAmmo;
+        audioSource = GetComponent<AudioSource>();
         if (AmmoDisplay == null)
         {
             AmmoDisplay = GameObject.FindWithTag("AmmoDisplayer")?.GetComponent<Text>();
         }
+        view = GetComponent<PhotonView>();
     }
-
+    [PunRPC]
+    private void PlayShootSound()
+    {
+        if (shootingAudioClip != null)
+        {
+            float distance = Vector3.Distance(Camera.main.transform.position, transform.position);
+            if (distance <= 60)
+            {
+                AudioSource.PlayClipAtPoint(shootingAudioClip, transform.position);
+            }
+        }
+    }
     private void Update()
     {
         if (holder != null)
@@ -87,7 +105,7 @@ public class GunEntity : PickableItem
     public void Shoot()
     {
         currentAmmo--;
-        Debug.Log(currentAmmo);
+        view.RPC("PlayShootSound", RpcTarget.All);
         shootingBehavior.Shoot();
         if (holderAI == null)
         {
@@ -153,5 +171,14 @@ public class GunEntity : PickableItem
             return 0;
         }
 
+    }
+
+    [PunRPC]
+    void SyncCurrentAmmo(int currentAmmo)
+    {
+
+        var gun = gameObject.GetComponent<GunEntity>();
+        gun.currentAmmo = currentAmmo;
+        
     }
 }

@@ -1,12 +1,15 @@
+using Photon.Pun;
 using UnityEngine;
-using UnityEngine.WSA;
 
 public class HealingItem : PickableItem
 {
     public int healAmount; // Amount of health to heal
+    public AudioClip HealClip;
+    public PhotonView view;
     private void Start()
     {
         Stackable = true;
+        view = GetComponent<PhotonView>();
     }
     public override void ItemEffect()
     {
@@ -23,6 +26,10 @@ public class HealingItem : PickableItem
         } else if (holder != null)
         {
             holder.TakeDamage(-healAmount);
+            if (view.IsMine)
+            {
+                AudioSource.PlayClipAtPoint(HealClip, holder.transform.position);
+            }
         }
     }
 

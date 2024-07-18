@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,18 +14,20 @@ public class AIPickUp : MonoBehaviour
     private AIBehavior chase;
     // List to store available weapons
     private AIInventory inventoryController;
-                                        // Start is called before the first frame update
-
+    private PhotonView view;
+    private GameManager gameManager;
     public float detectionRadius = 1f;
     public float speed = 1f;
     public int count = 3;
 
     void Start()
     {
+        view = GetComponent<PhotonView>();
         inventoryController = GetComponent<AIInventory>();
         master = GetComponent<PlayerAIProps>();
         chase = GetComponent<AIBehavior>();
-        //chase.enabled = false;
+        gameManager = FindObjectOfType<GameManager>();
+
     }
 
     // Update is called once per frame
@@ -34,37 +38,31 @@ public class AIPickUp : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Check if the colliding object is a weapon
-        if (other.CompareTag("PickUpItems"))
+        if (gameManager != null && gameManager.isStarted)
         {
-            if (inventoryController != null)
+            if (other.CompareTag("PickUpItems"))
             {
-                // Move to the next weapon in the list
-                var weapon = other.gameObject;
-                // Equip the new weapon
-                var gun = weapon.GetComponent<GunEntity>();
-                if (gun != null && gun.currentAmmo == 0)
+                if (inventoryController != null)
                 {
-                    return;
+                    // Move to the next weapon in the list
+                    var weapon = other.gameObject;
+                    // Equip the new weapon
+                    var gun = weapon.GetComponent<GunEntity>();
+                    if (gun != null && gun.currentAmmo == 0)
+                    {
+                        return;
+                    }
+                    var result = inventoryController.InventoryAdd(weapon);
+                    if (result == 1)
+                    {
+                        EquipWeapon(weapon);
+                    }
+                    else if (result == 2)
+                    {
+                        view.RPC("DestroyItemRPC", RpcTarget.AllBuffered, weapon.GetPhotonView().ViewID);
+                    }
                 }
-                var result = inventoryController.InventoryAdd(weapon);
-                if (result == 1)
-                {
-                    EquipWeapon(weapon);
-                }
-                else if (result == 2)
-                {
-                    Destroy(weapon);
-                }              
             }
-            //Debug.Log("should pick up");
-
-            //EquipWeapon(other.gameObject);
-            //if (count <= 0)
-            //{
-            //    active = true;
-            //}
-            //other.gameObject.tag = "Untagged";
-            //this.enabled = false;
         }
     }
 
@@ -72,7 +70,7 @@ public class AIPickUp : MonoBehaviour
     public void CarryTheItem()
     {
         var item = inventoryController.Inventory[inventoryController.currentSlot - 1];
-        if (item != null)
+        if (item != null && item.GameObject != null)
         {
             var gun = item.GameObject.GetComponent<GunEntity>();
             var deviationAngle = 0;
@@ -89,14 +87,59 @@ public class AIPickUp : MonoBehaviour
             Quaternion itemRotation = Quaternion.Euler(0f, 0f, angle - deviationAngle);
             Quaternion masterRotation = Quaternion.Euler(Vector3.forward * angle);
             Vector3 targetPosition = transform.position + (masterRotation * Vector3.right * itemSpriteLength/2);
-            item.GameObject.transform.position = targetPosition;
-            item.GameObject.transform.rotation = itemRotation;
+            view.RPC("SyncItemTransform", RpcTarget.All, item.GameObject.GetPhotonView().ViewID, targetPosition, itemRotation);
         }
     }
     public void EquipWeapon(GameObject weapon)
     {
-        weapon.transform.SetParent(transform); // Make the player character the parent of the picked object
-        weapon.GetComponent<Collider2D>().enabled = false;
+        PhotonView weaponView = weapon.GetComponent<PhotonView>();
+        if (weaponView != null && !weaponView.IsMine)
+        {
+            weaponView.TransferOwnership(PhotonNetwork.LocalPlayer);
+        }
+
+        // Call the RPC method to equip the weapon
+        view.RPC("EquipWeaponRPC", RpcTarget.AllBuffered, weaponView.ViewID);
     }
-   
+
+
+    [PunRPC]
+    void SyncItemTransform(int itemViewId, Vector3 targetPosition, Quaternion itemRotation)
+    {
+        PhotonView itemView = PhotonView.Find(itemViewId);
+        if (itemView != null)
+        {
+            GameObject item = itemView.gameObject;
+            item.transform.position = targetPosition;
+            item.transform.rotation = itemRotation;
+        }
+    }
+
+    [PunRPC]
+    private void EquipWeaponRPC(int weaponViewID)
+    {
+        // Find the weapon by its PhotonView ID
+        PhotonView weaponView = PhotonView.Find(weaponViewID);
+        if (weaponView != null)
+        {
+            GameObject weapon = weaponView.gameObject;
+            weapon.transform.SetParent(transform); // Make the player character the parent of the picked object
+            weapon.GetComponent<Collider2D>().enabled = false;
+        }
+        else
+        {
+            Debug.LogError("Failed to find weapon with PhotonView ID: " + weaponViewID);
+        }
+    }
+    [PunRPC]
+    private void DestroyItemRPC(int viewId)
+    {
+        PhotonView itemView = PhotonView.Find(viewId);
+        if (itemView != null)
+        {
+            GameObject item = itemView.gameObject;
+            Destroy(item);
+        }
+    }
+
 }

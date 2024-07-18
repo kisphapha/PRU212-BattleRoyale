@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -17,27 +18,32 @@ public class InventoryDrawer : MonoBehaviour
     private Text inventorySlotAmount2;
     private Text inventorySlotAmount3;
     private InventoryController inventoryController;
-
+    private PhotonView view;
     private void Start()
     {
-        inventorySlot1 = GameObject.Find("Slot1").GetComponent<Image>();
-        inventorySlot2 = GameObject.Find("Slot2").GetComponent<Image>();
-        inventorySlot3 = GameObject.Find("Slot3").GetComponent<Image>();
-        inventorySlotAmount1 = GameObject.Find("Slot1_Amount").GetComponent<Text>();
-        inventorySlotAmount2 = GameObject.Find("Slot2_Amount").GetComponent<Text>();
-        inventorySlotAmount3 = GameObject.Find("Slot3_Amount").GetComponent<Text>();
-        inventorySlotFrame1 = GameObject.Find("Slot1_Frame").GetComponent<Image>();
-        inventorySlotFrame2 = GameObject.Find("Slot2_Frame").GetComponent<Image>();
-        inventorySlotFrame3 = GameObject.Find("Slot3_Frame").GetComponent<Image>();
+        view = GetComponent<PhotonView>();
+        if (view.IsMine)
+        {
+            inventorySlot1 = GameObject.Find("Slot1").GetComponent<Image>();
+            inventorySlot2 = GameObject.Find("Slot2").GetComponent<Image>();
+            inventorySlot3 = GameObject.Find("Slot3").GetComponent<Image>();
+            inventorySlotAmount1 = GameObject.Find("Slot1_Amount").GetComponent<Text>();
+            inventorySlotAmount2 = GameObject.Find("Slot2_Amount").GetComponent<Text>();
+            inventorySlotAmount3 = GameObject.Find("Slot3_Amount").GetComponent<Text>();
+            inventorySlotFrame1 = GameObject.Find("Slot1_Frame").GetComponent<Image>();
+            inventorySlotFrame2 = GameObject.Find("Slot2_Frame").GetComponent<Image>();
+            inventorySlotFrame3 = GameObject.Find("Slot3_Frame").GetComponent<Image>();
 
-        SetImageVisibility(inventorySlot1,false);
-        SetImageVisibility(inventorySlot2,false);
-        SetImageVisibility(inventorySlot3,false);
-        inventorySlotAmount1.text = "";
-        inventorySlotAmount3.text = "";
-        inventorySlotAmount2.text = "";
-        inventoryController = GetComponent<InventoryController>();
-        UpdateInventoryFrame();
+            SetImageVisibility(inventorySlot1, false);
+            SetImageVisibility(inventorySlot2, false);
+            SetImageVisibility(inventorySlot3, false);
+            inventorySlotAmount1.text = "";
+            inventorySlotAmount3.text = "";
+            inventorySlotAmount2.text = "";
+            inventoryController = GetComponent<InventoryController>();
+            UpdateInventoryFrame();
+        }
+           
     }
     public void SetImageVisibility(Image image, bool visible)
     {
@@ -57,8 +63,8 @@ public class InventoryDrawer : MonoBehaviour
     }
     public void UpdateInventoryFrame()
     {
-        var sprite1 = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/spr_inventory_slot.png", typeof(Sprite)); 
-        var sprite2 = (Sprite)AssetDatabase.LoadAssetAtPath("Assets/Sprites/spr_inventory_slot_2.png", typeof(Sprite));
+        var sprite1 = Resources.Load<Sprite>("spr_inventory_slot"); 
+        var sprite2 = Resources.Load<Sprite>("spr_inventory_slot_2");
         if (inventorySlotFrame1 != null && inventorySlotFrame2 != null && inventorySlotFrame3 != null)
         {
 

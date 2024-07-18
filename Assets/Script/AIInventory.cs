@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +9,11 @@ public class AIInventory : MonoBehaviour
     public PlayerAIProps master;
     public int maxSlot = 3;
     public int currentSlot = 1;
+    private PhotonView view;
     // Start is called before the first frame update
     void Start()
     {
+        view = GetComponent<PhotonView>();
         master = GetComponent<PlayerAIProps>();
         //setup inventory
         for (int i = 0; i < maxSlot; i++)
@@ -28,7 +31,7 @@ public class AIInventory : MonoBehaviour
     {
         if (currentItem != null)
         {
-            currentItem.SetActive(false);
+            view.RPC("SetItemActiveRPC", RpcTarget.AllBuffered, currentItem.GetPhotonView().ViewID, false);
             if (master.holdingItem != null)
             {
                 master.holdingItem = null;
@@ -37,7 +40,7 @@ public class AIInventory : MonoBehaviour
         currentItem = Inventory[currentSlot - 1]?.GameObject;
         if (currentItem != null)
         {
-            currentItem.SetActive(true);
+            view.RPC("SetItemActiveRPC", RpcTarget.AllBuffered, currentItem.GetPhotonView().ViewID, true);
             master.holdingItem = currentItem;
         }
     }
@@ -98,7 +101,7 @@ public class AIInventory : MonoBehaviour
 
             if (slot != currentSlot)
             {
-                item.SetActive(false);
+                view.RPC("SetItemActiveRPC", RpcTarget.AllBuffered, item.GetPhotonView().ViewID, false);
             }
             else
             {
@@ -157,7 +160,7 @@ public class AIInventory : MonoBehaviour
             {
                 if (isUse)
                 {
-                    Destroy(item.GameObject);
+                    view.RPC("DestroyItemAfterUseRPC", RpcTarget.AllBuffered, item.GameObject.GetPhotonView().ViewID);
                 }
                 Inventory[slot] = null;
             }
@@ -236,5 +239,25 @@ public class AIInventory : MonoBehaviour
     {
         return Inventory[currentSlot - 1]?.GameObject;
     }
+    [PunRPC]
+    private void DestroyItemAfterUseRPC(int itemViewID)
+    {
+        PhotonView itemView = PhotonView.Find(itemViewID);
+        if (itemView != null)
+        {
+            GameObject item = itemView.gameObject;
+            Destroy(item);
+        }
+    }
 
+    [PunRPC]
+    private void SetItemActiveRPC(int itemViewID, bool isActive)
+    {
+        PhotonView itemView = PhotonView.Find(itemViewID);
+        if (itemView != null)
+        {
+            GameObject item = itemView.gameObject;
+            item.SetActive(isActive);
+        }
+    }
 }

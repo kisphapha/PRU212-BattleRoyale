@@ -1,4 +1,6 @@
 using Cinemachine;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 public class PlayerProps : MonoBehaviour
@@ -12,34 +14,47 @@ public class PlayerProps : MonoBehaviour
     public GameObject holdingItem;
     public InventoryController inventoryController;
     public ArrowMovement mover;
-
-    public GameOver gameOverManager;
+    public PhotonView view;
+    public int killCount;
+    public AudioClip killEarnClip;
+    public AudioClip failClip;
 
     private GameManager gameManager;
     private float checkBorderTimer;
     private bool isDead;
     private FloatingHealthBar floatingHealthBar;
+    private FloatingKillCounter floatingKillCounter;
     private FloatingName floatingName;
-    private CinemachineVirtualCamera cmv;
+
     // Start is called before the first frame update
     void Start()
     {
-        cmv = GameObject.Find("FollowCamera").GetComponent<CinemachineVirtualCamera>();
-        cmv.Follow = gameObject.transform;
-
-        var persistentData = FindObjectOfType<PersistentData>();
-        if (persistentData != null)
-        {
-            characterName = persistentData.playerName;
-        }
         inventoryController = GetComponent<InventoryController>();
-        gameOverManager = GetComponent<GameOver>();
         floatingHealthBar = GetComponentInChildren<FloatingHealthBar>();
         floatingName = GetComponentInChildren<FloatingName>();
+        floatingKillCounter = GetComponentInChildren<FloatingKillCounter>();
         mover = GetComponentInChildren<ArrowMovement>();
-        floatingName.UpdateName(characterName);
         gameManager = FindObjectOfType<GameManager>();
-        gameManager.PlayerChange(1);
+
+        view = GetComponent<PhotonView>();
+        if (view.IsMine)
+        {
+            // Find and configure the Cinemachine virtual camera to follow this player
+            gameManager.UpdatePlayerCount();
+            characterName = PhotonNetwork.NickName;
+            floatingName.UpdateName(characterName);
+
+            var virtualCam = FindObjectOfType<CinemachineVirtualCamera>();
+            if (virtualCam != null)
+            {
+                virtualCam.Follow = transform;
+                virtualCam.LookAt = transform;
+            }
+        } else
+        {
+            characterName = view.Owner.CustomProperties["PlayerName"].ToString();
+            floatingName.UpdateName(characterName);
+        }
     }
 
     // Update is called once per frame
@@ -55,26 +70,59 @@ public class PlayerProps : MonoBehaviour
             checkBorderTimer = 0f;
         }
     }
-
-    public void TakeDamage(float amount)
+    public void EarnKill()
     {
+        Debug.Log("Earned a kill!");
+        killCount++;
+        if (floatingKillCounter != null)
+        {
+            floatingKillCounter.UpdateKill(killCount);
+        }
+        AudioSource.PlayClipAtPoint(killEarnClip, transform.position);
+        var killRecord = PlayerPrefs.GetInt("kills") + 1;
+        PlayerPrefs.SetInt("kills",killRecord);
+        view.RPC("SyncKills", RpcTarget.OthersBuffered, killCount);
+    }
+    public void TakeDamage(float amount, GameObject causer = null)
+    {
+        if (causer != null)
+        {
+            Debug.Log("Getting damaged from " + causer.name);
+        }
         hp -= amount;
         if (hp > hpMax)
         {
             hp = hpMax;
         }
-        floatingHealthBar.UpdateHealthBar(hp, hpMax);
+        if (floatingHealthBar != null)
+        {
+            floatingHealthBar.UpdateHealthBar(hp, hpMax);
+        }
         if (hp <= 0 && !isDead)
         {
             isDead = true;
-            gameOverManager.gameOver();
-            gameManager.PlayerChange(-1);
-            Destroy(gameObject);
+            if (causer != null)
+            {
+                var player = causer.GetComponent<PlayerProps>();
+                if (player != null)
+                {
+                    player.EarnKill();
+                }
+                var ai = causer.GetComponent<PlayerAIProps>();
+                if (ai != null)
+                {
+                    ai.EarnKill();
+                }
+            }
+            AudioSource.PlayClipAtPoint(failClip, transform.position);
+            view.RPC("SyncDeath", RpcTarget.AllBuffered);
         }
+        view.RPC("SyncHealth", RpcTarget.OthersBuffered, hp);        
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Roof")
+        if (collision.tag == "Roof" && view != null && view.IsMine)
         {
             FadingSprite o = collision.GetComponent<FadingSprite>();
             o.FadeOut();
@@ -82,10 +130,51 @@ public class PlayerProps : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Roof")
+        if (collision.tag == "Roof" && view != null && view.IsMine)
         {
             FadingSprite o = collision.GetComponent<FadingSprite>();
             o.FadeIn();
         }
+    }
+    private void OnDestroy()
+    {
+        if (view.IsMine)
+        {
+            gameManager.gameOverController.gameOver();
+            gameManager.gameOverController.UpdateKillCount(killCount);
+        }
+        gameManager.UpdatePlayerCount();
+    }
+    public void Win()
+    {
+        if (view.IsMine)
+        {
+            var winRecord = PlayerPrefs.GetInt("wins") + 1;
+            PlayerPrefs.SetInt("wins", winRecord);
+        }
+    }
+
+    [PunRPC]
+    void SyncHealth(float syncHealth)
+    {
+        hp = syncHealth;
+        if (floatingHealthBar != null)
+        {
+            floatingHealthBar.UpdateHealthBar(syncHealth, hpMax);
+        }
+    }
+    [PunRPC]
+    void SyncKills(int kills)
+    {
+        killCount = kills;
+        if (floatingKillCounter != null)
+        {
+            floatingKillCounter.UpdateKill(kills);
+        }
+    }
+    [PunRPC]
+    void SyncDeath()
+    {
+        Destroy(gameObject);
     }
 }
